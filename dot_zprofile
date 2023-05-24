@@ -1,0 +1,28 @@
+echo "running zprofile"
+
+export ZSH="$HOME/.oh-my-zsh"
+export DOTZSH="$HOME/.config/zsh"
+
+source $DOTZSH/exports.zsh
+source $DOTZSH/path.zsh
+if [[ -f $DOTZSH/.env ]]; then
+    source $DOTZSH/.env
+fi 
+
+if [[ -f $DOTZSH/lprofile.zsh ]]; then
+    source $DOTZSH/lprofile.zsh 
+fi 
+
+typeset -gU cdpath fpath mailpath path
+
+#path=(
+#  /usr/local/{bin,sbin}
+#  $path
+#)
+
+if [[ ! -d "${TMPDIR}" ]]; then
+  mkdir -m 700 "${TMPDIR}"
+fi
+
+export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+

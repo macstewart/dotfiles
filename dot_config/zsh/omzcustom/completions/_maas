@@ -1,0 +1,5 @@
+#compdef maas
+local -a _projects
+_projects=( $(find $MAASDIR -maxdepth 1 -name 'maas-*' | xargs basename | cut -d '-' -f 2-) )
+_describe -t projects 'project' _projects
+

@@ -1,0 +1,198 @@
+"" Source your .vimrc
+"source ~/.vimrc
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLiuueBreakpoint)
+" ------------------------------------------------------------------------------------------------------
+" ---------Plugins
+set surround
+set sneak
+set argtextobj
+set commentary
+set NERDTree
+set highlightedyank
+set which-key
+
+let mapleader=" "
+" mappings
+" Quickly insert an empty new line without entering insert mode
+nmap <SPACE> <Nop>
+xmap <SPACE> <Nop>
+
+"" config
+set notimeout
+set nocompatible            " disable compatibility to old-time vi
+set showmatch               " show matching
+set smartcase
+set wrap linebreak
+set mouse=v                 " middle-click paste with
+set hlsearch                " highlight search
+set incsearch               " incremental search
+set tabstop=4               " number of columns occupied by a tab
+set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
+set expandtab               " converts tabs to white space
+set shiftwidth=4            " width for autoindents
+set autoindent              " indent a new line the same amount as the line just typed
+set number                  " add line numbers
+set relativenumber
+set visualbell
+set noerrorbells
+set title
+set showcmd
+set wildmode=longest,list   " get bash-like tab completions
+"set cc=80                  " set an 80 column border for good coding style
+syntax on                  " syntax highlighting
+
+set mouse=a                 " enable mouse click
+set clipboard=unnamedplus   " using system clipboard
+set showmode
+
+filetype plugin on
+
+" set spell                 " enable spell check (may need to download language package)
+" set noswapfile            " disable creating swap file
+" set backupdir=~/.cache/vim " Directory to store backup files.
+" open new split panes to right and below
+
+" tool windows
+nmap \\\\ :NERDTreeFocus<cr>
+nmap \\d :action ActivateDebugToolWindow<cr>
+nmap \\r :action ActivateRunToolWindow<cr>
+nmap \\m :action ActivateMavenToolWindow<cr>
+nmap \\t :action ActivateProblemsViewToolWindow<cr>
+nmap \\l :action ActivateProblemsViewToolWindow<cr>
+nmap \\h :action ActivateServicesToolWindow<cr>
+nmap \\s :action ActivateStructureToolWindow<cr>
+nmap \\; :action ActivateDatabaseToolWindow<cr>
+
+nmap \\] :action HideAllWindows<cr>
+
+" telescope
+nmap <Leader>ft :action FindInPath<CR>
+xmap <Leader>ft :action FindInPath<CR>
+
+nmap <Leader>ff :action GotoFile<CR>
+nmap <Leader>fd :action ViewBreakpoints<CR>
+nmap <Leader>fp :action ManageRecentProjects<CR>
+nmap <Leader>fs :action GotoSymbol<CR>
+nmap <Leader>fr :action ChooseRunConfiguration<CR>
+
+nmap <Leader>fa :action GotoAction<CR>
+xmap <Leader>fa :action GotoAction<CR>
+
+" lsp
+nmap <leader>lr :action RenameElement<CR>
+nmap <leader>lf :action ReformatCode<CR>
+nmap <leader>li :action OptimizeImports<CR>
+nmap <leader>la :action ShowIntentionActions<CR>
+
+" navigationEditorPopupMenu.Run
+nmap [f :action MethodUp<CR>
+nmap ]f :action MethodDown<CR>
+
+nmap [g :action VcsShowPrevChangeMarker<CR>
+nmap ]g :action VcsShowNextChangeMarker<CR>
+
+nmap [l :action GotoPreviousError<CR>
+nmap ]l :action GotoNextError<CR>
+
+" add new line without insert mode
+nmap <leader>o o<Esc>
+nmap <leader>O O<Esc>
+
+" hides search highlights
+nmap <leader>h :nohl<cr>
+
+nmap <leader><F5> :source ~/.ideavimrc<cr>
+nmap <leader><leader> @:
+
+" maven
+nmap <Leader>mi :action Maven.Reimport<CR>
+nmap <Leader>mI :action MavenRunHelperCleanInstall<CR>
+nmap <Leader>mc :action MavenRunHelperCompile<CR>
+
+" To copy text to the end-of-line, press Y.
+" This mapping sets up Y to be consistent with
+" the C and D operators, which act from the cursor
+" to the end of the line. The default behavior of Y
+" is to yank the whole line.
+nnoremap Y y$
+
+" Splitting Windows
+nmap <Leader>= :vsplit<CR>
+nmap <Leader>- :split<CR>
+nmap <Leader>x :action Unsplit<CR>
+nmap <Leader>ww :action CloseEditor<CR>
+nmap <Leader>wr :action CloseAllToTheRight<CR>
+nmap <Leader>wl :action CloseAllToTheLeft<CR>
+nmap <Leader>wo :action CloseAllUnpinnedEditors<CR>
+nmap <Leader>wa :action CloseContent<CR>
+nmap <Leader>wp :action CloseProject<CR>
+
+nmap <Leader>gd :action Vcs.ShowDiffChangedLines<CR>
+nmap <Leader>gr :action Vcs.RollbackChangedLines<CR>
+
+" navigating splits
+nmap <C-h> <C-W>h
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-l> <C-W>l
+
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
+
+" shift h/l to move between tabs
+nmap <s-H> :action PreviousTab<CR>
+nmap <s-L> :action NextTab<CR>
+nmap <Leader>tp :action PinActiveTabToggle<CR>
+nmap <Leader>1 :action GoToTab1<CR>
+nmap <Leader>2 :action GoToTab2<CR>
+nmap <Leader>3 :action GoToTab3<CR>
+nmap <Leader>4 :action GoToTab4<CR>
+nmap <Leader>5 :action GoToTab5<CR>
+nmap <Leader>6 :action GoToTab6<CR>
+nmap <Leader>7 :action GoToTab7<CR>
+nmap <Leader>8 :action GoToTab8<CR>
+nmap <Leader>9 :action GoToTab9<CR>
+nmap <Leader>0 :action GoToLastTab<CR>
+
+
+
+
+" alt + j/k to move line(s) up and down in visual and normal mode
+nmap <A-J> :action MoveLineDown<CR>
+nmap <A-K> :action MoveLineUp<CR>
+xmap <A-J> :action MoveLineDown<CR>
+xmap <A-K> :action MoveLineUp<CR>
+
+" debug
+nmap <Leader>db :action ToggleLineBreakpoint<CR>
+nmap <Leader>dd :action ContextDebug<CR>
+nmap <Leader>D :action Debug<CR>
+
+" run
+nmap <Leader>R :action Run<CR>
+nmap <Leader>rr :action ContextRun<CR>
+
+" keep selected state when indenting
+xmap < <gv
+xmap > >gv
+" handlers
+sethandler <F5> n-v:vim i:ide

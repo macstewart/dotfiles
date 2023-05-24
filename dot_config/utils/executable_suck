@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+usage() {
+    echo "Usage: suck [-a] [-n <name>] [<identifier>]"
+    echo "Saves the piped result in the suckdir"
+    echo "  -a: append to the most recent matching file (or -n named file) rather than replacing"
+    echo "  -h: show this help message"
+    echo "  -n: suck to named file"
+    echo "  identifier: identifier to add to generated file, or to match appending file"
+}
+################################################################################
+if [ -z "$SUCKDIR" ]; then
+    echo "SUCKDIR var not set" >&2
+    exit 1
+fi
+
+if [[ -t 0 ]]; then
+    echo "no data to suck" >&2
+    exit 1
+fi
+
+while getopts "ahn:" opt; do
+    case $opt in
+        a) append=true
+            ;;
+        n) name=$OPTARG; 
+            ;;
+        h) usage; exit 0
+            ;;
+        \?) usage; exit 1
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+identifier=$1
+
+if [[ -n $name ]]; then
+    file=$SUCKDIR/1named/$name
+elif [ "$append" = true ]; then
+    getCmd="rg --files -g '!{**/archive/**}' $SUCKDIR"
+
+    if [[ -n "$identifier" ]]; then
+        getCmd+=" | rg $1"
+    fi 
+
+    getCmd+=" | sort | tail -n 1"
+    # echo $getCmd
+    file=$(bash -c "$getCmd")
+fi
+
+if [[ -z "$file" ]]; then
+    datestring=$(gdate +%Y%m%d%a%b)
+    if [[ ! -d $SUCKDIR/$datestring ]]; then
+        mkdir -p $SUCKDIR/$datestring
+    fi
+
+    identifier=$1
+    # echo $datestring
+    timestring=$(gdate +%H:%M_%S)
+    filename=$timestring$identifier
+    if [[ -f $SUCKDIR/$datestring/$filename ]]; then
+        millis=$(gdate +%N | cut -b 1-3)
+        if [ -v identifier ]; then
+            $idname=${identifier%.*}
+            $idext=${identifier##*.}
+            filename=$timestring$idname$millis.$idext
+        else
+            filename=$timestring$millis
+        fi
+    fi
+    file=$SUCKDIR/$datestring/$filename
+fi
+IFS= read -r -d '' indata
+
+if [[ -n $indata ]]; then
+    if [ "$append" = true ]; then
+        printf "%s" "$indata" >> "$file"
+    else
+        printf "%s" "$indata" > "$file"
+    fi
+fi

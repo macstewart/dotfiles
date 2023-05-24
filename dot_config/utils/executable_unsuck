@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+usage() {
+    echo "Usage: unsuck [<options>] [<filter>]"
+    echo "Archives the last matching sucked result"
+    echo "  -a: archive all matched files except named"
+    echo "  -A: archive all matched files including named"
+    echo "  -i: interactively select files to archive"
+    echo "  -n <name>: archive explicitly by name from 1named dir"
+    echo "  -h: show this help message"
+    echo "  filter: string match for the to-be-archived file"
+}
+################################################################################
+
+archive() {
+    fname=$1
+    if [ -z "$fname" ]; then
+        return
+    fi
+    if [ ! -f "$fname" ]; then
+        return
+    fi
+    fbasename=$(basename "$fname")
+    if [ -f "$SUCKDIR/archive/$fbasename" ]; then
+        fbasename+="_"$(gdate +%N | cut -b 1-3)
+    fi
+    echo "Archiving $fname to $SUCKDIR/archive/$fbasename"
+    mv "$fname" "$SUCKDIR/archive/$fbasename"
+}
+
+if [ -z "$SUCKDIR" ]; then
+    echo "SUCKDIR var not set" >&2
+    exit 1
+fi
+
+while getopts "aAin:h" opt; do
+    case $opt in
+        a) all=true
+            ;;
+        A) all=true
+            named=true
+            ;;
+        i) interactive=true
+            ;;
+        n) name=$OPTARG; 
+            ;;
+        h) usage; exit 0
+            ;;
+        \?) usage; exit 1
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+filter=$1
+
+if [ "$named" = true ]; then
+    selector="rg --files -g '!{**/archive/**}' $SUCKDIR"
+else 
+    selector="rg --files -g '!{**/archive/**,**/1named/**}' $SUCKDIR"
+fi
+
+if [ -n "$filter" ]; then
+    selector+=" | rg $filter"
+fi
+if [ "$all" = true ]; then
+    # echo $selector
+    bash -c "$selector" | while read -r fname; do
+        archive "$fname"
+    done
+fi

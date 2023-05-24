@@ -1,0 +1,11 @@
+export JIRA_URL=https://sol-jira.atlassian.net
+export JIRA_API_TOKEN=
+export GITHUB_TOKEN=
+export MAAS_MAAS_ID=mstewart-dev
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_DEFAULT_REGION=us-east-1
+export VAULT_ADDR=https://vault.maas-vault-prod.solace.cloud:8200/
+export JENKINS_API_TOKEN=
+export PACKAGES_ADMIN_USER=
+export PACKAGES_ADMIN_TOKEN=
