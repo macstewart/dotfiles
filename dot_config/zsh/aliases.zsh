@@ -18,8 +18,8 @@ alias gam='git commit -am "this will be squashed anyway"'
 
 alias dotconf='cd $DOTCONF'
 
-alias mci='qmvn clean install'
-alias msb='qmvn spring-boot:run'
+alias mci='qmvn clean install $@'
+alias msb='qmvn spring-boot:run $@'
 
 alias jm='jira issue list -q"filter=\"Solace Cloud Current User\""'
 
@@ -37,3 +37,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 alias dot='chezmoi'
+
+alias s='suck'
+alias b='blow'
