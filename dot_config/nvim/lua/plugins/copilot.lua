@@ -6,6 +6,7 @@ end
 copilot.setup({
 	suggestion = {
 		enabled = true,
+        autotrigger = true,
 		keymap = {
 			accept = "<C-Tab>",
 			dismiss = "<C-e>",

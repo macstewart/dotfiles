@@ -66,8 +66,8 @@ cmp.setup({
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 		["<C-j>"] = cmp.mapping.select_next_item(),
-		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+		["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
+		["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		["<C-e>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
@@ -76,24 +76,22 @@ cmp.setup({
 		-- Accept currently selected item. If none selected, `select` first item.
 		-- Set `select` to `false` to only confirm explicitly selected items.
 		["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-                cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert })
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if require("copilot.suggestion").is_visible() then
+                require("copilot.suggestion").accept()
             elseif cmp.visible() then
-                cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert })
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
             elseif luasnip.expandable() then
                 luasnip.expand()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif check_backspace() then
-                fallback()
+            elseif has_words_before() then
+                cmp.complete()
             else
                 fallback()
             end
-            end, {
+        end, {
                 "i",
                 "s",
-        }),
+            }),
         -- ["<S-Tab>"] = cmp.mapping(function(fallback)
         -- 	if cmp.visible() then
         -- 		cmp.select_prev_item()
