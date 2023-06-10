@@ -108,9 +108,15 @@ super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
 # parent split ratios
-super + alt + {1-8}
+super + ctrl + shift + {1-8}
     bspc node -f @parent; \
     bspc node -r 0.{12,25,33,4,5,66,75,87}; \
+    bspc node older -f;
+
+# rotate
+super + r
+    bspc node -f @parent; \
+    bspc node -R 90; \
     bspc node older -f;
 
 # cancel the preselection for the focused node
