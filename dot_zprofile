@@ -1,24 +1,28 @@
-echo "running zprofile"
-
 export ZSH="$HOME/.oh-my-zsh"
 export DOTZSH="$HOME/.config/zsh"
 
+### EXPORT SOURCE
 source $DOTZSH/exports.zsh
+
+### PATH SOURCE
 source $DOTZSH/path.zsh
+
+### ALIASES AND FUNCTIONS
+source $DOTZSH/aliases.zsh
+source $DOTZSH/functions.zsh
+
+### KEYBINDS
+source $DOTZSH/bindings.zsh
+
+### .ENV SOURCE
 if [[ -f $DOTZSH/.env ]]; then
     source $DOTZSH/.env
 fi 
-
-if [[ -f $DOTZSH/lprofile.zsh ]]; then
-    source $DOTZSH/lprofile.zsh 
+if [[ -f $HOME/.env ]]; then
+    source $HOME/.env
 fi 
 
 typeset -gU cdpath fpath mailpath path
-
-#path=(
-#  /usr/local/{bin,sbin}
-#  $path
-#)
 
 if [[ ! -d "${TMPDIR}" ]]; then
   mkdir -m 700 "${TMPDIR}"

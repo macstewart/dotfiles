@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d | fzf --ansi --height 100% --keep-right --border-label "sessionizer" --info hidden --no-scrollbar --tabstop 4 --preview 'bat -f --style=grid {}/README.md' --preview-window up,30% )
+    selected=$(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d | fzf --ansi --height 100% --keep-right --border-label "sessionizer" --info hidden --no-scrollbar --tabstop 4 --preview 'bat -f --style=grid {}/README.md' --preview-window up,60% )
 fi
 
 if [[ -z $selected ]]; then
