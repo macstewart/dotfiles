@@ -16,8 +16,6 @@ alias gp='git push'
 alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias gam='git commit -am "this will be squashed anyway"'
 
-alias dotconf='cd $DOTCONF'
-
 alias mci='qmvn clean install $@'
 alias msb='qmvn spring-boot:run $@'
 

@@ -1,7 +1,6 @@
 echo "running zexports"
 
 export BREWPATH=$(which brew)
-export DOTCONF="$HOME/github/macstewart/dotconfig"
 export SUCKDIR="$HOME/suck"
 
 if ! [[ -v JHOME ]]; then
