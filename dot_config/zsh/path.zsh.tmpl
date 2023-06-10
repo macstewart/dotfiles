@@ -17,7 +17,7 @@ pathadditions=(
 )
 
 {{- if eq .chezmoi.os "linux" }}
-pathadditions+=($HOME/linuxbrew/.linuxbrew/bin)
+pathadditions+=(/home/linuxbrew/.linuxbrew/bin)
 {{- end }}
 
 for i in ${pathadditions[@]}; do addToPath $i; done
