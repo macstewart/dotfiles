@@ -16,13 +16,6 @@ __wezterm_set_pane_var() {
   fi
 }
 
-function setlocal() {
-    export LOCALENV=$1
-    ln -sf $DOTZSH/local/${LOCALENV}_profile.zsh $DOTZSH/lprofile.zsh
-    ln -sf $DOTZSH/local/${LOCALENV}_rc.zsh $DOTZSH/lrc.zsh
-    re-source-full
-}
-
 function addutil() {
     ln -sf $(pwd)/$1 ~/utils/$2
 }
@@ -31,11 +24,8 @@ function listutils() {
     ls ~/utils
 }
 
-function bttnotify() {
-    open "btt://trigger_named/?trigger_name=pomodoro_start"
-}
-
 function re-source() {
+    chezmoi apply
     exec zsh -l
 }
 
@@ -209,9 +199,9 @@ function json() {
 }
 
 function zvm_vi_yank() {
-	zvm_yank
-	echo ${CUTBUFFER} | pbcopy
-	zvm_exit_visual_mode
+    zvm_yank
+    echo ${CUTBUFFER} | pbcopy
+    zvm_exit_visual_mode
 }
 
 function zvm_vi_put_after() {
@@ -220,8 +210,8 @@ function zvm_vi_put_after() {
 }
 
 funct ion zvm_vi_put_before() {
-    CUTBUFFER=$(pbpaste)
-    zvm_vi_put_before
+CUTBUFFER=$(pbpaste)
+zvm_vi_put_before
 }
 
 qmvn() {
@@ -231,8 +221,8 @@ qmvn() {
 
 qmvntest() {
     # if ! [ -f $1 ]; then
-        # echo "requires test class or method"
-        # return
+    # echo "requires test class or method"
+    # return
     # fi;
     echo "running: mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true -Dtest=$1" 
     MAVEN_OPTS="-agentpath:/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib/deployed/jdk16/mac/libprofilerinterface.jnilib=/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib,5140" mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true -Dtest=$1
@@ -240,8 +230,8 @@ qmvntest() {
 
 qmvntestall() {
     # if ! [ -f $1 ]; then
-        # echo "requires test class or method"
-        # return
+    # echo "requires test class or method"
+    # return
     # fi;
     echo "running: mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true" 
     mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true
@@ -250,10 +240,11 @@ qmvntestall() {
 maas() {
     cd "$MAASDIR/maas-$1"
 }
-_maas_service_completions() {
-    COMPREPLY=($(compgen -W  "$(find $MAASDIR -maxdepth 1 -name 'maas-*' | xargs basename | cut -d '-' -f 2-)" -- "${COMP_WORDS[1]}"))
+
+i() {
+    read pipein
+    print -z $pipein
 }
-# complete -F _maas_service_completions maas
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
