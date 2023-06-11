@@ -26,7 +26,7 @@ Managed with [chezmoi](chezmoi.io)
 - [zsh](dot_config/zsh)
 - [ideavim](dot_ideavimrc)
 - misc [scripts](dot_config/scripts) / [utils](dot_config/utils), some of which are useful
-### not in use both might be functional idk
+### not in use but might be functional idk
 - [i3](archive/i3)
 - [sketchybar](archive/sketchybar)
 - [spacebar](dot_config/spacebar)
