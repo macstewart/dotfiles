@@ -7,6 +7,7 @@ S    S   S     S      S     S      S S      S            P
 P ss"     "sss"       P     P      P P sSSs P sSSss ` ss'  
                                                            
 Mostly functional personal dotfiles and other config for macos + linux
+
 Managed with [chezmoi](chezmoi.io)
 ## linux
 - [bspwm](dot_config/bspwm)
