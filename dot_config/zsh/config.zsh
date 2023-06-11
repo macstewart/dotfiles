@@ -1,3 +1,5 @@
+_dotfileLog "sourcing config.zsh" 2>/dev/null
+
 export VI_MODE_SET_CURSOR=true
 HYPHEN_INSENSITIVE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"

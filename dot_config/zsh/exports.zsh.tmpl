@@ -1,11 +1,11 @@
-export BREWPATH=$(which brew)
+_dotfileLog "sourcing exports.zsh" 2>/dev/null
+
 export SUCKDIR="$HOME/suck"
 
 if ! [[ -v JHOME ]]; then
     export JHOME=/usr/libexec/java_home
 fi
 
-# if JHOME exists, set JAVA_HOME
 if [[ -d "$JHOME" ]]; then
     export JAVA_HOME=$($JHOME -v 11.0.12)
 fi
@@ -15,12 +15,12 @@ export LC_ALL='en_US.UTF-8';
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+
 {{- if eq .chezmoi.os "linux" }}
 export DISPLAY=:0
 {{- end }}
 
 export LESS_TERMCAP_md="${yellow}";
-
 export MANPAGER='less -X';
 
 if [[ -z "${TMPDIR}" ]]; then
@@ -28,6 +28,7 @@ if [[ -z "${TMPDIR}" ]]; then
 fi
 
 if [[ -f "$HOME/.env" ]]; then
+    _dotfileLog "sourcing ~/.env" 2>/dev/null
     source "$HOME/.env"
 fi
 

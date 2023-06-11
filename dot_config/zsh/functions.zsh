@@ -1,3 +1,6 @@
+ 
+_dotfileLog "sourcing functions.zsh" 2>/dev/null
+
 # my ip on the network
 function ip() {
   ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
@@ -25,7 +28,14 @@ function listutils() {
 }
 
 function re-source() {
-    chezmoi apply
+    if [ $# -gt 0 ]; then # assume arg is debug flag, TODO don't do this
+        export DEBUG=1
+        cflag="--debug"
+    else
+        export DEBUG=0
+    fi
+    chezmoi apply $cflag
+    source ~/.zprofile
     exec zsh -l
 }
 
@@ -240,6 +250,12 @@ qmvntestall() {
 i() {
     read pipein
     print -z $pipein
+}
+
+_dotfileLog() {
+    if [[ $DEBUG == 1 ]]; then
+        echo $1
+    fi
 }
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

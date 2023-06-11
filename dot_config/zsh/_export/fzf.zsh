@@ -1,3 +1,5 @@
+_dotfileLog "sourcing fzf.zsh" 2>/dev/null
+
 export FZF_DEFAULT_OPTS=\
 "--height 40% 
 --layout=reverse
