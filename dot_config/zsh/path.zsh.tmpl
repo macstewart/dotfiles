@@ -1,8 +1,9 @@
+_dotfileLog "sourcing path.zsh" 2>/dev/null
 
 function addToPath() {
     case ":$PATH" in
         *":$1"*) :;; #already there
-        *) export PATH="$1:$PATH"; echo "adding $1 to path";; #adding to path
+        *) export PATH="$1:$PATH"; _dotfileLog "sourcing path.zsh" 2>/dev/null;;
     esac
 }
 
@@ -18,6 +19,11 @@ pathadditions=(
 
 {{- if eq .chezmoi.os "linux" }}
 pathadditions+=(/home/linuxbrew/.linuxbrew/bin)
+{{- else if eq .chezmoi.os "darwin" }}
+pathadditions+=(/opt/homebrew/bin)
 {{- end }}
 
 for i in ${pathadditions[@]}; do addToPath $i; done
+
+eval $(brew shellenv)
+
