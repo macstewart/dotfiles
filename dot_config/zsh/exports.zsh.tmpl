@@ -1,5 +1,3 @@
-echo "running zexports"
-
 export BREWPATH=$(which brew)
 export SUCKDIR="$HOME/suck"
 
@@ -7,8 +5,11 @@ if ! [[ -v JHOME ]]; then
     export JHOME=/usr/libexec/java_home
 fi
 
-export MAASDIR="$HOME/github/solacedev"
-export JAVA_HOME=$($JHOME -v 11.0.12)
+# if JHOME exists, set JAVA_HOME
+if [[ -d "$JHOME" ]]; then
+    export JAVA_HOME=$($JHOME -v 11.0.12)
+fi
+
 export LANG='en_US.UTF-8';
 export LC_ALL='en_US.UTF-8';
 

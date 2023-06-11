@@ -12,7 +12,6 @@ symbol = ""
 success_symbol = '[󱙝 |](bold green)' 
 error_symbol = '[󱙝 |](bold green)' 
 vicmd_symbol = '[󰊠 |](bold blue)'
-vimcmd_visual_symbol = '[INSERT](bold purple)[❯](bold purple)' 
 
 [dart]
 symbol = ""

@@ -1,4 +1,3 @@
-echo "running zconfig"
 export VI_MODE_SET_CURSOR=true
 HYPHEN_INSENSITIVE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"

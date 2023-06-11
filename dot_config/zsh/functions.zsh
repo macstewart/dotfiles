@@ -237,10 +237,6 @@ qmvntestall() {
     mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true
 }
 
-maas() {
-    cd "$MAASDIR/maas-$1"
-}
-
 i() {
     read pipein
     print -z $pipein

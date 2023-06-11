@@ -1,8 +1,6 @@
 alias nnn='nnn -e -x'
 
 alias cat='bat'
-alias ping='prettyping --nolegend'
-alias top="htop"
 
 alias vi="nvim"
 alias vim="nvim"
@@ -20,8 +18,6 @@ alias mci='qmvn clean install $@'
 alias msb='qmvn spring-boot:run $@'
 
 alias jm='jira issue list -q"filter=\"Solace Cloud Current User\""'
-
-alias rk='rusty-krab-manager --config /Users/mstewart/.config/rusty-krab-manager/config.toml'
 
 alias xpv='xargs -I{} reversepv $@ {}'
 
