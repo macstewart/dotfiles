@@ -1,0 +1,9 @@
+{{- if ne .chezmoi.os "linux" }}
+bspwm/
+pipewire/
+sxhkd/
+systemd/
+{{- else if ne .chezmoi.os "darwin" }}
+skhd/
+yabai/
+{{- end }}
