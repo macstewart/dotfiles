@@ -18,7 +18,10 @@ pathadditions=(
 )
 
 {{- if eq .chezmoi.os "linux" }}
-pathadditions+=(/home/linuxbrew/.linuxbrew/bin)
+pathadditions+=(
+    /home/linuxbrew/.linuxbrew/bin
+    /usr/local/go/bin
+)
 {{- else if eq .chezmoi.os "darwin" }}
 pathadditions+=(/opt/homebrew/bin)
 {{- end }}
