@@ -208,22 +208,6 @@ function json() {
     fi;
 }
 
-function zvm_vi_yank() {
-    zvm_yank
-    echo ${CUTBUFFER} | pbcopy
-    zvm_exit_visual_mode
-}
-
-function zvm_vi_put_after() {
-    CUTBUFFER=$(pbpaste)
-    zvm_vi_put_after
-}
-
-funct ion zvm_vi_put_before() {
-CUTBUFFER=$(pbpaste)
-zvm_vi_put_before
-}
-
 qmvn() {
     echo "running: mvn $@ -DskipTests -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true" 
     mvn $@ -DskipTests -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true 
