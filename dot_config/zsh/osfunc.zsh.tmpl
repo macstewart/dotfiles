@@ -1,0 +1,15 @@
+# todo add paste
+{{- if eq .chezmoi.os "linux" }}
+function zvm_vi_yank () {
+	zvm_yank
+	printf %s "${CUTBUFFER}" | xclip -sel c
+	zvm_exit_visual_mode
+}
+{{- else if eq .chezmoi.os "darwin" }}
+
+function zvm_vi_yank() {
+	zvm_yank
+	echo ${CUTBUFFER} | pbcopy
+	zvm_exit_visual_mode
+}
+{{- end }}

@@ -11,6 +11,7 @@ source $DOTZSH/path.zsh
 ### ALIASES AND FUNCTIONS
 source $DOTZSH/aliases.zsh
 source $DOTZSH/functions.zsh
+source $DOTZSH/osfunc.zsh
 
 ### KEYBINDS
 source $DOTZSH/bindings.zsh
