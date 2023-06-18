@@ -32,6 +32,10 @@ keymap("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", opts)
 keymap("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", opts)
 keymap("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", opts)
 
+keymap('n', '<leader>o', '@="m`o<C-V><Esc>``"<CR>')
+-- break line at cursor
+keymap("n", "<leader>j", "i<cr><esc>l", opts)
+
 keymap("n", "<M-k>", ":m -2<CR>", opts)
 keymap("n", "<M-j>", ":m +1<CR>", opts)
 keymap("x", "<m-k>", ":m '<-2<cr>gv=gv", opts)
@@ -83,7 +87,7 @@ keymap("n", "<leader>c#", ":set relativenumber!<cr>", opts)
 keymap("n", "<leader>h", "<cmd>nohlsearch<cr>", opts)
 
 -- better paste
-keymap("v", "<leader>p", '"_dp', opts)
+keymap("v", "p", '"_dP', opts)
 
 -- visual --
 -- stay in indent mode
