@@ -67,6 +67,8 @@ cmp.setup({
     mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-3), { "i", "c" }),
         ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(3), { "i", "c" }),
         ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -78,11 +80,11 @@ cmp.setup({
         -- Set `select` to `false` to only confirm explicitly selected items.
         ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-            -- if require("copilot.suggestion").is_visible() then
-            --     require("copilot.suggestion").accept()
-            if cmp.visible() and has_words_before() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-                -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            if require("copilot.suggestion").is_visible() then
+                require("copilot.suggestion").accept()
+            elseif cmp.visible() and has_words_before() then
+                -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
             elseif luasnip.expandable() then
                 luasnip.expand()
             elseif has_words_before() then
