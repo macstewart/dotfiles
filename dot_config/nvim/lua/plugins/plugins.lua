@@ -41,7 +41,6 @@ packer.init({
     },
 })
 
--- Install your plugins here
 return packer.startup(function(use)
     use({ "wbthomason/packer.nvim" })                                                       -- Have packer manage itself
     use({ "nvim-lua/plenary.nvim" })                                                        -- Useful lua functions used by lots of plugins
@@ -61,6 +60,8 @@ return packer.startup(function(use)
     use({ "tpope/vim-repeat" })
     use({ "rest-nvim/rest.nvim" })
     use({ "christoomey/vim-tmux-navigator" })
+    -- harpooin
+    use({ "theprimeagen/harpoon" })
 
     -- Style
     use({ "folke/tokyonight.nvim" })

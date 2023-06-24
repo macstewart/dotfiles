@@ -27,12 +27,19 @@ keymap("n", "-", "$", opts)
 -- keymap("n", "<C-h>", "<C-w>h", opts)
 -- keymap("n", "<C-j>", "<C-w>j", opts)
 --
+keymap("n", "<a-j>", ":m .+1<CR>==")
+keymap("n", "<a-k>", ":m .-2<CR>==")
+keymap("i", "<a-j>", "<Esc>:m .+1<CR>==gi")
+keymap("i", "<a-k>", "<Esc>:m .-2<CR>==gi")
+keymap("v", "<a-j>", ":m '>+1<CR>gv=gv")
+keymap("v", "<a-k>", ":m '<-2<CR>gv=gv")
+
 keymap("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", opts)
 keymap("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", opts)
 keymap("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", opts)
 keymap("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", opts)
 
-keymap('n', '<leader>o', '@="m`o<C-V><Esc>``"<CR>')
+keymap("n", "<leader>o", '@="m`o<C-V><Esc>``"<CR>')
 -- break line at cursor
 keymap("n", "<leader>j", "i<cr><esc>l", opts)
 
@@ -58,17 +65,28 @@ keymap("n", "<s-l>", ":BufferLineCycleNext<cr>", opts)
 keymap("n", "<s-Left>", ":BufferLineMovePrev<cr>", opts)
 keymap("n", "<s-Right>", ":BufferLineMoveNext<cr>", opts)
 
-keymap("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<cr>", opts)
-keymap("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<cr>", opts)
-keymap("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<cr>", opts)
-keymap("n", "<leader>4", "<cmd>BufferLineGoToBuffer 4<cr>", opts)
-keymap("n", "<leader>5", "<cmd>BufferLineGoToBuffer 5<cr>", opts)
-keymap("n", "<leader>6", "<cmd>BufferLineGoToBuffer 6<cr>", opts)
-keymap("n", "<leader>7", "<cmd>BufferLineGoToBuffer 7<cr>", opts)
-keymap("n", "<leader>8", "<cmd>BufferLineGoToBuffer 8<cr>", opts)
-keymap("n", "<leader>9", "<cmd>BufferLineGoToBuffer 9<cr>", opts)
-keymap("n", "<leader>0", "<cmd>BufferLineGoToBuffer 10<cr>", opts)
+keymap("n", "<C-1>", "<cmd>BufferLineGoToBuffer 1<cr>", opts)
+keymap("n", "<C-2>", "<cmd>BufferLineGoToBuffer 2<cr>", opts)
+keymap("n", "<C-3>", "<cmd>BufferLineGoToBuffer 3<cr>", opts)
+keymap("n", "<C-4>", "<cmd>BufferLineGoToBuffer 4<cr>", opts)
+keymap("n", "<C-5>", "<cmd>BufferLineGoToBuffer 5<cr>", opts)
+keymap("n", "<C-6>", "<cmd>BufferLineGoToBuffer 6<cr>", opts)
+keymap("n", "<C-7>", "<cmd>BufferLineGoToBuffer 7<cr>", opts)
+keymap("n", "<C-8>", "<cmd>BufferLineGoToBuffer 8<cr>", opts)
+keymap("n", "<C-9>", "<cmd>BufferLineGoToBuffer 9<cr>", opts)
 
+keymap("n", "<leader>h", ":lua require('harpoon.mark').add_file()<cr>", opts)
+keymap("n", "\\h", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
+keymap("n", "<leader>1", ":lua require('harpoon.ui').nav_file(1)<cr>", opts)
+keymap("n", "<leader>2", ":lua require('harpoon.ui').nav_file(2)<cr>", opts)
+keymap("n", "<leader>3", ":lua require('harpoon.ui').nav_file(3)<cr>", opts)
+keymap("n", "<leader>4", ":lua require('harpoon.ui').nav_file(4)<cr>", opts)
+keymap("n", "<leader>5", ":lua require('harpoon.ui').nav_file(5)<cr>", opts)
+keymap("n", "<leader>6", ":lua require('harpoon.ui').nav_file(6)<cr>", opts)
+keymap("n", "<leader>7", ":lua require('harpoon.ui').nav_file(7)<cr>", opts)
+keymap("n", "<leader>8", ":lua require('harpoon.ui').nav_file(8)<cr>", opts)
+keymap("n", "<leader>9", ":lua require('harpoon.ui').nav_file(9)<cr>", opts)
+keymap("n", "<leader><tab>", ":e#<cr>", opts)
 -- close buffers
 keymap("n", "<leader>ww", "<cmd>Bdelete!<cr>", opts)
 keymap("n", "<leader>wo", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<cr>", opts)
@@ -84,7 +102,7 @@ keymap("n", "<leader>cw", ":set wrap!<cr>", opts)
 keymap("n", "<leader>c#", ":set relativenumber!<cr>", opts)
 
 -- clear highlights
-keymap("n", "<leader>h", "<cmd>nohlsearch<cr>", opts)
+keymap("n", "<leader><esc>", "<cmd>nohlsearch<cr>", opts)
 
 -- better paste
 keymap("v", "p", '"_dP', opts)
@@ -158,6 +176,3 @@ keymap("n", "]t", "<cmd>lua require'trouble'.next({skip_groups = true, jump = tr
 keymap("n", "[t", "<cmd>lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", opts)
 -- Lsp
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
-
-
-

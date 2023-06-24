@@ -23,7 +23,6 @@ map Q gq
 " ------------------------------------------------------------------------------------------------------
 " ---------Plugins
 set surround
-set sneak
 set argtextobj
 set commentary
 set NERDTree
@@ -78,7 +77,6 @@ nmap \\r :action ActivateRunToolWindow<cr>
 nmap \\m :action ActivateMavenToolWindow<cr>
 nmap \\t :action ActivateProblemsViewToolWindow<cr>
 nmap \\l :action ActivateProblemsViewToolWindow<cr>
-nmap \\h :action ActivateServicesToolWindow<cr>
 nmap \\s :action ActivateStructureToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
 
@@ -116,9 +114,15 @@ nmap ]l :action GotoNextError<CR>
 " add new line without insert mode
 nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
-
+" TODO fix this
+" nmap <M-j> :m .+1<CR>==
+" nmap <M-k> :m .-2<CR>==
+" imap <M-j> <Esc>:m .+1<CR>==gi
+" imap <M-k> <Esc>:m .-2<CR>==gi
+" xmap <M-j> :m '>+1<CR>gv=gv
+" xmap <M-k> :m '<-2<CR>gv=gv
 " hides search highlights
-nmap <leader>h :nohl<cr>
+nmap <leader><esc> :nohl<cr>
 
 nmap <leader><F5> :source ~/.ideavimrc<cr>
 nmap <leader><leader> @:
@@ -142,11 +146,12 @@ nmap <Leader>x :action Unsplit<CR>
 nmap <Leader>ww :action CloseEditor<CR>
 nmap <Leader>wr :action CloseAllToTheRight<CR>
 nmap <Leader>wl :action CloseAllToTheLeft<CR>
-nmap <Leader>wo :action CloseAllUnpinnedEditors<CR>
+nmap <Leader>wo :action CloseAllEditorsButActive<CR>
 nmap <Leader>wa :action CloseContent<CR>
 nmap <Leader>wp :action CloseProject<CR>
 
 nmap <Leader>gd :action Vcs.ShowDiffChangedLines<CR>
+nmap <Leader>gb :action Annotate<CR>
 nmap <Leader>gr :action Vcs.RollbackChangedLines<CR>
 
 " navigating splits
@@ -161,17 +166,21 @@ nmap <C-i> :action Forward<CR>
 " shift h/l to move between tabs
 nmap <s-H> :action PreviousTab<CR>
 nmap <s-L> :action NextTab<CR>
-nmap <Leader>tp :action PinActiveTabToggle<CR>
-nmap <Leader>1 :action GoToTab1<CR>
-nmap <Leader>2 :action GoToTab2<CR>
-nmap <Leader>3 :action GoToTab3<CR>
-nmap <Leader>4 :action GoToTab4<CR>
-nmap <Leader>5 :action GoToTab5<CR>
-nmap <Leader>6 :action GoToTab6<CR>
-nmap <Leader>7 :action GoToTab7<CR>
-nmap <Leader>8 :action GoToTab8<CR>
-nmap <Leader>9 :action GoToTab9<CR>
-nmap <Leader>0 :action GoToLastTab<CR>
+
+nmap \\h :action ShowHarpoon<CR>
+nmap <Leader>h :action AddToHarpoon<CR>
+nmap <Leader>1 :action GotoHarpoon1<CR>
+nmap <Leader>2 :action GotoHarpoon2<CR>
+nmap <Leader>3 :action GotoHarpoon3<CR>
+nmap <Leader>4 :action GotoHarpoon4<CR>
+nmap <Leader>5 :action GotoHarpoon5<CR>
+nmap <Leader>6 :action GotoHarpoon6<CR>
+nmap <Leader>7 :action GotoHarpoon7<CR>
+nmap <Leader>8 :action GotoHarpoon8<CR>
+nmap <Leader>9 :action GotoHarpoon9<CR>
+
+" alernate-file
+nmap <leader><tab> :e#<CR>
 
 
 
