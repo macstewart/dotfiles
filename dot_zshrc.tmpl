@@ -21,6 +21,7 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
+# TODO can I break this out into a separate file?
 {{- if eq .chezmoi.os "linux" }}
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -39,3 +40,5 @@ unset __conda_setup
 {{- end }}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source $DOTZSH/app/zinit.zsh
