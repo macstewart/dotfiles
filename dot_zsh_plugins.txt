@@ -1,0 +1,4 @@
+zsh-users/zsh-completions
+marlonrichert/zsh-autocomplete
+Aloxaf/fzf-tab
+reegnz/jq-zsh-plugin
