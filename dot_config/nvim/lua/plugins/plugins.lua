@@ -60,7 +60,7 @@ return packer.startup(function(use)
     use({ "tpope/vim-repeat" })
     use({ "rest-nvim/rest.nvim" })
     use({ "christoomey/vim-tmux-navigator" })
-    -- harpooin
+    -- harpoon
     use({ "theprimeagen/harpoon" })
 
     -- Style

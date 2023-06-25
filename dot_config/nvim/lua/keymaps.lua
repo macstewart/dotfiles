@@ -1,14 +1,8 @@
--- Shorten function name
 local keymap = vim.keymap.set
--- Silent keymap option
 -- local opts = { silent = true }
 local opts = {}
--- keymap("n", "<leader>h", "<cmd>nohlsearch<cr>", opts)
-
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
--- keymap("n", "gr", "<Nop>", opts)
--- keymap("n", "gd", "<Nop>", opts)
 vim.g.mapleader = " "
 
 -- Modes
@@ -19,14 +13,13 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
+keymap("n", "<leader><esc>", "<cmd>nohlsearch<cr>", opts)
+keymap("n", "<leader><F5>", ":source $MYVIMRC<cr>", opts)
+
 keymap("n", "-", "$", opts)
--- BUFFER/TAB MANAGEMENT
--- Better window navigation
--- keymap("n", "<C-k>", "<C-w>k", opts)
--- keymap("n", "<C-l>", "<C-w>l", opts)
--- keymap("n", "<C-h>", "<C-w>h", opts)
--- keymap("n", "<C-j>", "<C-w>j", opts)
---
+keymap("n", "<leader>a", "$", opts)
+keymap("n", "<leader>i", "0", opts)
+
 keymap("n", "<a-j>", ":m .+1<CR>==")
 keymap("n", "<a-k>", ":m .-2<CR>==")
 keymap("i", "<a-j>", "<Esc>:m .+1<CR>==gi")
@@ -102,7 +95,6 @@ keymap("n", "<leader>cw", ":set wrap!<cr>", opts)
 keymap("n", "<leader>c#", ":set relativenumber!<cr>", opts)
 
 -- clear highlights
-keymap("n", "<leader><esc>", "<cmd>nohlsearch<cr>", opts)
 
 -- better paste
 keymap("v", "p", '"_dP', opts)
