@@ -62,6 +62,8 @@ syntax on                  " syntax highlighting
 set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
 set showmode
+set ideavimsupport=dialogs
+set idearefactormode=keep
 
 filetype plugin on
 
@@ -114,6 +116,8 @@ nmap ]l :action GotoNextError<CR>
 " add new line without insert mode
 nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
+nmap <leader>i ^
+nmap <leader>a $
 " TODO fix this
 " nmap <M-j> :m .+1<CR>==
 " nmap <M-k> :m .-2<CR>==
@@ -193,6 +197,10 @@ xmap <A-K> :action MoveLineUp<CR>
 
 " debug
 nmap <Leader>db :action ToggleLineBreakpoint<CR>
+nmap <Leader>dr :action Resume<CR>
+nmap <Leader>di :action StepInto<CR>
+nmap <Leader>do :action StepOut<CR>
+nmap <Leader>dn :action StepOut<CR>
 nmap <Leader>dd :action ContextDebug<CR>
 nmap <Leader>D :action Debug<CR>
 
