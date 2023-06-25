@@ -118,6 +118,8 @@ nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
 nmap <leader>i ^
 nmap <leader>a $
+xmap <leader>i ^
+xmap <leader>a $
 " TODO fix this
 " nmap <M-j> :m .+1<CR>==
 " nmap <M-k> :m .-2<CR>==

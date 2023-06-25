@@ -19,6 +19,8 @@ keymap("n", "<leader><F5>", ":source $MYVIMRC<cr>", opts)
 keymap("n", "-", "$", opts)
 keymap("n", "<leader>a", "$", opts)
 keymap("n", "<leader>i", "0", opts)
+keymap("v", "<leader>a", "$", opts)
+keymap("v", "<leader>i", "0", opts)
 
 keymap("n", "<a-j>", ":m .+1<CR>==")
 keymap("n", "<a-k>", ":m .-2<CR>==")
