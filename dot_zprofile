@@ -13,8 +13,6 @@ source $DOTZSH/aliases.zsh
 source $DOTZSH/functions.zsh
 source $DOTZSH/osfunc.zsh
 
-### KEYBINDS
-source $DOTZSH/bindings.zsh
 
 ### .ENV SOURCE
 if [[ -f $DOTZSH/.env ]]; then
@@ -31,4 +29,3 @@ if [[ ! -d "${TMPDIR}" ]]; then
 fi
 
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-

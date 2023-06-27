@@ -1,4 +1,7 @@
 _dotfileLog "sourcing .zshrc" 2>/dev/null
+if [[ $DEBUG == 1 ]]; then
+    zmodload zsh/zprof
+fi
 
 # zstyle ':znap:*' repos-dir ~/.config/znap
 # source ~/zsh-snap/znap.zsh
@@ -40,6 +43,8 @@ unset __conda_setup
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
-antidote load
 source $DOTZSH/bindings.zsh
+
+if [[ $DEBUG == 1 ]]; then
+    zprof
+fi
