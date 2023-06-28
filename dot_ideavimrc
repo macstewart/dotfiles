@@ -103,6 +103,8 @@ nmap <leader>lf :action ReformatCode<CR>
 nmap <leader>li :action OptimizeImports<CR>
 nmap <leader>la :action ShowIntentionActions<CR>
 
+nmap gi :action GotoImplementation<CR>
+
 " navigationEditorPopupMenu.Run
 nmap [f :action MethodUp<CR>
 nmap ]f :action MethodDown<CR>
