@@ -108,7 +108,7 @@ keymap("v", ">", ">gv", opts)
 
 --PLUGINS
 -- NvimTree
-keymap("n", "\\\\", ":NvimTreeFindFile<CR>", opts)
+keymap("n", "\\p", ":NvimTreeFindFile<CR>", opts)
 keymap("n", "\\]", ":NvimTreeToggle<CR>", opts)
 keymap("n", "\\t", ":TroubleToggle<cr>", opts)
 keymap("n", "\\q", ":ccl<cr>:lcl<cr>", opts)
