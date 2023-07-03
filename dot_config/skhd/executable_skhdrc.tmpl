@@ -13,7 +13,7 @@ ctrl + alt - up : yabai -m window --insert north
 ctrl + alt - right : yabai -m window --insert east
 
 ### recent actions
-alt - s : yabai -m window --stack recent #stack
+alt - s : yabai -m window --stack recent follow #stack
 alt - u : yabai -m window --toggle float && yabai -m window --toggle float #unstack
 alt - m : ~/.config/skhd/swap-current.sh recent
 ctrl + alt - w: yabai -m window --warp recent
@@ -57,9 +57,12 @@ alt - 0x32 : yabai -m window --focus stack.next || yabai -m window --focus stack
 
 # balance spaces
 ctrl + alt + shift - b : yabai -m space --balance
+ctrl + alt + shift - 2 : yabai -m window --ratio abs:0.25
 ctrl + alt + shift - 3 : yabai -m window --ratio abs:0.333
+ctrl + alt + shift - 4 : yabai -m window --ratio abs:0.4
 ctrl + alt + shift - 5 : yabai -m window --ratio abs:0.5
 ctrl + alt + shift - 6 : yabai -m window --ratio abs:0.666
+ctrl + alt + shift - 7 : yabai -m window --ratio abs:0.75
 
 ctrl + alt - r : yabai -m window --toggle split
 
