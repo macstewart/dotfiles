@@ -3,15 +3,15 @@
 #
 
 # terminal emulator
-super + Return
+alt + Return
 	flatpak run org.wezfurlong.wezterm
 
 # program launcher
-super + @space
+alt + @space
 	dmenu_run
 
 # make sxhkd reload its configuration files:
-super + Escape
+alt + Escape
 	pkill -USR1 -x sxhkd
 
 #
@@ -23,27 +23,27 @@ super + alt + r
     bspc wm -r
 
 # close and kill
-super + {_,shift + }w
+alt + {_,shift + }w
 	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
-super + z
+alt + z
 	bspc desktop -l next
 
 alt + c
     ~/.config/bspwm/toggle-scatchpad.sh gnome-calculator gnome-calculator
 
 # send the newest marked node to the newest preselected node
-super + y
+alt + y
 	bspc node -n newest.!automatic.local
 # super + y
 # 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
-super + g
+alt + g
 	bspc node -s biggest.window
 
-super + p
+alt + p
     bspc node -g sticky
 
 #
@@ -51,13 +51,13 @@ super + p
 #
 
 # set the window state
-super + t
+alt + t
     bspc node -t \~floating
 
 # set the node flags
 # super + M ; {m,x,y,z}
 # 	bspc node -g {marked,locked,sticky,private}
-super + M ; 
+alt + M ; 
 	bspc node -g {marked,locked,sticky,private}
 
 #
@@ -65,11 +65,11 @@ super + M ;
 #
 
 # focus the node in the given direction but only with the same state
-super + {_,shift + }{h,j,k,l}
+alt + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}.$(bspc query -T -n | jq -r '.client.state')
 
 # toggle focus to other layer (tiled <-> floating)
-super + q
+alt + q
     ~/.config/bspwm/layerswap.sh
 
 # focus the node for the given path jump
@@ -77,54 +77,54 @@ super + q
 # 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
+alt + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
+alt + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
+alt + {grave,Tab}
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
+alt + {o,i}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
+alt + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
+alt + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
+alt + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
 # parent split ratios
-super + ctrl + shift + {1-8}
+alt + ctrl + shift + {1-8}
     bspc node -f @parent; \
     bspc node -r 0.{12,25,33,4,5,66,75,87}; \
     bspc node older -f;
 
 # rotate
-super + r
+alt + r
     bspc node -f @parent; \
     bspc node -R 90; \
     bspc node older -f;
 
 # cancel the preselection for the focused node
-super + ctrl + space
+alt + ctrl + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-super + ctrl + shift + space
+alt + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
@@ -133,23 +133,23 @@ super + ctrl + shift + space
 
 # ratio snapping (current just 4:3 and 16:9)
 # TODO change hotkeys or use a cycle or something
-super + f ; {Prior,Next}
+alt + f ; {Prior,Next}
     {~/.config/bspwm/floatingaspect.sh 4 3,~/.config/bspwm/floatingaspect.sh 16 9}
 
-super + f ; {Up ; Left,Left ; Up,Up ; Right,Right ; Up,Down ; Left,Left ; Down,Down ; Right,Right ; Down}
+alt + f ; {Up ; Left,Left ; Up,Up ; Right,Right ; Up,Down ; Left,Left ; Down,Down ; Right,Right ; Down}
     ~/.config/bspwm/floatingsnap.sh {1,1,2,2,3,3,4,4}
 
 # hide floating windows
-super + f ; {h,shift + h}
+alt + f ; {h,shift + h}
     bspc node any.floating.local -g hidden{_,=off}
 
-super + f ; {-,=}
+alt + f ; {-,=}
     sign={_,+}; \
     bspc node .floating.local -g hidden{_,=off}
 
 
 # expand a window by moving one of its side outward 
-super + alt + {h,j,k,l}
+alt + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
@@ -157,5 +157,5 @@ super + alt + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-super + {Left,Down,Up,Right}
+alt + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
