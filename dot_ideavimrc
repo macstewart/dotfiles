@@ -73,7 +73,7 @@ filetype plugin on
 " open new split panes to right and below
 
 " tool windows
-nmap \\p :NERDTreeFocus<cr>
+nmap \\\\ :NERDTreeFocus<cr>
 nmap \\d :action ActivateDebugToolWindow<cr>
 nmap \\r :action ActivateRunToolWindow<cr>
 nmap \\m :action ActivateMavenToolWindow<cr>
@@ -82,7 +82,7 @@ nmap \\l :action ActivateProblemsViewToolWindow<cr>
 nmap \\s :action ActivateStructureToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
 
-nmap \\] :action HideAllWindows<cr>
+nmap \\p :action HideAllWindows<cr>
 
 " telescope
 nmap <Leader>ft :action FindInPath<CR>
