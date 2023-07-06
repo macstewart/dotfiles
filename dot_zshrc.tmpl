@@ -3,25 +3,11 @@ if [[ $DEBUG == 1 ]]; then
     zmodload zsh/zprof
 fi
 
-# zstyle ':znap:*' repos-dir ~/.config/znap
-# source ~/zsh-snap/znap.zsh
 source $DOTZSH/config.zsh
-# source $DOTZSH/omzconfig.zsh
 
-# source $ZSH/oh-my-zsh.sh
-
+source $DOTZSH/osfunc.zsh
 source $DOTZSH/aliases.zsh
 source $DOTZSH/functions.zsh
-
-eval "$(starship init zsh)"
-
-if [[ -f $DOTZSH/lrc.zsh ]]; then
-    source $DOTZSH/lrc.zsh 
-fi 
-
-autoload edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
 
 # TODO can I break this out into a separate file?
 {{- if eq .chezmoi.os "linux" }}
@@ -44,6 +30,12 @@ unset __conda_setup
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $DOTZSH/bindings.zsh
+
+source $DOTZSH/comp.zsh
+
+source $DOTZSH/plugins.zsh
+
+eval "$(starship init zsh)"
 
 if [[ $DEBUG == 1 ]]; then
     zprof

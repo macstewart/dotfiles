@@ -1,5 +1,7 @@
 _dotfileLog "sourcing exports.zsh" 2>/dev/null
 
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+
 export SUCKDIR="$HOME/suck"
 
 if ! [[ -v JHOME ]]; then

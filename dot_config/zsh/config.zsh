@@ -7,11 +7,13 @@ HIST_STAMPS="yyyy-mm-dd"
 KEYTIMEOUT=10
 setopt menu_complete
 setopt no_list_ambiguous
+setopt extended_glob
 
-source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 autoload -U edit-command-line
 zle -N edit-command-line
 
 source $DOTZSH/_export/fzf.zsh
 source $DOTZSH/_export/nnn.zsh
+

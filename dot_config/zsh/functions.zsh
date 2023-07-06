@@ -7,18 +7,6 @@ function ip() {
   echo $ip
 }
 
-__wezterm_set_pane_var() {
-  if hash base64 2>/dev/null ; then
-    if [[ -z "${TMUX}" ]] ; then
-      printf "\033]1337;SetUserVar=%s=%s\007" "$1" `echo -n "$2" | base64`
-    else
-      # <https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it>
-      # Note that you ALSO need to add "set -g allow-passthrough on" to your tmux.conf
-      printf "\033Ptmux;\033\033]1337;SetUserVar=%s=%s\007\033\\" "$1" `echo -n "$2" | base64`
-    fi
-  fi
-}
-
 function addutil() {
     ln -sf $(pwd)/$1 ~/utils/$2
 }
@@ -83,21 +71,6 @@ export FCD_EXCLUDE_DIRS="Library .m2"
 fcd() {
     cd $(fd --type d -E $FCD_EXCLUDE_DIRS | fzf --header "[cd <dir>]")
 }
-# use silver-searcher to search for file names (respects .agignore!)
-#function agf() {
-#  ag $2 -l -g $1
-#}
-alias agf='ag -l -g'
-
-function nreload() {
-    nvim -E -c PlugInstall -c qall
-    # vim needs to restart and run UpdateRemotePlugins
-    nvim -E -c UpdateRemotePlugins -c qall
-}
-
-function killonport() {
-    lsof -ti tcp:"$@" -sTCP:LISTEN | xargs kill
-}
 
 function cd() {
     builtin cd "$@";
@@ -142,11 +115,6 @@ function llll() {
 }
 function lllll() {
     tree -aC -L 5 -I '.git|node_modules' --dirsfirst "$@" | less -FRNX;
-}
-
-# Change working directory to the top-most Finder window location
-function cdf() { # short for `cdfinder`
-    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
 
 function extract () {
@@ -217,6 +185,3 @@ _dotfileLog() {
         echo $1
     fi
 }
-
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"

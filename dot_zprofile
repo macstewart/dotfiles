@@ -1,18 +1,16 @@
 _dotfileLog "sourcing .zprofile" 2>/dev/null
 
-export DOTZSH="$HOME/.config/zsh"
+if [[ ! -d "${TMPDIR}" ]]; then
+  mkdir -m 700 "${TMPDIR}"
+fi
+
 
 ### EXPORT SOURCE
+export DOTZSH="$HOME/.config/zsh"
 source $DOTZSH/exports.zsh
 
 ### PATH SOURCE
 source $DOTZSH/path.zsh
-
-### ALIASES AND FUNCTIONS
-source $DOTZSH/aliases.zsh
-source $DOTZSH/functions.zsh
-source $DOTZSH/osfunc.zsh
-
 
 ### .ENV SOURCE
 if [[ -f $DOTZSH/.env ]]; then
@@ -24,8 +22,4 @@ fi
 
 typeset -gU cdpath fpath mailpath path
 
-if [[ ! -d "${TMPDIR}" ]]; then
-  mkdir -m 700 "${TMPDIR}"
-fi
 
-export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
