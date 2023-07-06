@@ -95,6 +95,7 @@ return packer.startup(function(use)
     use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
     use({ "RRethy/vim-illuminate" })
     use({ "imsnif/kdl.vim" })
+    use({ "phelipetls/vim-jqplay" })
     -- Telescope
     use({ "nvim-telescope/telescope.nvim" })
     use({

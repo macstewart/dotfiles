@@ -12,7 +12,6 @@ source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd 'v' edit-command-line
 
 source $DOTZSH/_export/fzf.zsh
 source $DOTZSH/_export/nnn.zsh
