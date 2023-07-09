@@ -1,6 +1,6 @@
-local status_ok, indent_blankline = pcall(require, "indent_blankline")
-if not status_ok then
-  return
+local indent_blankline = utils.loadpkg("indent_blankline")
+if indent_blankline == nil then
+    return
 end
 
 indent_blankline.setup {

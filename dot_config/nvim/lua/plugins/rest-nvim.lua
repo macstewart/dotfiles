@@ -1,6 +1,6 @@
-local status_ok, project = pcall(require, "rest-nvim")
-if not status_ok then
-	return
+local project = utils.loadpkg("rest-nvim")
+if project == nil then
+    return
 end
 project.setup({
     -- Open request results in a horizontal split

@@ -1,6 +1,6 @@
-local status_ok, copilotCmp = pcall(require, "copilot_cmp")
-if not status_ok then
-	return
+local copilotCmp = utils.loadpkg("copilot_cmp")
+if copilotCmp == nil then
+    return
 end
 
 copilotCmp.setup({

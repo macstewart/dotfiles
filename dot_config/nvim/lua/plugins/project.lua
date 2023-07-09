@@ -1,6 +1,6 @@
-local status_ok, project = pcall(require, "project_nvim")
-if not status_ok then
-	return
+local project = utils.loadpkg("project_nvim")
+if project == nil then
+    return
 end
 project.setup({
 
@@ -11,9 +11,9 @@ project.setup({
 	patterns = { ".git", "Makefile", "package.json", "go.mod" },
 })
 
-local tele_status_ok, telescope = pcall(require, "telescope")
-if not tele_status_ok then
-	return
+local telescope = utils.loadpkg("telescope")
+if telescope == nil then
+    return
 end
 
 telescope.load_extension('projects')

@@ -1,6 +1,6 @@
-local status_ok, illuminate = pcall(require, "illuminate")
-if not status_ok then
-	return
+local illuminate = utils.loadpkg("illuminate")
+if illuminate == nil then
+    return
 end
 
 vim.g.Illuminate_ftblacklist = {'alpha', 'NvimTree'}

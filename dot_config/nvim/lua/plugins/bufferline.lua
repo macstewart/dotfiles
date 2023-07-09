@@ -1,6 +1,6 @@
-local status_ok, bufferline = pcall(require, "bufferline")
-if not status_ok then
-	return
+local bufferline = utils.loadpkg("bufferline")
+if bufferline == nil then
+    return
 end
 
 local mocha = require("catppuccin.palettes").get_palette "mocha"

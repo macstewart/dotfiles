@@ -1,5 +1,5 @@
-local status_ok, lualine = pcall(require, "lualine")
-if not status_ok then
+local lualine = utils.loadpkg("lualine")
+if lualine == nil then
     return
 end
 

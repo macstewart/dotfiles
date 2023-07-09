@@ -1,3 +1,4 @@
+require "utils"
 require "plugins.impatient"
 require "options"
 require "keymaps"

@@ -1,4 +1,8 @@
-require("catppuccin").setup({
+local catppuccin = utils.loadpkg("catppuccin")
+if catppuccin == nil then
+    return
+end
+catppuccin.setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
     background = { -- :h background
         light = "latte",

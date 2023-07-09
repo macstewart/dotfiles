@@ -1,6 +1,6 @@
-local status_ok, telescope = pcall(require, "telescope")
-if not status_ok then
-	return
+local telescope = utils.loadpkg("telescope")
+if telescope == nil then
+    return
 end
 
 local actions = require("telescope.actions")

@@ -1,16 +1,16 @@
-local dap_status_ok, dap = pcall(require, "dap")
-if not dap_status_ok then
-	return
+local dap = utils.loadpkg("dap")
+if dap == nil then
+    return
 end
 
-local dap_ui_status_ok, dapui = pcall(require, "dapui")
-if not dap_ui_status_ok then
-	return
+local dapui = utils.loadpkg("dapui")
+if dapui == nil then
+    return
 end
 
-local dap_install_status_ok, dap_install = pcall(require, "dap-install")
-if not dap_install_status_ok then
-	return
+local dap_install = utils.loadpkg("dap-install")
+if dap_install == nil then
+    return
 end
 require("plugins.dap.dapgo")
 

@@ -1,6 +1,6 @@
-local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then
-  return
+local gitsigns = utils.loadpkg("gitsigns")
+if gitsigns == nil then
+    return
 end
 
 gitsigns.setup {

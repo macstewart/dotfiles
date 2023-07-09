@@ -1,11 +1,11 @@
-local status_ok, treesitter = pcall(require, "nvim-treesitter")
-if not status_ok then
-	return
+local treesitter = utils.loadpkg("nvim-treesitter")
+if treesitter == nil then
+    return
 end
 
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-if not status_ok then
-	return
+local configs = utils.loadpkg("nvim-treesitter.configs")
+if configs == nil then
+    return
 end
 
 configs.setup({
