@@ -12,7 +12,7 @@ local dap_install = utils.loadpkg("dap-install")
 if dap_install == nil then
     return
 end
-require("plugins.dap.dapgo")
+require("dap.dapgo")
 
 dap_install.setup({})
 
