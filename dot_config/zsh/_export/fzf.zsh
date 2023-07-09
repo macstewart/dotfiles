@@ -3,8 +3,7 @@ _dotfileLog "sourcing fzf.zsh" 2>/dev/null
 export FZF_DEFAULT_OPTS=\
 "--height 40% 
 --layout=reverse
---border
---preview-window 'right:57%' --preview 'bat --style=numbers --line-range :300 {}'
+--no-preview
 --bind ctrl-u:preview-up,ctrl-d:preview-down"
 # --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284
 # --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf

@@ -36,5 +36,7 @@ repos=(
     zsh-users/zsh-autosuggestions
 )
 
+source $DOTZSH/plugconf.zsh
+
 # now load your plugins
 plugin-load $repos

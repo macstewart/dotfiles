@@ -35,7 +35,7 @@ function jq-repl () {
   nodemon -q -d 0.3 -w $query_file -x "$nodemon_cmd"
 }
 
-function re-source() {
+function re() {
     if [ $# -gt 0 ]; then # assume arg is debug flag, TODO don't do this
         export DEBUG=1
         cflag="--debug"

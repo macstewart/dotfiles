@@ -4,10 +4,11 @@
 # `testff`. In addition, it's important that the file name starts with 
 # an `_`, otherwise `compinit` won't autoload it.
 
-local output=$(maas-cmdr list -c)
+local output=$(maas-cmdr list -c | sed -e "s/\(.*\)/'\1'/")
 
 # Split the output on newlines.
-local -a services=( ${(f)output} )
+local -a services=( ${(Q)output} )
+local -a services2=( ${(f)services} )
 
-# Offer the second to the last line as completions'.
-_arguments '-m[music file]:filename:->files' '-f[flags]:flag:->flags'
+# Offer the second to the last line as completions.
+compadd -Q - $services2
