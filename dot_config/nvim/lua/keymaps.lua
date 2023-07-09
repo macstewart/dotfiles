@@ -112,6 +112,9 @@ keymap("n", "\\\\", ":NvimTreeFindFile<CR>", opts)
 keymap("n", "\\p", ":NvimTreeToggle<CR>", opts)
 keymap("n", "\\t", ":TroubleToggle<cr>", opts)
 keymap("n", "\\q", ":ccl<cr>:lcl<cr>", opts)
+
+keymap("n", ";", ":", opts)
+
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files hidden=true<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)

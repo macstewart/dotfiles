@@ -98,6 +98,7 @@ return packer.startup(function(use)
     use({ "phelipetls/vim-jqplay" })
     -- Telescope
     use({ "nvim-telescope/telescope.nvim" })
+    use({ "gbrlsnchs/telescope-lsp-handlers.nvim" })
     use({
         "folke/trouble.nvim",
         requires = "nvim-tree/nvim-web-devicons",

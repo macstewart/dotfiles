@@ -34,9 +34,11 @@ telescope.setup({
 				["<C-n>"] = actions.move_selection_next,
 				["<C-p>"] = actions.move_selection_previous,
 				["<C-t>"] = trouble.open_with_trouble,
+				["t"] = trouble.open_with_trouble,
 				["<C-/>"] = "which_key",
 				["?"] = "which_key",
 			},
 		},
 	},
 })
+telescope.load_extension('lsp_handlers')
