@@ -1,2 +1,2 @@
-require "style.catppuccin"
+require("style.catppuccin")
 -- require "style.tokyonight"

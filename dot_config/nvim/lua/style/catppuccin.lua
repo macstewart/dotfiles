@@ -4,7 +4,7 @@ if catppuccin == nil then
 end
 catppuccin.setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
-    background = { -- :h background
+    background = {  -- :h background
         light = "latte",
         dark = "mocha",
     },
@@ -34,12 +34,12 @@ catppuccin.setup({
     color_overrides = {
         mocha = {
             -- base = "#1e1e2e",
-        }
+        },
     },
     custom_highlights = function(colors)
         return {
             Comment = { fg = colors.flamingo },
-            CursorLine = { style = {"underline"} },
+            CursorLine = { style = { "underline" } },
             ["@constant.builtin"] = { fg = colors.peach, style = {} },
             ["@comment"] = { fg = colors.surface2, style = { "italic" } },
         }
@@ -52,9 +52,9 @@ catppuccin.setup({
         treesitter = true,
         dap = true,
         mason = true,
-		which_key = true,
-		markdown = true,
-	},
+        which_key = true,
+        markdown = true,
+    },
 })
 
 -- setup must be called before loading

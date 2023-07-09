@@ -3,45 +3,43 @@ if bufferline == nil then
     return
 end
 
-local mocha = require("catppuccin.palettes").get_palette "mocha"
+local mocha = require("catppuccin.palettes").get_palette("mocha")
 bufferline.setup({
-	options = {
-		close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
-		right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
-		offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-		separator_style = "thick", -- | "thick" | "thin" | { 'any', 'any' },
+    options = {
+        close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+        right_mouse_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
+        offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+        separator_style = "thick",     -- | "thick" | "thin" | { 'any', 'any' },
         indicator = {
             style = "underline",
-        }
+        },
     },
 
-    highlights = require("catppuccin.groups.integrations.bufferline").get(
-        {
-            styles = { "italic", "bold" },
-            custom = {
-                all = {
-                    -- fill = { fg = mocha.text },
-                    buffer_selected = { bg = mocha.base },
-                    tab_selected = { bg = mocha.base },
-                    close_button_selected = { bg = mocha.base },
-                    numbers_selected = { bg = mocha.base },
-                    modified_selected = { bg = mocha.base },
-                    diagnostic_selected = { bg = mocha.base },
-                    hint_selected = { bg = mocha.base },
-                    info_selected = { bg = mocha.base },
-                    warning_selected = { bg = mocha.base },
-                    error_selected = { bg = mocha.base },
-                    separator_selected = { bg = mocha.base },
-                    indicator_selected = { bg = mocha.base },
-
-                },
-                mocha = {
-                    background = { fg = mocha.text },
-                },
-                latte = {
-                    background = { fg = "#000000" },
-                },
+    highlights = require("catppuccin.groups.integrations.bufferline").get({
+        styles = { "italic", "bold" },
+        custom = {
+            all = {
+                -- fill = { fg = mocha.text },
+                buffer_selected = { bg = mocha.base },
+                tab_selected = { bg = mocha.base },
+                close_button_selected = { bg = mocha.base },
+                numbers_selected = { bg = mocha.base },
+                modified_selected = { bg = mocha.base },
+                diagnostic_selected = { bg = mocha.base },
+                hint_selected = { bg = mocha.base },
+                info_selected = { bg = mocha.base },
+                warning_selected = { bg = mocha.base },
+                error_selected = { bg = mocha.base },
+                separator_selected = { bg = mocha.base },
+                indicator_selected = { bg = mocha.base },
             },
+            mocha = {
+                background = { fg = mocha.text },
+            },
+            latte = {
+                background = { fg = "#000000" },
+            },
+        },
     }),
     -- highlights = {
     --   fill = {

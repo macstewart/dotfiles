@@ -1,8 +1,8 @@
 require("colorizer").setup({
-	"lua",
-	"css",
-	"javascript",
-	html = {
-		mode = "foreground",
-	},
+    "lua",
+    "css",
+    "javascript",
+    html = {
+        mode = "foreground",
+    },
 })

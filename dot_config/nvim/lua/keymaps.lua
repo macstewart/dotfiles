@@ -113,7 +113,7 @@ keymap("n", "\\p", ":NvimTreeToggle<CR>", opts)
 keymap("n", "\\t", ":TroubleToggle<cr>", opts)
 keymap("n", "\\q", ":ccl<cr>:lcl<cr>", opts)
 
-keymap("n", ";", ":", opts)
+-- keymap("n", ";", ":", opts)
 
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files hidden=true<CR>", opts)
@@ -161,13 +161,13 @@ keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
 -- quickfix list
-keymap("n", "]q", ":cn<cr>", opts) -- next quickfix item
-keymap("n", "[q", ":cp<cr>", opts) -- previous quickfix item
-keymap("n", "]Q", ":cnew<cr>", opts) --next quickfix list
-keymap("n", "[Q", ":col<cr>", opts) --previous quickfix list
+keymap("n", "]q", ":cn<cr>", opts)    -- next quickfix item
+keymap("n", "[q", ":cp<cr>", opts)    -- previous quickfix item
+keymap("n", "]Q", ":cnew<cr>", opts)  --next quickfix list
+keymap("n", "[Q", ":col<cr>", opts)   --previous quickfix list
 -- location list
 keymap("n", "]l", ":lnext<cr>", opts) -- next location item
-keymap("n", "[l", ":lp<cr>", opts) -- previous location item
+keymap("n", "[l", ":lp<cr>", opts)    -- previous location item
 -- trouble list
 keymap("n", "]t", "<cmd>lua require'trouble'.next({skip_groups = true, jump = true})<cr>", opts)
 keymap("n", "[t", "<cmd>lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", opts)

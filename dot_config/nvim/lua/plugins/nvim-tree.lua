@@ -112,5 +112,5 @@ nvim_tree.setup({
 			},
 		},
 	},
-	ignore_buffer_on_setup = true,
+	-- ignore_buffer_on_setup = true,
 })

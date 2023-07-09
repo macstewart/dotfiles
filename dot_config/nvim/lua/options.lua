@@ -26,7 +26,7 @@ opt.shiftwidth = 4                          -- the number of spaces inserted for
 opt.tabstop = 4                             -- insert 2 spaces for a tab
 opt.cursorline = true                       -- highlight the current line
 opt.number = true                           -- set numbered lines
-opt.relativenumber = true                           -- set numbered lines
+opt.relativenumber = true                   -- set numbered lines
 opt.laststatus = 3                          -- only the last window will always have a status line
 opt.showcmd = false                         -- hide (partial) command in the last line of the screen (for performance)
 opt.ruler = false                           -- hide the line and column number of the cursor position
@@ -36,9 +36,9 @@ opt.wrap = false                            -- display lines as one long line
 opt.scrolloff = 8                           -- minimal number of screen lines to keep above and below the cursor
 opt.sidescrolloff = 8                       -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 opt.guifont = "monospace:h17"               -- the font used in graphical neovim applications
-opt.fillchars.eob=" "                       -- show empty lines at the end of a buffer as ` ` {default `~`}
+opt.fillchars.eob = " "                     -- show empty lines at the end of a buffer as ` ` {default `~`}
 opt.whichwrap:append("<,>,[,],h,l")         -- keys allowed to move to the previous/next line when the beginning/end of line is reached
 opt.iskeyword:append("-")                   -- treats words with `-` as single words
 opt.formatoptions:remove({ "c", "r", "o" }) -- This is a sequence of letters which describes how automatic formatting is to be done vim.opt.linebreak = true
-opt.shortmess:append "c"                    -- hide all the completion messages, e.g. "-- XXX completion (YYY)", "match 1 of 2", "The only match", "Pattern not found"
-vim.api.nvim_set_var('tmux_navigator_no_wrap', 1)
+opt.shortmess:append("c")                   -- hide all the completion messages, e.g. "-- XXX completion (YYY)", "match 1 of 2", "The only match", "Pattern not found"
+vim.api.nvim_set_var("tmux_navigator_no_wrap", 1)
