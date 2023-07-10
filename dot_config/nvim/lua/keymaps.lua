@@ -135,15 +135,15 @@ keymap("n", "gI", ":Telescope lsp_implen<CR>", opts)
 keymap("n", "<leader>gr", ":Gitsigns reset_hunk<CR>", opts)
 keymap("n", "<leader>gp", ":Gitsigns preview_hunk_inline<CR>", opts)
 keymap("n", "<leader>gh", ":Gitsigns toggle_linehl<CR>:Gitsigns toggle_numhl<CR>", opts)
-keymap("n", "<leader>gB", ":Gitsigns toggle_current_line_blame<CR>", opts)
-keymap("n", "<leader>gb", "<cmd>lua require'gitsigns'.blame_line({full=true})<CR>", opts)
+keymap("n", "<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", opts)
+keymap("n", "<leader>gB", "<cmd>lua require'gitsigns'.blame_line({full=true})<CR>", opts)
 keymap("n", "<leader>gd", ":Gitsigns diffthis<CR>", opts)
 keymap("n", "<leader>gD", "<cmd>lua require'gitsigns'.diffthis('~')<CR>", opts)
 -- Text object
 keymap("o", "ig", ":<C-U>Gitsigns select_hunk<CR>")
 keymap("x", "ig", ":<C-U>Gitsigns select_hunk<CR>")
-keymap("n", "]g", "&diff ? ']c' : ':Gitsigns next_hunk<CR>'", { expr = true })
-keymap("n", "[g", "&diff ? '[c' : ':Gitsigns prev_hunk<CR>'", { expr = true })
+keymap("n", "<leader>gf", "&diff ? ']c' : ':Gitsigns next_hunk<CR>'", { expr = true })
+keymap("n", "<leader>gk", "&diff ? '[c' : ':Gitsigns prev_hunk<CR>'", { expr = true })
 
 -- Comment
 keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
@@ -161,15 +161,15 @@ keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
 -- quickfix list
-keymap("n", "]q", ":cn<cr>", opts)    -- next quickfix item
-keymap("n", "[q", ":cp<cr>", opts)    -- previous quickfix item
-keymap("n", "]Q", ":cnew<cr>", opts)  --next quickfix list
-keymap("n", "[Q", ":col<cr>", opts)   --previous quickfix list
+keymap("n", "<leader>qj", ":cn<cr>", opts)    -- next quickfix item
+keymap("n", "<leader>qk", ":cp<cr>", opts)    -- previous quickfix item
+keymap("n", "<leader>Qj", ":cnew<cr>", opts)  --next quickfix list
+keymap("n", "<leader>Qk", ":col<cr>", opts)   --previous quickfix list
 -- location list
-keymap("n", "]l", ":lnext<cr>", opts) -- next location item
-keymap("n", "[l", ":lp<cr>", opts)    -- previous location item
+keymap("n", "<leader>lj", ":lnext<cr>", opts) -- next location item
+keymap("n", "<leader>lk", ":lp<cr>", opts)    -- previous location item
 -- trouble list
-keymap("n", "]t", "<cmd>lua require'trouble'.next({skip_groups = true, jump = true})<cr>", opts)
-keymap("n", "[t", "<cmd>lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", opts)
+keymap("n", "<leader>tj", "<cmd>lua require'trouble'.next({skip_groups = true, jump = true})<cr>", opts)
+keymap("n", "<leader>tk", "<cmd>lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", opts)
 -- Lsp
 keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)

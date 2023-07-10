@@ -106,14 +106,14 @@ nmap <leader>la :action ShowIntentionActions<CR>
 nmap gi :action GotoImplementation<CR>
 
 " navigationEditorPopupMenu.Run
-nmap [f :action MethodUp<CR>
-nmap ]f :action MethodDown<CR>
+nmap <leader>fj :action MethodDown<CR>
+nmap <leader>fk :action MethodUp<CR>
 
-nmap [g :action VcsShowPrevChangeMarker<CR>
-nmap ]g :action VcsShowNextChangeMarker<CR>
+nmap <leader>gk :action VcsShowPrevChangeMarker<CR>
+nmap <leader>gj :action VcsShowNextChangeMarker<CR>
 
-nmap [l :action GotoPreviousError<CR>
-nmap ]l :action GotoNextError<CR>
+nmap <leader>lj :action GotoNextError<CR>
+nmap <leader>lk :action GotoPreviousError<CR>
 
 " add new line without insert mode
 nmap <leader>o o<Esc>
@@ -204,7 +204,7 @@ nmap <Leader>db :action ToggleLineBreakpoint<CR>
 nmap <Leader>dr :action Resume<CR>
 nmap <Leader>di :action StepInto<CR>
 nmap <Leader>do :action StepOut<CR>
-nmap <Leader>dn :action StepOut<CR>
+nmap <Leader>dn :action StepOver<CR>
 nmap <Leader>dd :action ContextDebug<CR>
 nmap <Leader>D :action Debug<CR>
 
