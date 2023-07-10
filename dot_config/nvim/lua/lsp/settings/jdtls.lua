@@ -33,7 +33,7 @@ local opts = {
                 },
             },
             format = {
-                enabled = true,
+                -- enabled = true,
             },
             import = {
                 eclipse = {
@@ -64,7 +64,7 @@ local opts = {
                 outPath = "target",
             },
             saveActions = {
-                organizeImports = true,
+                organizeImports = false,
             },
             signatureHelp = { enabled = true },
             sources = {
@@ -155,10 +155,12 @@ local function build_cmd()
     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
     local home = os.getenv("HOME")
     local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
-
+    -- local jdtlsjar = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
+    -- utils.notify("workspace_dir is " .. workspace_dir)
+    -- utils.notify("jar is " .. jdtlsjar)
     local cmd = {
         "java",
-        "-javaagent:" .. vim.fn.glob(home .. "/.local/libs/jdtls/lombok/lombok*.jar"),
+        "-javaagent:" .. vim.fn.glob(jdtls_path .. "/lombok*.jar"),
         "-Declipse.application=org.eclipse.jdt.ls.core.id1",
         "-Dosgi.bundles.defaultStartLevel=4",
         "-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -203,31 +205,24 @@ local function setup()
     if jdtls == nil then
         return {}
     end
-
-    set_jdk_runtimes()
-
+    -- set_jdk_runtimes()
     local root_dir = jdtls.setup.find_root(root_markers)
     opts.root_dir = root_dir
 
-    local bundles = find_files_in_dir(os.getenv("HOME") .. "/.local/libs/jdtls/bazel", "(*.jar)")
-    for _, v in ipairs(bundles) do
-        table.insert(opts.init_options.bundles, v)
-    end
-
-    local dap_plugin_jar_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/"
-    local dap_plugin_jar = find_file_in_dir(dap_plugin_jar_path, "(com.microsoft.java.debug.plugin-.*.jar)")
-    if dap_plugin_jar ~= nil then
-        table.insert(opts.init_options.bundles, dap_plugin_jar_path .. dap_plugin_jar)
-    end
+    -- local dap_plugin_jar_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/"
+    -- local dap_plugin_jar = find_file_in_dir(dap_plugin_jar_path, "(com.microsoft.java.debug.plugin-.*.jar)")
+    -- if dap_plugin_jar ~= nil then
+        -- table.insert(opts.init_options.bundles, dap_plugin_jar_path .. dap_plugin_jar)
+    -- end
 
     opts.cmd = build_cmd()
     local handler = require("lsp.handlers")
 
     local on_attach = function(client, bufnr)
-        vim.notify("jdtls on_attach called")
-        vim.lsp.codelens.refresh()
-        jdtls.setup_dap({ hotcodereplace = "auto" })
-        require('jdtls.dap').setup_dap_main_class_configs()
+        vim.notify("jdtls on_attach called", vim.log.levels.INFO)
+        -- vim.lsp.codelens.refresh()
+        -- jdtls.setup_dap({ hotcodereplace = "auto" })
+        -- require('jdtls.dap').setup_dap_main_class_configs()
         require('jdtls.setup').add_commands()
         handler.on_attach(client, bufnr)
     end

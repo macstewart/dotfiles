@@ -3,5 +3,5 @@ local jdtls = utils.loadpkg("jdtls")
 if jdtls == nil then
     return
 end
-utils.notify("JDTLS started")
+-- utils.notify("jdtls_config: " .. vim.inspect(jdtls_config))
 jdtls.start_or_attach(jdtls_config)
