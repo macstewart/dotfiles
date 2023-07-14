@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+################################################################################
+# requires: ripgrep (rg), fzf for interactive mode
+################################################################################
 usage() {
-    echo "Usage: blow [-i] [-d] [-n] [<filter>]"
+    echo "Usage: blow [-i] [-p] [-n] [<filter>]"
     echo "Returns the last sucked result"
     echo "  -i: interactively select source instead of using the most recent"
     echo "  -p: return file path instead of contents"
@@ -11,8 +14,8 @@ usage() {
 }
 ################################################################################
 if [ -z "$SUCKDIR" ]; then
-    echo "SUCKDIR var not set" >&2
-    exit 1
+    echo "SUCKDIR var not set, using default" >&2
+    SUCKDIR=~/suck
 fi
 
 while getopts "hin:p" opt; do

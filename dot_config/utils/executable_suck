@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+################################################################################
+# requires: ripgrep (rg), gdate, fzf for interactive mode
+################################################################################
 usage() {
     echo "Usage: suck [-a] [-n <name>] [<identifier>]"
     echo "Saves the piped result in the suckdir"
@@ -9,8 +12,8 @@ usage() {
 }
 ################################################################################
 if [ -z "$SUCKDIR" ]; then
-    echo "SUCKDIR var not set" >&2
-    exit 1
+    echo "SUCKDIR var not set, using default" >&2
+    SUCKDIR=~/suck
 fi
 
 if [[ -t 0 ]]; then
