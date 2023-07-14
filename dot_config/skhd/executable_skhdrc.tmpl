@@ -67,5 +67,8 @@ ctrl + alt + shift - 7 : yabai -m window --ratio abs:0.75
 ctrl + alt - r : yabai -m window --toggle split
 alt - f : yabai -m window --toggle float
 
-
+{{- if eq .chezmoi.hostname "mackenziestewart" }}
+ctrl + alt + cmd + shift - s : yabToggleWindow slack
+ctrl + alt + cmd + shift - t : yabToggleWindow teams
+{{- end }}
 

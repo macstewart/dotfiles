@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+SHELF_SPACE=5 # space number to use as the floating window holder 
+
+declare -A configuredWindowFilters
+configuredWindowFilters[teams]='[.[] | select(.app == "Microsoft Teams" and ."is-topmost" == false)] | sort_by(.id) | .[-1]'
+configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
+configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian")][0]'
+
+function getCurrentSpace() {
+    yabai -m query --windows --window | gojq '(.space, .id)'
+}
+
+function getTargetWindow() {
+    yabai -m query --windows | gojq "${configuredWindowFilters[$1]}"
+}
+
+function sendToShelf() {
+    yabai -m window $winId --space $SHELF_SPACE
+    source /tmp/yab_prev_win
+    if [[ ! -z $YAB_PREV_WIN && $YAB_PREV_WIN != $winId ]]; then
+        yabai -m window $YAB_PREV_WIN --focus
+        # echo "" > /tmp/yab_prev_win
+    fi
+}
+
+function pullFromShelf() {
+    echo "YAB_PREV_WIN=${current[1]}" > /tmp/yab_prev_win
+    yabai -m window $winId --space ${current[0]}
+    yabai -m window $winId --focus &
+}
+
+echo "winident"
+windowIdentifier=$1
+if [[ -z $windowIdentifier ]]; then
+    echo "No window identifier provided" >&2
+    exit 1
+fi
+
+echo "get target"
+window=$(getTargetWindow $windowIdentifier)
+if [[ -z $window ]]; then
+    echo "No window found for identifier $windowIdentifier" >&2
+    exit 1
+fi
+
+echo "get durrent space"
+current=( $(getCurrentSpace) )
+if [[ -z $current ]]; then
+    echo "No current space found" >&2
+    exit 1
+fi
+windowArr=( $(echo $window | gojq '. | (.id, .space, ."has-focus")') )
+
+echo "prewinvar"
+winId="${windowArr[0]}"
+winSpace="${windowArr[1]}"
+winFocus="${windowArr[2]}"
+echo "prepull"
+if [[ $winSpace == "${current[0]}" && $winFocus == 'true' ]]; then
+    sendToShelf
+else
+    pullFromShelf
+fi
