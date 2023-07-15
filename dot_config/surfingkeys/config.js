@@ -62,6 +62,8 @@ unmap('R');
 unmap('d');
 unmap("X");
 
+unmap('h');
+
 settings.modeAfterYank = 'Normal';
-// unmapAllExcept(['o', 'T'], /trello.com/);
+unmapAllExcept(['o', 'O', 'b', 'B'], /bento/);
 settings.blacklistPattern = /trello.com/;
