@@ -1,0 +1,10 @@
+[user]
+    name = Mackenzie Stewart
+    email = github@macstew.art
+{{- if eq .chezmoi.os "linux" }}
+[credential]
+	credentialStore = gpg
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+{{- else if eq .chezmoi.os "darwin" }}
+
+{{- end }}
