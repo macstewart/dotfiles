@@ -25,10 +25,6 @@ export DISPLAY=:0
 export LESS_TERMCAP_md="${yellow}";
 export MANPAGER='less -X';
 
-if [[ -z "${TMPDIR}" ]]; then
-  export TMPDIR="/tmp/zsh-${UID}"
-fi
-
 if [[ -f "$HOME/.env" ]]; then
     _dotfileLog "sourcing ~/.env" 2>/dev/null
     source "$HOME/.env"

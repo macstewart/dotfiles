@@ -21,6 +21,7 @@ pathadditions=(
 pathadditions+=(
     /home/linuxbrew/.linuxbrew/bin
     /usr/local/go/bin
+    /usr/share
 )
 {{- else if eq .chezmoi.os "darwin" }}
 pathadditions+=(/opt/homebrew/bin)

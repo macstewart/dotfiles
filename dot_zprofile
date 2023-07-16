@@ -1,5 +1,9 @@
 _dotfileLog "sourcing .zprofile" 2>/dev/null
 
+if [[ -z "${TMPDIR}" ]]; then
+  export TMPDIR="/tmp/zsh-${UID}"
+fi
+
 if [[ ! -d "${TMPDIR}" ]]; then
   mkdir -m 700 "${TMPDIR}"
 fi
@@ -10,7 +14,6 @@ export DOTZSH="$HOME/.config/zsh"
 source $DOTZSH/exports.zsh
 
 ### PATH SOURCE
-source $DOTZSH/path.zsh
 
 ### .ENV SOURCE
 if [[ -f $DOTZSH/.env ]]; then
