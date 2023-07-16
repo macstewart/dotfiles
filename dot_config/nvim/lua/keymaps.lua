@@ -166,8 +166,8 @@ keymap("n", "<leader>qk", ":cp<cr>", opts)    -- previous quickfix item
 keymap("n", "<leader>Qj", ":cnew<cr>", opts)  --next quickfix list
 keymap("n", "<leader>Qk", ":col<cr>", opts)   --previous quickfix list
 -- location list
-keymap("n", "<leader>lj", ":lnext<cr>", opts) -- next location item
-keymap("n", "<leader>lk", ":lp<cr>", opts)    -- previous location item
+-- keymap("n", "<leader>lj", ":lnext<cr>", opts) -- next location item
+-- keymap("n", "<leader>lk", ":lp<cr>", opts)    -- previous location item
 -- trouble list
 keymap("n", "<leader>tj", "<cmd>lua require'trouble'.next({skip_groups = true, jump = true})<cr>", opts)
 keymap("n", "<leader>tk", "<cmd>lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", opts)
