@@ -6,7 +6,7 @@ StartLimitIntervalSec=60
 StartLimitBurst=4
 
 [Service]
-UMask=0002
+Environment=DISPLAY=:0
 ExecStart=/usr/bin/syncthing serve --no-browser --no-restart --logflags=0
 Restart=on-failure
 RestartSec=1
@@ -20,9 +20,10 @@ SystemCallArchitectures=native
 MemoryDenyWriteExecute=true
 NoNewPrivileges=true
 
+
 # Elevated permissions to sync ownership (disabled by default),
 # see https://docs.syncthing.net/advanced/folder-sync-ownership
 #AmbientCapabilities=CAP_CHOWN CAP_FOWNER
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
