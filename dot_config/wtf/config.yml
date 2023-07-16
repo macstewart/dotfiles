@@ -1,0 +1,74 @@
+wtf:
+  colors:
+    border:
+      focusable: darkslateblue
+      focused: orange
+      normal: gray
+  # grid:
+    # columns: [32, 32, 32, 32, 90]
+    # rows: [10, 10, 10, 4, 4, 90]
+  refreshInterval: 1
+  mods:
+    github:
+      customQueries:
+        othersPRs:
+          filter: "is:open is:pr -author:wtfutil"
+          title: "Others Pull Requests"
+      enabled: true
+      enableStatus: true
+      position:
+        left: 1
+        top: 0
+        height: 1
+        width: 2
+      refreshInterval: 5m
+      repositories:
+        - "SolaceDev/maas-gateway"
+        - "SolaceDev/maas-base"
+      showOpenPullRequests: true
+      showOpenReviewRequests: true
+      showStats: true
+      username: "macstewart"
+    feedreader:
+      enabled: true
+      title: "hn"
+      feedLimit: 10      
+      feeds:
+      - https://news.ycombinator.com/rss 
+      position:
+        height: 1
+        left: 1
+        top: 1
+        width: 2
+      refreshInterval: 14400
+    gcal:
+      colors:
+        title: "white"
+        eventTime: "lightblue"
+        description: "yellow"
+        highlights:
+        - ['scrum', 'green']
+        - ['apple|google|aws', 'blue']
+        - ['interview|meet', 'magenta']
+        - ['Guild', 'gray']
+        past: "gray"
+      calendarReadLevel: "reader"
+      conflictIcon: "🚨"
+      currentIcon: "💥"
+      displayResponseStatus: true
+      email: "macjmstewart@gmail.com"
+      enabled: true
+      eventCount: 15
+      hourFormat: "12"
+      multiCalendar: true
+      position:
+        top: 0
+        left: 0
+        height: 3
+        width: 1
+      refreshInterval: 5m
+      secretFile: "~/.config/wtf/secret.json"
+      showDeclined: true
+      showEndTime: false
+      timezone: "America/Ottawa"
+      withLocation: false
