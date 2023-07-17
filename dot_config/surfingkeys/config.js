@@ -55,7 +55,7 @@ map('F', 'af')
 //open bookmark in current tab
 // map('b', 'bO');
 unmap('t') 
-map('tp', '<Alt-p>') //pin tab
+// map('tp', '<Alt-p>') //pin tab
 
 unmap('E');
 unmap('R');
