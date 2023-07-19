@@ -42,7 +42,7 @@ else
     fi 
 
     if [ "$interactive" = true ]; then
-        getCmd+=" | sort -r | fzf"
+        getCmd+=" | sort -r | fzf --preview 'cat {}'"
     else 
         getCmd+=" | sort | tail -n 1"
     fi

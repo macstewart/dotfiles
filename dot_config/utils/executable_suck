@@ -82,3 +82,4 @@ if [[ -n $indata ]]; then
         printf "%s" "$indata" > "$file"
     fi
 fi
+echo $file
