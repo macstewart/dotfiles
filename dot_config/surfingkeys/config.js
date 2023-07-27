@@ -63,6 +63,7 @@ unmap('d');
 unmap("X");
 
 unmap('h');
+unmap('l');
 
 settings.modeAfterYank = 'Normal';
 unmapAllExcept(['o', 'O', 'b', 'B'], /bento/);
