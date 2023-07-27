@@ -137,8 +137,9 @@ nmap <leader><leader> @:
 
 " maven
 nmap <Leader>mi :action Maven.Reimport<CR>
-nmap <Leader>mI :action MavenRunHelperCleanInstall<CR>
-nmap <Leader>mc :action MavenRunHelperCompile<CR>
+nmap <Leader>mI :action RunConfigurationAsAction_Run_install no style checks_default_target<CR>
+nmap <Leader>mv :action MavenRunHelperCompile<CR>
+nmap <Leader>mc :action RunConfigurationAsAction_Run_compile no style checks_default_target<CR>
 
 " To copy text to the end-of-line, press Y.
 " This mapping sets up Y to be consistent with
