@@ -8,6 +8,9 @@ alias vv="nvim ."
 
 alias cd='cd -P'
 
+alias ld='lazydocker'
+alias lg='lazygit'
+
 alias gs='git status'
 alias gd='git diff | diff-so-fancy'
 alias gp='git push'
