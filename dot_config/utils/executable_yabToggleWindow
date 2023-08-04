@@ -6,6 +6,7 @@ declare -A configuredWindowFilters
 configuredWindowFilters[teams]='[.[] | select(.app == "Microsoft Teams" and ."is-topmost" == false)] | sort_by(.id) | .[-1]'
 configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
 configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian")][0]'
+configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
 
 function getCurrentSpace() {
     yabai -m query --windows --window | gojq '(.space, .id)'
@@ -30,21 +31,21 @@ function pullFromShelf() {
     yabai -m window $winId --focus &
 }
 
-echo "winident"
 windowIdentifier=$1
+echo "winident" $windowIdentifier
 if [[ -z $windowIdentifier ]]; then
     echo "No window identifier provided" >&2
     exit 1
 fi
 
-echo "get target"
 window=$(getTargetWindow $windowIdentifier)
+echo "target" $window
 if [[ -z $window ]]; then
     echo "No window found for identifier $windowIdentifier" >&2
     exit 1
 fi
 
-echo "get durrent space"
+echo "get current space"
 current=( $(getCurrentSpace) )
 if [[ -z $current ]]; then
     echo "No current space found" >&2
