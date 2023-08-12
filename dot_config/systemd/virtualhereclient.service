@@ -1,0 +1,10 @@
+[Unit]
+Description=VirtualHere Client 
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/vhClient -n
+
+[Install]
+WantedBy=multi-user.target

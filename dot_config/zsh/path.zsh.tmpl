@@ -22,6 +22,7 @@ pathadditions+=(
     /home/linuxbrew/.linuxbrew/bin
     /usr/local/go/bin
     /usr/share
+    $HOME/.config/xorg/bin
 )
 {{- else if eq .chezmoi.os "darwin" }}
 pathadditions+=(/opt/homebrew/bin)
