@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+xMod=$1
+yMod=$2
+
+if [[ -z $xMod || -z $yMod ]]; then
+    echo "No target identifier provided" >&2
+    exit 1
+fi
+
+# todo this is lazy
+if [[ $xMod != '1' && $xMod != '0' && $xMod != '-1' ]]; then
+    echo "Invalid x target identifier provided" >&2
+    exit 1
+fi
+
+# todo this is lazy
+if [[ $yMod != '1' && $yMod != '0' && $yMod != '-1' ]]; then
+    echo "Invalid y target identifier provided" >&2
+    exit 1
+fi
+
+dSize=( $(yabai -m query --displays --display | gojq '. | (.frame.w, .frame.h)') )
+halfDw=$(( ${dSize[0]} / 2 ))
+halfDh=$(( ${dSize[1]} / 2 ))
+
+#  
+# [-1 -1] [0 -1] [1 -1]
+# [-1  0] [0  0] [1  0]
+# [-1  1] [0  1] [1  1]
+#  
+#
+
+
+window=$(yabai -m query --windows --window)
+if [[ -z $window ]]; then
+    echo "No window found for identifier $windowIdentifier" >&2
+    exit 1
+fi
+
+# wMeta = [ id, isFloating ]
+wMeta=( $(echo $window | gojq '. | (.id, ."is-floating")') )
+if [[ -z $wMeta || ${wMeta[1]} == 'false' ]]; then
+    echo "Window is not floating" >&2
+    exit 0
+fi
+
+wSize=( $(echo $window | gojq '. | (.frame.w, .frame.h)') )
+
+halfWw=$(( ${wSize[0]} / 2 ))
+halfWh=$(( ${wSize[1]} / 2 ))
+
+xStart=$(expr $halfDw - $halfWw)
+yStart=$(expr $halfDh - $halfWh)
+
+xTarget=$(expr $xStart + $xStart \* $xMod)
+yTarget=$(expr $yStart + $yStart \* $yMod)
+echo xTarget $xTarget yTarget $yTarget
+yabai -m window ${wMeta[0]} --move abs:$xTarget:$yTarget
