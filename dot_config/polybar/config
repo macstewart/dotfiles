@@ -1,2 +1,2 @@
 
-include-file = ~/.config/polybar/forest/config.ini
+include-file = ~/.config/polybar/bar/config.ini
