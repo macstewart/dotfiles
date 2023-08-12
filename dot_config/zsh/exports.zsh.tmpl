@@ -20,6 +20,7 @@ export EDITOR="$VISUAL"
 
 {{- if eq .chezmoi.os "linux" }}
 export DISPLAY=:0
+export STEAMPATH="$HOME/.local/share/Steam"
 {{- end }}
 
 export LESS_TERMCAP_md="${yellow}";
