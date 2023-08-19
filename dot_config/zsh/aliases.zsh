@@ -26,8 +26,7 @@ alias xpv='xargs -I{} reversepv $@ {}'
 
 alias t='tmux'
 alias ta='tmux attach'
-alias ts='tmux new -s'
-alias tls='tmux ls'
+alias ts='tmux-sessionizer'
 
 alias ..='cd ..'
 alias ...='cd ../..'
