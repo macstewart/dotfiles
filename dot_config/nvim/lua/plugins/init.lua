@@ -48,7 +48,7 @@ return packer.startup(function(use)
     use({ "numToStr/Comment.nvim" })                    -- adds comments textobjects and hotkeys
     use({ "JoosepAlviste/nvim-ts-context-commentstring" }) --adds support for context sensitive comment blocks in certain languages
     use({ "nvim-tree/nvim-web-devicons" })              --devicons
-    use({ "nvim-tree/nvim-tree.lua" })                  --file manager/file bar
+    use({ "nvim-tree/nvim-tree.lua", commit = "ace64228ad5d89035fbe6f85e7f45a1f7b9e29c1" })                  --file manager/file bar
     use({ "moll/vim-bbye" })                            --better buffer close behavior
     use({ "nvim-lualine/lualine.nvim" })                --bottom status bar
     use({ "akinsho/toggleterm.nvim" })
