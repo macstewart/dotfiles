@@ -17,8 +17,12 @@ alias gp='git push'
 alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias gam='git commit -am "this will be squashed anyway"'
 
-alias mci='qmvn clean install $@'
+# alias mci='qmvn clean install $@'
 alias msb='qmvn spring-boot:run $@'
+
+alias mc='maasc'
+alias mca='maasc api'
+alias mci='maasc api -i'
 
 alias jm='jira issue list -q"filter=\"Solace Cloud Current User\""'
 
