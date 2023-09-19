@@ -8,5 +8,6 @@
     interactive = auto
     guiPrompt = false
 {{- else if eq .chezmoi.os "darwin" }}
-
+[credential]
+    helper = osxkeychain
 {{- end }}
