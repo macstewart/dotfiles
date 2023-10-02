@@ -69,7 +69,7 @@ fdt() {
 export FCD_EXCLUDE_DIRS="Library .m2"
 
 fcd() {
-    cd $(fd --type d -E $FCD_EXCLUDE_DIRS | fzf --header "[cd <dir>]")
+    cd "$(fd --type d -E $FCD_EXCLUDE_DIRS | fzf --header '[cd <dir>]')"
 }
 
 function cd() {
