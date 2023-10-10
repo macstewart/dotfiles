@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# bootnext only applies to the next reboot
+# 0000 is the entry for windows boot manager
+# found using efibootmgr -v
+sudo efibootmgr --bootnext 0000 && reboot

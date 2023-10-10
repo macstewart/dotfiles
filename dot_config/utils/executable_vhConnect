@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+addr=$(vhClient -t list | grep Shield | cut -d"(" -f2 | cut -d")" -f1)
+vhClient -t use,$addr
