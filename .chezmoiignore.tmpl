@@ -1,4 +1,8 @@
 README.md
-
 archive/
+
+{{- if ne .chezmoi.os "linux" }}
+dot_xorg.conf
+{{- else if ne .chezmoi.os "darwin" }}
+{{- end }}
 
