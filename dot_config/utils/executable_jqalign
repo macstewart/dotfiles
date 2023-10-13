@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+FILTER='
+        def width:      map(keys_unsorted | map(length) | max) | max ;
+        def pad($w):    . + (($w-length)*" ") ;
+
+        . | width as $w | map(to_entries | map("\(.key|pad($w)) : \(.value)"), [""]) | .[][]
+'
+
+IFS= read -r -d '' indata
+echo "$indata" | jq -r "$FILTER"
