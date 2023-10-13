@@ -9,12 +9,6 @@ yabai -m config window_shadow off
 
 # bsp, stack, float
 yabai -m config layout bsp
-yabai -m config active_window_border_color 0xff2ecc71
-
-#border style
-#yabai -m config normal_window_border_color 0xff000000
-yabai -m config window_border on
-yabai -m config window_border_width 4
 
 yabai -m config window_placement second_child
 
@@ -41,18 +35,18 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
 #ignored apps
-yabai -m rule --add app="^System Settings$" manage=off border=off
-yabai -m rule --add app="^FortiClient$" manage=off border=off
-yabai -m rule --add app="^Spotify$" manage=off border=off
-yabai -m rule --add app="^Slack$" manage=off border=off
+yabai -m rule --add app="^System Settings$" manage=off 
+yabai -m rule --add app="^FortiClient$" manage=off 
+yabai -m rule --add app="^Spotify$" manage=off 
+yabai -m rule --add app="^Slack$" manage=off 
 yabai -m rule --add app="^Obsidian$" manage=off
 yabai -m rule --add app="^Telegram$" manage=off
-yabai -m rule --add app="^Calculator$" manage=off border=off
-yabai -m rule --add app="^Microsoft Teams$" manage=off border=off
-yabai -m rule --add app="^BetterTouchTool$" manage=off border=off
-yabai -m rule --add app="^Finder$" manage=off border=off
-yabai -m rule --add app="^Microsoft Outlook$" title!="^(Inbox|Calendar)" manage=off border==off
-yabai -m rule --add app="^IntelliJ IDEA$" title="^(Settings|Move|Preferences|Breakpoints|Select Methods to Implement|Harpoon)$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off 
+yabai -m rule --add app="^Microsoft Teams$" manage=off
+yabai -m rule --add app="^BetterTouchTool$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Microsoft Outlook$" title!="^(Inbox|Calendar)" manage=off 
+yabai -m rule --add app="^IntelliJ IDEA$" title="^(Settings|Move|Preferences|Breakpoints|Select Methods to Implement|Harpoon|Evaluate)$" manage=off
 yabai -m rule --add app="^VisualVM$" title="^(Profile Startup|Options)$" manage=off
 # yabai -m rule --add app="^Intellij IDEA$" title="^Find$" manage=off
 # yabai -m rule --add app="^Intellij IDEA$" title="^Find in Path$" manage=off
