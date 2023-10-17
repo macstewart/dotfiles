@@ -79,7 +79,7 @@ nmap \\r :action ActivateRunToolWindow<cr>
 nmap \\m :action ActivateMavenToolWindow<cr>
 nmap \\t :action ActivateProblemsViewToolWindow<cr>
 nmap \\l :action ActivateProblemsViewToolWindow<cr>
-nmap \\s :action ActivateStructureToolWindow<cr>
+nmap \\s :action ActivateSonarLintToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
 
 nmap \\p :action HideAllWindows<cr>
