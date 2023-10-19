@@ -81,6 +81,8 @@ nmap \\t :action ActivateProblemsViewToolWindow<cr>
 nmap \\l :action ActivateProblemsViewToolWindow<cr>
 nmap \\s :action ActivateSonarLintToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
+nmap \\e :action ActivateEndpointsToolWindow<cr>
+nmap \\g :action ActivatePullRequestsToolWindow<cr>
 
 nmap \\p :action HideAllWindows<cr>
 
@@ -96,12 +98,19 @@ nmap <Leader>fr :action ChooseRunConfiguration<CR>
 
 nmap <Leader>fa :action GotoAction<CR>
 xmap <Leader>fa :action GotoAction<CR>
+nmap <Leader>fl :action Refactorings.QuickListPopupAction<CR>
+xmap <Leader>fl :action Refactorings.QuickListPopupAction<CR>
 
 " lsp
 nmap <leader>lr :action RenameElement<CR>
 nmap <leader>lf :action ReformatCode<CR>
 nmap <leader>li :action OptimizeImports<CR>
+
 nmap <leader>la :action ShowIntentionActions<CR>
+xmap <leader>la :action ShowIntentionActions<CR>
+
+nmap <leader>le :action ExtractMethod<CR>
+xmap <leader>le :action ExtractMethod<CR>
 
 nmap gi :action GotoImplementation<CR>
 
