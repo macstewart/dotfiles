@@ -11,6 +11,9 @@ alias cd='cd -P'
 alias ld='lazydocker'
 alias lg='lazygit'
 
+alias dc='docker compose'
+alias dcupdate='docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f'
+
 alias gs='git status'
 alias gd='git diff | diff-so-fancy'
 alias gp='git push'
