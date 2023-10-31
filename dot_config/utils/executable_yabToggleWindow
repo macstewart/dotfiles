@@ -8,6 +8,7 @@ configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
 configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-floating" == true)][0]'
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'
+configuredWindowFilters[orion]='[.[] | select(.app == "Orion" and ."is-floating" == true)][0]'
 
 function getCurrentSpace() {
     yabai -m query --windows --window | gojq '(.space, .id)'

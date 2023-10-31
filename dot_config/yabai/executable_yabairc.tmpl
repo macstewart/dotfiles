@@ -35,6 +35,7 @@ defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
 #ignored apps
+yabai -m rule --add app="^Orion$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off 
 yabai -m rule --add app="^FortiClient$" manage=off 
 yabai -m rule --add app="^Spotify$" manage=off 
