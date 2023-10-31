@@ -83,6 +83,7 @@ nmap \\s :action ActivateSonarLintToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
 nmap \\e :action ActivateEndpointsToolWindow<cr>
 nmap \\g :action ActivatePullRequestsToolWindow<cr>
+nmap \\c :action ActivateCommitToolWindow<cr>
 
 nmap \\p :action HideAllWindows<cr>
 
