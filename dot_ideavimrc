@@ -87,6 +87,8 @@ nmap \\c :action ActivateCommitToolWindow<cr>
 
 nmap \\p :action HideAllWindows<cr>
 
+nmap <Leader><Leader> :nohlsearch<cr>
+
 " telescope
 nmap <Leader>ft :action FindInPath<CR>
 xmap <Leader>ft :action FindInPath<CR>
