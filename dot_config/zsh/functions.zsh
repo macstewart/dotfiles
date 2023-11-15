@@ -163,7 +163,8 @@ qmvntest() {
     # return
     # fi;
     echo "running: mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true -Dtest=$1" 
-    MAVEN_OPTS="-agentpath:/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib/deployed/jdk16/mac/libprofilerinterface.jnilib=/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib,5140" mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true -Dtest=$1
+    # MAVEN_OPTS="-agentpath:/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib/deployed/jdk16/mac/libprofilerinterface.jnilib=/Applications/VisualVM.app/Contents/Resources/visualvm/visualvm/lib,5140" 
+    mvn test -Dpmd.skip=true -Dspotbugs.skip=true -Dcheckstyle.skip=true -Dtest=$1
 }
 
 testff() {
