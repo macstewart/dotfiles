@@ -9,6 +9,8 @@ configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-flo
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'
 configuredWindowFilters[orion]='[.[] | select(.app == "Orion" and ."is-floating" == true)][0]'
+configuredWindowFilters[telegram]='[.[] | select(.app == "Telegram" and ."is-floating" == true)][0]'
+
 
 function getCurrentSpace() {
     yabai -m query --windows --window | gojq '(.space, .id)'
@@ -16,6 +18,13 @@ function getCurrentSpace() {
 
 function getTargetWindow() {
     yabai -m query --windows | gojq "${configuredWindowFilters[$1]}"
+}
+
+function refocusManagedWindow() {
+    firstManagedWindow=$(yabai -m query --windows --space | gojq -r '[.[] | select(."is-floating" == false and .layer == "normal")][0] | .id') 
+    if [[ ! -z $firstManagedWindow ]]; then
+        yabai -m window $firstManagedWindow --focus
+    fi
 }
 
 function sendToShelf() {
@@ -38,6 +47,16 @@ windowIdentifier=$1
 echo "winident" $windowIdentifier
 if [[ -z $windowIdentifier ]]; then
     echo "No window identifier provided" >&2
+    exit 1
+fi
+
+if [[ $windowIdentifier == 'display' ]]; then
+    refocusManagedWindow
+    exit 0
+fi
+
+if [[ -z ${configuredWindowFilters[$windowIdentifier]} ]]; then
+    echo "No window filter configured for $windowIdentifier" >&2
     exit 1
 fi
 
