@@ -127,6 +127,11 @@ nmap <leader>gj :action VcsShowNextChangeMarker<CR>
 nmap <leader>lj :action GotoNextError<CR>
 nmap <leader>lk :action GotoPreviousError<CR>
 
+nmap <leader>ll :action GotoNextError<CR> :action ShowIntentionActions<CR>
+
+nmap <leader>jm :action MethodDown<CR>
+nmap <leader>km :action MethodUp<CR>
+
 " add new line without insert mode
 nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
