@@ -16,6 +16,12 @@ vim.g.mapleader = " "
 keymap("n", "<leader><esc>", "<cmd>nohlsearch<cr>", opts)
 keymap("n", "<leader><F5>", ":source $MYVIMRC<cr>", opts)
 
+keymap("n", "<leader>ss", ":%!suck<cr>u", opts)
+keymap("v", "<leader>ss", ":'<,'>!suck<cr>ugv", opts)
+
+-- todo: fix user input
+-- keymap("n", "<leader>ss", ":exec '%!suck '.input('prefix: ')<cr>u", opts)
+
 keymap("n", "-", "$", opts)
 keymap("n", "<leader>a", "$", opts)
 keymap("n", "<leader>i", "0", opts)

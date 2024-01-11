@@ -1,4 +1,5 @@
 require("utils")
+require("funcs")
 require("plugins.impatient")
 require("options")
 require("keymaps")
