@@ -22,10 +22,6 @@ configs.setup({
     },
     indent = { enable = true, disable = { "python", "css" } },
 
-    context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-    },
     textobjects = {
         select = {
             enable = true,
