@@ -102,6 +102,7 @@ keymap("n", "<leader>x", "<cmd>close<cr>", opts)
 keymap("n", "<leader>cw", ":set wrap!<cr>", opts)
 keymap("n", "<leader>c#", ":set relativenumber!<cr>", opts)
 
+keymap("n", "<leader>\\z", ":ZenMode<cr>", opts)
 -- clear highlights
 
 -- better paste

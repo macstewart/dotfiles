@@ -63,6 +63,9 @@ return packer.startup(function(use)
     -- harpoon
     use({ "theprimeagen/harpoon" })
 
+    -- use({ "junegunn/goyo.vim" })
+    use({ "folke/zen-mode.nvim" })
+
     -- Style
     use({ "folke/tokyonight.nvim" })
     use({ "lunarvim/darkplus.nvim" })
