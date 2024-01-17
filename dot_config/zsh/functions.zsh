@@ -56,6 +56,12 @@ function fv() {
     v $(rg --files | fzf)
 }
 
+function bv() {
+    filename=$(blow -p "$@")
+    echo "opening $filename in nvim"
+    v $filename
+}
+
 alias ff='fv'
 
 ft() {
