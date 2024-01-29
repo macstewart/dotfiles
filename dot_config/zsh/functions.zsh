@@ -56,6 +56,16 @@ function fv() {
     v $(rg --files | fzf)
 }
 
+function pbs() {
+    echo "sucking from clipboard" >&2
+    pbpaste | suck "$@" 
+}
+
+function pbb() {
+    echo "blowing to clipboard" >&2
+    blow "$@" | pbcopy
+}
+
 function bv() {
     filename=$(blow -p "$@")
     echo "opening $filename in nvim"
