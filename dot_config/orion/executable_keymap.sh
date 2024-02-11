@@ -2,6 +2,7 @@
 
 defaults write com.kagi.kagimacOS NSUserKeyEquivalents '{
   "New Tab"="t";
+  "Home"="h";
   "Close Tab"="x";
   "Undo Tab Close"="u";
 
