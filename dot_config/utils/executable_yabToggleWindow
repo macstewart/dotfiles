@@ -4,7 +4,7 @@ SHELF_SPACE=5 # space number to use as the floating window holder
 
 declare -A configuredWindowFilters
 
-configuredWindowFilters[teams]='[.[] | select(.layer == "normal" and (.app | startswith("Microsoft Teams")))] | sort_by(.id) | .[-1]'
+configuredWindowFilters[teams]='[.[] | select(.layer == "normal" and (.app | startswith("Microsoft Teams")) and ."is-floating" == true)] | sort_by(.id) | .[-1]'
 configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
 configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-floating" == true)][0]'
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
