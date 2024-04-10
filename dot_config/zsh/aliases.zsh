@@ -45,5 +45,6 @@ alias s='suck'
 alias b='blow'
 
 alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysql -h$SERVITOR_HOST -u$SERVITOR_DB_USER"
+# alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysqlsh --host $SERVITOR_HOST --user $SERVITOR_DB_USER"
 alias kauth="source awsAuth"
 alias k="kubectl"
