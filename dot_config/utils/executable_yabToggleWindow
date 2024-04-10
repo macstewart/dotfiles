@@ -42,8 +42,14 @@ function sendToShelf() {
 
 function pullFromShelf() {
     echo "YAB_PREV_WIN=${current[1]}" > /tmp/yab_prev_win
+    echo "Moving window $winId to space ${current[0]}"
     yabai -m window $winId --space ${current[0]}
-    yabai -m window $winId --focus &
+    # if the last command succeeded; then
+    if [[ $? -eq 0 ]]; then
+        echo "Moving focus to window $winId"
+        yabai -m window $winId --focus &
+    fi
+    echo "Done"
 }
 
 windowIdentifier=$1
