@@ -10,6 +10,8 @@ source $DOTZSH/aliases.zsh
 source $DOTZSH/functions.zsh
 source $DOTZSH/path.zsh
 
+for f in $DOTZSH/funcs/*.zsh; do source $f; done
+
 # TODO can I break this out into a separate file?
 {{- if eq .chezmoi.os "linux" }}
 # >>> conda initialize >>>
