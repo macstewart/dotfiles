@@ -1,36 +1,43 @@
 
-function est() {
-    date -r $(($1 / 1000))
-}
-
-function utc() {
-    date '+%Y-%m-%dT%H:%M:%SZ' -u -r $(($1 / 1000))
-}
-
-function timediff() {
-    nowMillis=$(gdate +%s%3N)
-    targetMillis=$1
-    if [ -z "$targetMillis" ]; then
-        echo "usage: timediff <epochMillis>"
-        return
+function millis() {
+    if [[ $# -eq 0 ]]; then
+        epoch --ms
+    else
+        epoch --ms --dt $@
     fi
-    # if it's an iso date, convert to epoch millis
-    if [[ $targetMillis == *"T"* ]]; then
-        targetMillis=$(isoToEpoch $targetMillis)
+}
+alias ,ms=millis
+
+function millisc() {
+    # call ms with all args, send to clipboard and stdout. strip trailing newline from pbcopy
+    millis $@ | tee >( tr -d '\n' | pbcopy)
+}
+alias ,msc=millisc
+
+function seconds() {
+    if [[ $# -eq 0 ]]; then
+        epoch
+    else
+        epoch --dt $@
     fi
-    echo $((($nowMillis - $targetMillis) / 1000 / 60)) minutes
 }
+alias ,sec=seconds
 
-function epochDuration() {
-    local T=$1/1000
-    local D=$((T/60/60/24))
-    local H=$((T/60/60%24))
-    local M=$((T/60%60))
-    local S=$((T%60))
-    printf '%dd%02dh%02dm%02ds\n' $D $H $M $S
+function secondsc() {
+    seconds $@ | tee >( tr -d '\n' | pbcopy)
 }
+alias ,secc=seconds
 
-function isoToEpoch() {
-    date -j -f "%Y-%m-%dT%H:%M:%SZ" $1 +%s%3N
+function utc {
+    if [[ $# -eq 0 ]]; then
+        epoch $(seconds)
+    else
+        epoch $(seconds --dt $@)
+    fi
 }
+alias ,utc=utc
 
+function utcc {
+    utc $@ | tee >( tr -d '\n' | pbcopy)
+}
+alias ,utcc=utcc
