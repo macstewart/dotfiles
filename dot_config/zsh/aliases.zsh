@@ -23,9 +23,9 @@ alias gam='git commit -am "this will be squashed anyway"'
 # alias mci='qmvn clean install $@'
 alias msb='qmvn spring-boot:run $@'
 
-alias mc='maasc'
-alias mca='maasc api'
-alias mci='maasc api -i'
+alias mc='maas-cmdr'
+alias mca='maas-cmdr api'
+alias mci='maas-cmdr api -i'
 
 alias jm='jira issue list -q"filter=\"Solace Cloud Current User\""'
 
@@ -45,6 +45,7 @@ alias s='suck'
 alias b='blow'
 
 alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysql -h$SERVITOR_HOST -u$SERVITOR_DB_USER"
+alias db="export MYSQL_PWD=$LOCAL_DB_PASS; mysql -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
 # alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysqlsh --host $SERVITOR_HOST --user $SERVITOR_DB_USER"
 alias kauth="source awsAuth"
 alias k="kubectl"
