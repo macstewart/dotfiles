@@ -4,7 +4,7 @@ if telescope == nil then
 end
 
 local actions = require("telescope.actions")
-local trouble = require("trouble.providers.telescope")
+local trouble_ts = require("trouble.sources.telescope")
 
 telescope.setup({
     defaults = {
@@ -21,7 +21,7 @@ telescope.setup({
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-n>"] = actions.move_selection_next,
                 ["<C-p>"] = actions.move_selection_previous,
-                ["<C-t>"] = trouble.open_with_trouble,
+                ["<C-t>"] = trouble_ts.open,
                 ["<C-->"] = actions.select_vertical,
                 ["<C-=>"] = actions.select_horizontal,
                 ["<C-/>"] = "which_key",
@@ -33,8 +33,8 @@ telescope.setup({
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-n>"] = actions.move_selection_next,
                 ["<C-p>"] = actions.move_selection_previous,
-                ["<C-t>"] = trouble.open_with_trouble,
-                ["t"] = trouble.open_with_trouble,
+                ["<C-t>"] = trouble_ts.open,
+                ["t"] = trouble_ts.open,
                 ["<C-/>"] = "which_key",
                 ["?"] = "which_key",
             },

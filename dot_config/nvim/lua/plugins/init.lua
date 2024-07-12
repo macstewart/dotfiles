@@ -58,7 +58,6 @@ return packer.startup(function(use)
     use({ "goolord/alpha-nvim" })
     use({ "tpope/vim-surround" })
     use({ "tpope/vim-repeat" })
-    use({ "rest-nvim/rest.nvim" })
     use({ "christoomey/vim-tmux-navigator" })
     -- harpoon
     use({ "theprimeagen/harpoon" })
