@@ -26,14 +26,15 @@ alias ,sec=seconds
 function secondsc() {
     seconds $@ | tee >( tr -d '\n' | pbcopy)
 }
-alias ,secc=seconds
+alias ,secc=secondsc
 
 function utc {
     if [[ $# -eq 0 ]]; then
-        epoch $(seconds)
+        sec=$(seconds)
     else
-        epoch $(seconds --dt $@)
+        sec=$(echo $1 / 1000 | bc)
     fi
+    epoch $sec
 }
 alias ,utc=utc
 
