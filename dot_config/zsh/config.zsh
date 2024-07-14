@@ -16,6 +16,7 @@ KEYTIMEOUT=10
 setopt menu_complete
 setopt no_list_ambiguous
 setopt extended_glob
+setopt EXTENDED_GLOB
 
 autoload -U edit-command-line
 zle -N edit-command-line
