@@ -15,6 +15,14 @@ function listutils() {
     ls ~/utils
 }
 
+function zvm_after_lazy_keybindings() {
+    source $DOTZSH/bindings.zsh
+}
+
+function zvm_after_init_commands() {
+    source $DOTZSH/bindings.zsh
+}
+
 # function jq-repl () {
 #   local query_file data_file new_pane_height nodemon_cmd change_aucmd jq_args
 #

@@ -40,3 +40,9 @@ source $DOTZSH/plugconf.zsh
 
 # now load your plugins
 plugin-load $repos
+
+bindkey -M viins -r "^R"
+bindkey -r "^R"
+bindkey -M viins -r "^R"
+
+eval "$(atuin init zsh)"
