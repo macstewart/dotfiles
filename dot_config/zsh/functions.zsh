@@ -39,7 +39,7 @@ function servitordbe() {
 }
 
 function mysqle() {
-    mysql $DB_NAME -e "$@" --json
+    mysql $DB_NAME -e "$@"
 }
 
 function setdb() {
