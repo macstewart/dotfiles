@@ -46,6 +46,9 @@ alias b='blow'
 
 alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysql -h$SERVITOR_HOST -u$SERVITOR_DB_USER"
 alias db="export MYSQL_PWD=$LOCAL_DB_PASS; mysql -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
+alias dbe="noglob localdbe"
+alias sdbe="noglob servitordbe"
+alias dbc="setdb"
 # alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysqlsh --host $SERVITOR_HOST --user $SERVITOR_DB_USER"
 alias kauth="source awsAuth"
 alias k="kubectl"

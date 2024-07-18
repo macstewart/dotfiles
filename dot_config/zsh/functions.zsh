@@ -23,6 +23,33 @@ function zvm_after_init_commands() {
     source $DOTZSH/bindings.zsh
 }
 
+function localdbe() {
+    echo $@
+    export MYSQL_USER=$LOCAL_DB_USER
+    export MYSQL_PWD=$LOCAL_DB_PASS
+    export MYSQL_HOST=$LOCAL_DB_HOST
+    mysqle "$*"
+}
+
+function servitordbe() {
+    export MYSQL_USER=$SERVITOR_DB_USER
+    export MYSQL_PWD=$SERVITOR_DB_PASS
+    export MYSQL_HOST=$SERVITOR_HOST
+    mysqle "$@"
+}
+
+function mysqle() {
+    mysql $DB_NAME -e "$@" --json
+}
+
+function setdb() {
+    dbdb=$(mysql -e 'show databases' | fzf)
+    if [ -n "$dbdb" ]; then
+        export DB_NAME=$dbdb
+    else
+        unset DB_NAME
+    fi
+}
 # function jq-repl () {
 #   local query_file data_file new_pane_height nodemon_cmd change_aucmd jq_args
 #
