@@ -35,11 +35,11 @@ function servitordbe() {
     export MYSQL_USER=$SERVITOR_DB_USER
     export MYSQL_PWD=$SERVITOR_DB_PASS
     export MYSQL_HOST=$SERVITOR_HOST
-    mysqle "$@"
+    mysqle "$*"
 }
 
 function mysqle() {
-    mysql $DB_NAME -e "$@"
+    mysql $DB_NAME -e "$@" 
 }
 
 function setdb() {
