@@ -4,6 +4,7 @@
 {{- if eq .chezmoi.os "linux" }}
 [credential "https://github.com"]
 	helper = !/usr/bin/gh auth git-credential
+
 {{- else if eq .chezmoi.os "darwin" }}
 [credential]
     helper = osxkeychain
