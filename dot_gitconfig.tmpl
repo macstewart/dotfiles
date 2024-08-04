@@ -2,11 +2,8 @@
     name = Mackenzie Stewart
     email = github@macstew.art
 {{- if eq .chezmoi.os "linux" }}
-[credential]
-    credentialStore = gpg
-    helper = /usr/local/bin/git-credential-manager
-    interactive = auto
-    guiPrompt = false
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
 {{- else if eq .chezmoi.os "darwin" }}
 [credential]
     helper = osxkeychain
