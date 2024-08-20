@@ -13,6 +13,7 @@ configuredWindowFilters[telegram]='[.[] | select(.app == "Telegram" and ."is-flo
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'
 configuredWindowFilters[orion]='[.[] | select(.app == "Orion" and ."is-floating" == true)][0]'
 configuredWindowFilters[vivaldi]='[.[] | select(.app == "Vivaldi" and ."is-floating" == true)][0]'
+configuredWindowFilters[zed]='[.[] | select(.layer == "normal" and .app == "Zed" and ."is-floating" == true)] | sort_by(.id) | .[-1]'
 
 
 function getCurrentSpace() {

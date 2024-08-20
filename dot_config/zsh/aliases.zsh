@@ -52,3 +52,6 @@ alias dbc="setdb"
 # alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysqlsh --host $SERVITOR_HOST --user $SERVITOR_DB_USER"
 alias kauth="source ,awsAuth"
 alias k="kubectl"
+
+alias z="zed"
+

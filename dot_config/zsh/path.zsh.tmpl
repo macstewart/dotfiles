@@ -26,7 +26,10 @@ pathadditions+=(
     $HOME/.config/xorg/bin
 )
 {{- else if eq .chezmoi.os "darwin" }}
-pathadditions+=(/opt/homebrew/bin)
+pathadditions+=(
+    /opt/homebrew/bin 
+    '/Applications/IntelliJ IDEA.app/Contents/MacOS'
+)
 {{- end }}
 
 for i in ${pathadditions[@]}; do addToPath $i; done

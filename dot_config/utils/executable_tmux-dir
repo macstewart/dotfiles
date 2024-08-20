@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+TMPFILE=`mktemp /tmp/tps-report.XXXXXXXXXX` || exit 1
+tmux run "printf '#{session_path}\n' > \"$TMPFILE\""
+cat "$TMPFILE"
+rm $TMPFILE
