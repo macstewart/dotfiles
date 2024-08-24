@@ -103,14 +103,14 @@ nvim_tree.setup({
 		width = 30,
 		adaptive_size = true,
 		side = "right",
-		mappings = {
-			list = {
-				{ key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
-				{ key = "h", cb = tree_cb("close_node") },
-				{ key = "-", cb = tree_cb("hsplit") },
-				{ key = "=", cb = tree_cb("split") },
-			},
-		},
+		-- mappings = {
+		-- 	list = {
+				-- { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
+				-- { key = "h", cb = tree_cb("close_node") },
+				-- { key = "-", cb = tree_cb("hsplit") },
+				-- { key = "=", cb = tree_cb("split") },
+			-- },
+		-- },
 	},
 	-- ignore_buffer_on_setup = true,
 })

@@ -138,12 +138,19 @@ local function build_cmd()
     -- local runtimes = get_jdk_runtimes()
     -- if runtimes == nil then return {} end
 
-    local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+    local home = os.getenv("HOME")
+    local jdtls_path = home .. "/dev/lsp/jdtls"
+
+    if vim.fn.isdirectory(jdtls_path) == 0 then
+        utils.notify("jdtls dir, make sure it's installed at " .. jdtls_path, "error")
+        return {}
+    end
+
     local shared_config_path = ""
 
     local os_name = utils.get_os_type()
     if string.lower(os_name) == "osx" then
-        shared_config_path = jdtls_path .. "/config_mac"
+        shared_config_path = jdtls_path .. "/config_mac_arm"
     elseif os_name == "linux" then
         shared_config_path = jdtls_path .. "/config_linux"
     else
@@ -153,7 +160,6 @@ local function build_cmd()
 
     -- local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-    local home = os.getenv("HOME")
     local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
     -- local jdtlsjar = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
     -- utils.notify("workspace_dir is " .. workspace_dir)

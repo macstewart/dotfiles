@@ -131,7 +131,7 @@ keymap("n", "<leader>fc", ":Telescope colorscheme<CR>", opts)
 
 keymap("n", "gd", ":Telescope lsp_definitions<CR>", opts)
 keymap("n", "gr", ":Telescope lsp_references<CR>", opts)
-keymap("n", "gI", ":Telescope lsp_implen<CR>", opts)
+keymap("n", "gI", ":Telescope lsp_implementations<CR>", opts)
 
 -- keymap("n", "<leader>hh", "<Plug>RestNvim", opts)
 -- keymap("n", "<leader>hr", "<Plug>RestNvimLast", opts)
