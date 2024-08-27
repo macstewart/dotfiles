@@ -98,6 +98,9 @@ keymap("n", "<leader>wh", ":BufferLineCloseLeft<cr>", opts)
 --unsplit
 keymap("n", "<leader>x", "<cmd>close<cr>", opts)
 
+keymap("n", "ZZ", ":wqa<cr>", opts)
+keymap("n", "QQ", ":wqa<cr>", opts)
+
 --HOTSWAP CONFIG
 keymap("n", "<leader>cw", ":set wrap!<cr>", opts)
 keymap("n", "<leader>c#", ":set relativenumber!<cr>", opts)

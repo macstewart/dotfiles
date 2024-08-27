@@ -5,6 +5,7 @@ alias cat='bat'
 alias vi="nvim"
 alias vim="nvim"
 alias vv="nvim ."
+alias vr="nvim -c 'Telescope oldfiles'"
 
 alias cd='cd -P'
 
