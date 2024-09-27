@@ -120,7 +120,7 @@ keymap("v", ">", ">gv", opts)
 -- NvimTree
 keymap("n", "\\\\", ":NvimTreeFindFile<CR>", opts)
 keymap("n", "\\p", ":NvimTreeToggle<CR>", opts)
-keymap("n", "\\t", ":TroubleToggle<cr>", opts)
+keymap("n", "\\t", ":Trouble toggle<cr>", opts)
 keymap("n", "\\q", ":ccl<cr>:lcl<cr>", opts)
 
 -- keymap("n", ";", ":", opts)
