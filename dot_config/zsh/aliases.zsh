@@ -11,6 +11,8 @@ alias cd='cd -P'
 
 alias ld='lazydocker'
 alias lg='lazygit'
+alias llq='llm -m gemini-flash'
+alias llc='llm -c'
 
 alias dc='docker compose'
 alias dcupdate='docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f'
