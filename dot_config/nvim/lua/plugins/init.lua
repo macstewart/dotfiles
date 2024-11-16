@@ -42,15 +42,15 @@ packer.init({
 })
 
 return packer.startup(function(use)
-    use({ "wbthomason/packer.nvim" })                   -- Have packer manage itself
-    use({ "nvim-lua/plenary.nvim" })                    -- Useful lua functions used by lots of plugins
-    use({ "windwp/nvim-autopairs" })                    -- Autopairs integrates with both cmp and treesitter
-    use({ "numToStr/Comment.nvim" })                    -- adds comments textobjects and hotkeys
-    use({ "JoosepAlviste/nvim-ts-context-commentstring" }) --adds support for context sensitive comment blocks in certain languages
-    use({ "nvim-tree/nvim-web-devicons" })              --devicons
-    use({ "nvim-tree/nvim-tree.lua", commit = "ace64228ad5d89035fbe6f85e7f45a1f7b9e29c1" })                  --file manager/file bar
-    use({ "moll/vim-bbye" })                            --better buffer close behavior
-    use({ "nvim-lualine/lualine.nvim" })                --bottom status bar
+    use({ "wbthomason/packer.nvim" })                                                    -- Have packer manage itself
+    use({ "nvim-lua/plenary.nvim" })                                                     -- Useful lua functions used by lots of plugins
+    use({ "windwp/nvim-autopairs" })                                                     -- Autopairs integrates with both cmp and treesitter
+    use({ "numToStr/Comment.nvim" })                                                     -- adds comments textobjects and hotkeys
+    use({ "JoosepAlviste/nvim-ts-context-commentstring" })                               --adds support for context sensitive comment blocks in certain languages
+    use({ "nvim-tree/nvim-web-devicons" })                                               --devicons
+    use({ "nvim-tree/nvim-tree.lua", commit = "ace64228ad5d89035fbe6f85e7f45a1f7b9e29c1" }) --file manager/file bar
+    use({ "moll/vim-bbye" })                                                             --better buffer close behavior
+    use({ "nvim-lualine/lualine.nvim" })                                                 --bottom status bar
     use({ "akinsho/toggleterm.nvim" })
     use({ "ahmedkhalf/project.nvim" })
     use({ "lewis6991/impatient.nvim" })
@@ -88,6 +88,16 @@ return packer.startup(function(use)
 
     -- LSP
     -- use { "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" } -- simple to use language server installer
+    --
+    use({ "OXY2DEV/markview.nvim" })
+    use({
+        "tadmccorkle/markdown.nvim",
+        config = function()
+            require("markdown").setup({
+                -- configuration here or empty for defaults
+            })
+        end,
+    })
     use("ray-x/go.nvim")
     use("ray-x/guihua.lua")       -- recommended if need floating window support
     use({ "mfussenegger/nvim-jdtls" })
