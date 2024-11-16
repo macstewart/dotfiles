@@ -13,6 +13,7 @@ alias ld='lazydocker'
 alias lg='lazygit'
 alias llq='llm -m gemini-flash'
 alias llc='llm -c'
+alias cmd='llm cmd'
 
 alias dc='docker compose'
 alias dcupdate='docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f'
@@ -49,6 +50,8 @@ alias b='blow'
 
 alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysql -h$SERVITOR_HOST -u$SERVITOR_DB_USER"
 alias db="export MYSQL_PWD=$LOCAL_DB_PASS; mysql -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
+alias dbi="export MYSQL_PWD=$LOCAL_DB_PASS; mycli -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
+alias dbdump="export MYSQL_PWD=$LOCAL_DB_PASS; mysqldump -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
 alias dbe="noglob localdbe"
 alias sdbe="noglob servitordbe"
 alias dbc="setdb"
