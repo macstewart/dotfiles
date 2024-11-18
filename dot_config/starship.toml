@@ -149,3 +149,8 @@ symbol = " "
 
 [spack]
 symbol = "🅢 "
+
+[username]
+disabled = true
+# show_always = true
+# aliases = { "corpuser034g" = "matchai" }
