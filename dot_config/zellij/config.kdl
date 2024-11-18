@@ -2,6 +2,22 @@ keybinds clear-defaults=true {
     locked {
         bind "Ctrl b" { SwitchToMode "normal"; }
     }
+    normal {
+        bind "g" { 
+            Run "lazygit" {
+                close_on_exit true
+                floating true
+            };
+            SwitchToMode "locked";
+        }
+        bind "g" { 
+            Run "zSessionizer" {
+                close_on_exit true
+                floating true
+            };
+            SwitchToMode "locked";
+        }
+    }
     pane {
         bind "left" { MoveFocus "left"; }
         bind "down" { MoveFocus "down"; }
@@ -129,10 +145,10 @@ keybinds clear-defaults=true {
         }
     }
     shared_among "normal" "locked" {
-        bind "Alt left" { MoveFocusOrTab "left"; }
-        bind "Alt down" { MoveFocus "down"; }
-        bind "Alt up" { MoveFocus "up"; }
-        bind "Alt right" { MoveFocusOrTab "right"; }
+        bind "Ctrl h" { MoveFocusOrTab "left"; }
+        bind "Ctrl j" { MoveFocus "down"; }
+        bind "Ctrl k" { MoveFocus "up"; }
+        bind "Ctrl l" { MoveFocusOrTab "right"; }
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
@@ -236,7 +252,7 @@ load_plugins {
 //   - true
 //   - false (Default)
 // 
-simplified_ui true
+simplified_ui false
  
 // Choose the theme that is specified in the themes section.
 // Default: default

@@ -36,6 +36,8 @@ return {
         "html",
         "css",
         "java",
+        "kdl",
+        "json"
       },
     },
   },

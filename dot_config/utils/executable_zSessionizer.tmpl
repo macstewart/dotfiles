@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+# inspired by script from https://github.com/ThePrimeagen/.dotfiles of the same name
+
+####################
+### arg handling
+####################
+usage() {
+    echo "Usage: zSessionizer [-d dir] [-h] [-c] [identifier]"
+    echo ""
+    echo "  -c: allow creating a new session dir if it doesn't exist"
+    echo "  -d: use specific dir, otherwise it uses projectDirs"
+    echo "  -h: show this help message"
+    echo "  identifier: select a specific session instead of selecting from the list"
+}
+
+while getopts "cd:h" opt; do
+    case $opt in
+        c) create=true;
+            ;;
+        d) dir=$OPTARG; 
+            ;;
+        h) usage; exit 0
+            ;;
+        \?) usage; exit 1
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+####################
+### session selection
+####################
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+elif [[ -n $dir ]]; then
+    options=( $(find "$dir" -mindepth 1 -maxdepth 1 -type d) )
+else
+    options=( $(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d) )
+    options+=($HOME/.local/share/chezmoi)
+fi
+
+if [[ -z $selected ]]; then
+    if [[ -z $options ]]; then
+        echo "No session directories found"
+        exit 1
+    fi
+    selected=$(printf "%s\n" "${options[@]}" | fzf --ansi --height 100% --keep-right --border-label "sessionizer" --info hidden --no-scrollbar --tabstop 4 --preview 'bat -f --style=grid {}/README.md' --preview-window up,60% )
+fi
+
+####################
+### session creation or switching
+####################
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    zellij -s $selected_name -c $selected
+    exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+fi
+
+tmux switch-client -t $selected_name
