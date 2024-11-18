@@ -12,8 +12,7 @@ map("n", "\\p", ":NvimTreeToggle<CR>")
 
 -- lazy keys weren't working here for some reason so we need to define them here
 -- and use the cmd trigger instead
-map("n", "<C-l>", "<cmd>TmuxNavigateLeft<cr>")
-map("n", "<D-l>", "<cmd>TmuxNavigateLeft<cr>")
+map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
 map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
 map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
 map("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
@@ -49,3 +48,9 @@ map("n", "<leader>kq", function()
 end, { desc = "next quickfix" })
 map("n", "<leader>jk", "<cmd>cp<CR>", { desc = "prev quickfix" })
 map("n", "\\q", ":ccl<cr>:lcl<cr>", { desc = "toggle quickfix" })
+
+map("n", "<C-S-p>", ":echo 'csp works!'<cr>")
+map("n", "<T-p>", ":echo  'tp works!'<cr>")
+map("n", "<M-p>", ":echo  'mp works!'<cr>")
+map("n", "<A-p>", ":echo  'ap works!'<cr>")
+map("n", "<D-p>", ":echo  'dp works!'<cr>")
