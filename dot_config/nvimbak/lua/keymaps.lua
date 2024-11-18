@@ -171,10 +171,10 @@ keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
 -- quickfix list
-keymap("n", "<leader>qj", ":cn<cr>", opts)    -- next quickfix item
-keymap("n", "<leader>qk", ":cp<cr>", opts)    -- previous quickfix item
-keymap("n", "<leader>Qj", ":cnew<cr>", opts)  --next quickfix list
-keymap("n", "<leader>Qk", ":col<cr>", opts)   --previous quickfix list
+keymap("n", "<leader>qj", ":cn<cr>", opts) -- next quickfix item
+keymap("n", "<leader>qk", ":cp<cr>", opts) -- previous quickfix item
+keymap("n", "<leader>Qj", ":cnew<cr>", opts) --next quickfix list
+keymap("n", "<leader>Qk", ":col<cr>", opts) --previous quickfix list
 -- location list
 -- keymap("n", "<leader>lj", ":lnext<cr>", opts) -- next location item
 -- keymap("n", "<leader>lk", ":lp<cr>", opts)    -- previous location item
