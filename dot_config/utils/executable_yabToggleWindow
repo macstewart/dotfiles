@@ -8,6 +8,7 @@ configuredWindowFilters[teams]='[.[] | select(.layer == "normal" and (.app | sta
 configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
 configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-floating" == true)][0]'
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
+configuredWindowFilters[ghostty]='[.[] | select(.app == "Ghostty" and ."is-floating" == true)][0]'
 configuredWindowFilters[telegram]='[.[] | select(.app == "Telegram" and ."is-floating" == true)][0]'
 
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'

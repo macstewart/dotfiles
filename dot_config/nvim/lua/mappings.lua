@@ -3,7 +3,7 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local clear = vim.keymap.del
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- map("n", ";", ":", { desc = "CMD enter command mode" })
 
 -- nvimtree
 map("n", "\\\\", ":NvimTreeFindFile<CR>")
@@ -39,7 +39,6 @@ map("n", "<leader>lf", function()
 end, { desc = "general format file" })
 
 map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "reset git hunk" })
-
 map("n", "<leader>jq", function()
   require("utils").Next_quickfix_item()
 end, { desc = "next quickfix" })

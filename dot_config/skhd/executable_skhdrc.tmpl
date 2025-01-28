@@ -71,7 +71,8 @@ ctrl + alt - r : yabai -m window --toggle split
 alt - f : yabai -m window --toggle float
 
 {{- if eq .chezmoi.os "darwin"  }}
-ctrl + alt + cmd + shift - k : yabToggleWindow wezterm
+# ctrl + alt + cmd + shift - k : yabToggleWindow wezterm
+ctrl + alt + cmd + shift - k : yabToggleWindow ghostty
 ctrl + alt + cmd + shift - p : yabToggleWindow postman
 ctrl + alt + cmd + shift - s : yabToggleWindow slack
 ctrl + alt + cmd + shift - t : yabToggleWindow teams

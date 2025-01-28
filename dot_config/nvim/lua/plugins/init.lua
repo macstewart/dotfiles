@@ -36,6 +36,7 @@ return {
         "html",
         "css",
         "java",
+        "sql"
       },
     },
   },
@@ -48,6 +49,14 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeFindFile" },
+  },
+
+  {
+    "nanotee/sqls.nvim",
+    ft = "sql",
+    -- config = function()
+      -- vim.bo.commentstring = '-- %s';
+    -- end,
   },
 
   {
