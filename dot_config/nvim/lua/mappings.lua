@@ -49,6 +49,7 @@ map("n", "<leader>jk", "<cmd>cp<CR>", { desc = "prev quickfix" })
 map("n", "\\q", ":ccl<cr>:lcl<cr>", { desc = "toggle quickfix" })
 
 map("n", "<C-S-p>", ":echo 'csp works!'<cr>")
+-- map("n", "<C-S-M-Enter>", ":echo 'csa enter works!'<cr>")
 map("n", "<T-p>", ":echo  'tp works!'<cr>")
 map("n", "<M-p>", ":echo  'mp works!'<cr>")
 map("n", "<A-p>", ":echo  'ap works!'<cr>")
