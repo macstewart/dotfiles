@@ -5,6 +5,7 @@ require "nvchad.options"
 local o = vim.o
 o.relativenumber = true
 o.wrap = false
+o.cmdheight = 1
 local api = vim.api
 api.nvim_set_var("tmux_navigator_save_on_switch", 1)
 api.nvim_set_var("tmux_navigator_no_wrap", 1)

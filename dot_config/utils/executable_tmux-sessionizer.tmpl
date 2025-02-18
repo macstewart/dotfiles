@@ -39,6 +39,7 @@ elif [[ -n $dir ]]; then
 else
     options=( $(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d) )
     options+=($HOME/.local/share/chezmoi)
+    options+=($HOME/syncthing/vaults/codemonkey)
 fi
 
 if [[ -z $selected ]]; then

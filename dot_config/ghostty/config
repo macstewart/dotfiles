@@ -1139,6 +1139,12 @@ working-directory =
 # permissions in System Preferences -> Privacy & Security -> Accessibility.
 #
 keybind = global:option+shift+ctrl+`=toggle_quick_terminal
+
+# sends the key sequence 'ctrl+shift+e' to the terminal
+keybind = shift+super+option+tab=text:\x05
+keybind = shift+super+option+j=text:\x05
+
+
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits
 keybind = super+physical:four=goto_tab:4
@@ -1973,7 +1979,7 @@ macos-titlebar-proxy-icon = visible
 # key, respectively.
 # 
 # This does not work with GLFW builds.
-macos-option-as-alt = 
+macos-option-as-alt = true
 
 # Whether to enable the macOS window shadow. The default value is true.
 # With some window managers and window transparency settings, you may

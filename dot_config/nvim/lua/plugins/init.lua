@@ -36,7 +36,8 @@ return {
         "html",
         "css",
         "java",
-        "sql"
+        "sql",
+        "json"
       },
     },
   },

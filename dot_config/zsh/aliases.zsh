@@ -3,6 +3,7 @@ alias nnn='nnn -e -x'
 alias cat='bat'
 
 alias vi="nvim"
+alias vj="nvim -c 'setfiletype json' -c 'Format'"
 alias vim="nvim"
 alias vv="nvim ."
 alias vr="nvim -c 'Telescope oldfiles'"
@@ -12,8 +13,14 @@ alias cd='cd -P'
 alias ld='lazydocker'
 alias lg='lazygit'
 alias llq='llm -m gemini-flash'
+alias jq\?='llm jq'
 alias llc='llm -c'
 alias cmd='llm cmd'
+
+alias y=pbcopy
+alias v=pbpaste
+
+alias 2csv='jq -r -f ~/.config/utils/jq/tocsv.jq'
 
 alias dc='docker compose'
 alias dcupdate='docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f'

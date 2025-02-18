@@ -11,7 +11,7 @@ return {
 			-- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
 			auto_suggestions_provider = "lllmClaudeHaiku",
 			behaviour = {
-				auto_suggestions = true,
+				auto_suggestions = false,
 			},
 			vendors = {
 				lllmClaudev2 = {
