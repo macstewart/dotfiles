@@ -1142,8 +1142,8 @@ keybind = global:option+shift+ctrl+`=toggle_quick_terminal
 
 # sends the key sequence 'ctrl+shift+e' to the terminal
 keybind = shift+super+option+tab=text:\x05
-keybind = shift+super+option+j=text:\x05
-
+# sends the key sequence 'ctrl+shift+j' to the terminal
+keybind = shift+super+option+j=text:\x0a
 
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits

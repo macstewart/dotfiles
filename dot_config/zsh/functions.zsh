@@ -88,7 +88,7 @@ function usej() {
 }
 
 function fv() {
-    v $(rg --files | fzf)
+    vi $(rg --files | fzf)
 }
 
 function pbs() {
