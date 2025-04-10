@@ -8,7 +8,7 @@ function ip() {
 }
 
 function addutil() {
-    ln -sf $(pwd)/$1 ~/utils/$2
+    ln -sf "$(pwd)/$1" ~/utils/$2
 }
 
 function listutils() {
