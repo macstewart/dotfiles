@@ -17,7 +17,7 @@ return {
 				lllmClaudev2 = {
 					__inherited_from = "openai",
 					endpoint = "https://lite-llm.mymaas.net",
-					model = "bedrock-claude-3-5-sonnet-v2",
+					model = "claude-3-7-sonnet",
 					api_key_name = "LITELLM_API_KEY",
 					temperature = 0,
 					max_tokens = 4096,
