@@ -3,6 +3,10 @@ if [[ $DEBUG == 1 ]]; then
     zmodload zsh/zprof
 fi
 
+preexec () {
+  echo -n "\\x1b]133;A\\x1b\\"
+}
+
 source $DOTZSH/config.zsh
 
 source $DOTZSH/osfunc.zsh
@@ -43,3 +47,4 @@ eval "$(starship init zsh)"
 if [[ $DEBUG == 1 ]]; then
     zprof
 fi
+

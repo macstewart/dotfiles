@@ -17,8 +17,8 @@ vicmd_symbol = '[󰊠 |](bold blue)'
 symbol = ""
 
 [directory]
-format = '[\[$path\]]($style)[$read_only]($read_only_style) '
-repo_root_format = '[$before_root_path]($before_repo_root_style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+format = "\u00A0[\\[$path\\]]($style)[$read_only]($read_only_style) "
+repo_root_format = "\u00A0[$before_root_path]($before_repo_root_style)[\\[$repo_root\\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 home_symbol = '~'
 read_only = ""
 truncation_length = 4
