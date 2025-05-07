@@ -1741,7 +1741,7 @@ quick-terminal-animation-duration = 0.01
 
 # Automatically hide the quick terminal when focus shifts to another window.
 # Set it to false for the quick terminal to remain open even when it loses focus.
-quick-terminal-autohide = true
+quick-terminal-autohide = false
 
 # Whether to enable shell integration auto-injection or not. Shell integration
 # greatly enhances the terminal experience by enabling a number of features:

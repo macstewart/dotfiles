@@ -19,7 +19,7 @@ function zvm_after_lazy_keybindings() {
     source $DOTZSH/bindings.zsh
 }
 
-function zvm_after_init_commands() {
+function zvm_after_init() {
     source $DOTZSH/bindings.zsh
 }
 

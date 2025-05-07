@@ -1,6 +1,6 @@
 zle -N edit-command-line
 
-bindkey -r '^J'
+bindkey -r '^d'
 
 bindkey "^t" jq-complete
 
@@ -18,3 +18,14 @@ bindkey "^r" atuin-search
 
 # ctrl + shift + e
 bindkey "^E" __llm_cmdcomp
+
+function run-tmux-copy-up { 'tcopy'; zle redisplay; }
+zle -N run-tmux-copy-up
+bindkey -M vicmd "^u" run-tmux-copy-up
+bindkey -M viins "^u" run-tmux-copy-up
+bindkey -M main "^u" run-tmux-copy-up
+bindkey "^u" run-tmux-copy-up
+# bindkey '^f' run-tmux-sessionizer
+# ctrl + u - enter tmux copy mode and scroll up once
+# bind -M vicmd "^u" 'tmux copy-mode'
+# bindkey -M viins "^u" tmux copy-mode

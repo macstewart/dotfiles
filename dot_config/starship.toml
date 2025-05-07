@@ -1,3 +1,7 @@
+
+# right_format = """$kubernetes"""
+# style = "bold white bg=black"
+
 [aws]
 disabled = true
 symbol = " "
@@ -72,6 +76,9 @@ symbol = "java"
 [julia]
 symbol = " "
 
+[kubernetes]
+# disabled = false
+
 [lua]
 disabled = true
 symbol = "lua"
@@ -132,6 +139,7 @@ Windows = " "
 [package]
 symbol = " "
 
+
 [python]
 symbol = " "
 
@@ -149,6 +157,9 @@ symbol = " "
 
 [spack]
 symbol = "🅢 "
+
+[time]
+# disabled = false
 
 [username]
 disabled = true
