@@ -1187,7 +1187,7 @@ keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
 keybind = super+a=select_all
 keybind = alt+right=esc:f
-keybind = super+shift+enter=toggle_split_zoom
+keybind = shift+enter=text:\x1b\r
 keybind = super+alt+down=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
 keybind = super+ctrl+right=resize_split:right,10
@@ -2210,7 +2210,7 @@ gtk-wide-tabs = true
 # 
 # This configuration only has an effect if Ghostty was built with
 # Adwaita support.
-gtk-adwaita = true
+# gtk-adwaita = true
 
 # If `true` (default), applications running in the terminal can show desktop
 # notifications using certain escape sequences such as OSC 9 or OSC 777.

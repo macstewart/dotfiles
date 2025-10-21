@@ -225,13 +225,13 @@ nmap <c-s-L> :action com.mnw.tabmover.actions.MoveTabDownAction<CR>
 " SetHarpoon4
 " SetHarpoon5
 " ShowHarpoon
-nmap \\h :action ShowHarpoon<CR>
-nmap <Leader>h :action AddToHarpoon<CR>
-nmap <Leader>1 :action GotoHarpoon1<CR>
-nmap <Leader>2 :action GotoHarpoon2<CR>
-nmap <Leader>3 :action GotoHarpoon3<CR>
-nmap <Leader>4 :action GotoHarpoon4<CR>
-nmap <Leader>5 :action GotoHarpoon5<CR>
+nmap \\h :action OpenHarpoon<CR>
+nmap <Leader>h :action AddFile<CR>
+nmap <Leader>1 :action com.obertdev.harpoonminimal.actions.OpenFile1Action<CR>
+nmap <Leader>2 :action com.obertdev.harpoonminimal.actions.OpenFile2Action<CR>
+nmap <Leader>3 :action com.obertdev.harpoonminimal.actions.OpenFile3Action<CR>
+nmap <Leader>4 :action com.obertdev.harpoonminimal.actions.OpenFile4Action<CR>
+nmap <Leader>5 :action com.obertdev.harpoonminimal.actions.OpenFile5Action<CR>
 " nmap <Leader>6 :action HarpoonerOpenFile5<CR>
 " nmap <Leader>7 :action HarpoonerOpenFile6<CR>
 " nmap <Leader>8 :action HarpoonerOpenFile7<CR>
