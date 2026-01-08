@@ -51,6 +51,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 alias dot='chezmoi'
+alias wm='workmux'
 
 alias s='suck'
 alias b='blow'
