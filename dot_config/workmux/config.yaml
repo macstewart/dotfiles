@@ -1,0 +1,8 @@
+window_prefix: "\uf418 " # Use nerdtree branch icon as prefix
+merge_strategy: rebase # Make workmux merge do rebase by default
+agent: claude
+
+panes:
+  - command: <agent> # Start the configured agent (e.g., claude)
+    focus: true
+  - split: horizontal # Second pane with default shell

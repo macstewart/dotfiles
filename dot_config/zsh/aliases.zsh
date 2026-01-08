@@ -69,3 +69,5 @@ alias k="kubectl"
 alias z="zed"
 
 alias ,showcsv=" | tr '\t' ',' \| csvlens"
+
+alias claude="/Users/mackenziestewart/.claude/local/claude"

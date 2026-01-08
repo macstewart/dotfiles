@@ -8,7 +8,7 @@ configuredWindowFilters[teams]='[.[] | select(.layer == "normal" and (.app | sta
 configuredWindowFilters[slack]='[.[] | select(.app == "Slack")][0]'
 configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-floating" == true)][0]'
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
-configuredWindowFilters[ghostty]='[.[] | select(.app == "Ghostty" and ."is-floating" == true)][0]'
+configuredWindowFilters[ghostty]='[.[] | select(.app == "Ghostty" and ."is-floating" == true and .layer == "normal")][0]'
 configuredWindowFilters[telegram]='[.[] | select(.app == "Telegram" and ."is-floating" == true)][0]'
 
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'
@@ -30,6 +30,7 @@ function refocusManagedWindow() {
     if [[ ! -z $firstManagedWindow ]]; then
         yabai -m window $firstManagedWindow --focus
     fi
+    echo "Refocused to managed window $firstManagedWindow"
 }
 
 function sendToShelf() {
@@ -37,7 +38,7 @@ function sendToShelf() {
     source /tmp/yab_prev_win
     if [[ ! -z $YAB_PREV_WIN && $YAB_PREV_WIN != $winId ]]; then
         yabai -m window $YAB_PREV_WIN --focus
-        # echo "" > /tmp/yab_prev_win
+        echo "Moved focus to previous window $YAB_PREV_WIN"
     fi
 }
 
