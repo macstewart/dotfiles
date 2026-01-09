@@ -24,6 +24,7 @@ KeyConfig = {
 		{ key = "w", mods = "CMD", action = act.CloseCurrentTab({ confirm = false }) },
 		{ key = "c", mods = "CMD", action = act.CopyTo 'ClipboardAndPrimarySelection' },
 		{ key = "v", mods = "CMD", action = act.PasteFrom 'Clipboard' },
+		-- { key = "p", mods = "CMD", action = act.SendString '\x02\"' },
 
 		{
 			key = "l",

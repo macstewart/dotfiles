@@ -14,6 +14,17 @@ function millisc() {
 }
 alias ,msc=millisc
 
+function lastmillis() {
+    val=$(millis $@)
+    echo $((val - 1))
+}
+alias ,lms=lastmillis
+
+function lastmillisc() {
+    lastmillis $@ | tee >( tr -d '\n' | pbcopy)
+}
+alias ,lmsc=lastmillis
+
 function seconds() {
     if [[ $# -eq 0 ]]; then
         epoch
@@ -22,6 +33,12 @@ function seconds() {
     fi
 }
 alias ,sec=seconds
+
+function lastsec() {
+    val=$(seconds $@)
+    echo $((val - 1))
+}
+alias ,ls=lastsec
 
 function secondsc() {
     seconds $@ | tee >( tr -d '\n' | pbcopy)

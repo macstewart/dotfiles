@@ -8,7 +8,7 @@ function ip() {
 }
 
 function addutil() {
-    ln -sf $(pwd)/$1 ~/utils/$2
+    ln -sf "$(pwd)/$1" ~/utils/$2
 }
 
 function listutils() {
@@ -19,7 +19,7 @@ function zvm_after_lazy_keybindings() {
     source $DOTZSH/bindings.zsh
 }
 
-function zvm_after_init_commands() {
+function zvm_after_init() {
     source $DOTZSH/bindings.zsh
 }
 
@@ -88,7 +88,7 @@ function usej() {
 }
 
 function fv() {
-    v $(rg --files | fzf)
+    vi $(rg --files | fzf)
 }
 
 function pbs() {

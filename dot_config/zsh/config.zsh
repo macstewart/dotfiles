@@ -18,6 +18,8 @@ setopt no_list_ambiguous
 setopt extended_glob
 setopt EXTENDED_GLOB
 
+setopt ignore_eof
+
 autoload -U edit-command-line
 zle -N edit-command-line
 

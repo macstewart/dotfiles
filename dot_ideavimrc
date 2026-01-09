@@ -79,7 +79,7 @@ nmap \\r :action ActivateRunToolWindow<cr>
 nmap \\m :action ActivateMavenToolWindow<cr>
 nmap \\t :action ActivateProblemsViewToolWindow<cr>
 nmap \\l :action ActivateProblemsViewToolWindow<cr>
-nmap \\s :action ActivateSonarLintToolWindow<cr>
+nmap \\s :action ActivateStructureToolWindow<cr>
 nmap \\; :action ActivateDatabaseToolWindow<cr>
 nmap \\e :action ActivateEndpointsToolWindow<cr>
 nmap \\g :action ActivatePullRequestsToolWindow<cr>
@@ -171,8 +171,8 @@ nmap <Leader>= :vsplit<CR>
 nmap <Leader>- :split<CR>
 nmap <Leader>x :action Unsplit<CR>
 nmap <Leader>ww :action CloseEditor<CR>
-nmap <Leader>wr :action CloseAllToTheRight<CR>
-nmap <Leader>wl :action CloseAllToTheLeft<CR>
+nmap <Leader>wl :action CloseAllToTheRight<CR>
+nmap <Leader>wh :action CloseAllToTheLeft<CR>
 nmap <Leader>wo :action CloseAllEditorsButActive<CR>
 nmap <Leader>wa :action CloseContent<CR>
 nmap <Leader>wp :action CloseProject<CR>
@@ -194,29 +194,66 @@ nmap <C-i> :action Forward<CR>
 nmap <s-H> :action PreviousTab<CR>
 nmap <s-L> :action NextTab<CR>
 
-nmap \\h :action ShowHarpoon<CR>
-nmap <Leader>h :action AddToHarpoon<CR>
-nmap <Leader>1 :action GotoHarpoon1<CR>
-nmap <Leader>2 :action GotoHarpoon2<CR>
-nmap <Leader>3 :action GotoHarpoon3<CR>
-nmap <Leader>4 :action GotoHarpoon4<CR>
-nmap <Leader>5 :action GotoHarpoon5<CR>
-nmap <Leader>6 :action GotoHarpoon6<CR>
-nmap <Leader>7 :action GotoHarpoon7<CR>
-nmap <Leader>8 :action GotoHarpoon8<CR>
-nmap <Leader>9 :action GotoHarpoon9<CR>
+nmap <c-s-H> :action com.mnw.tabmover.actions.MoveTabUpAction<CR>
+nmap <c-s-L> :action com.mnw.tabmover.actions.MoveTabDownAction<CR>
 
-" alernate-file
+" HarpoonerAddFile
+" HarpoonerNextFileAction
+" HarpoonerOpenFile0
+" HarpoonerOpenFile1
+" HarpoonerOpenFile2
+" HarpoonerOpenFile3
+" HarpoonerOpenFile4
+" HarpoonerOpenFile5
+" HarpoonerOpenFile6
+" HarpoonerOpenFile7
+" HarpoonerOpenFile8
+" HarpoonerOpenFile9
+" HarpoonerPreviousFileAction
+" HarpoonerQuickMenu
+"AddToHarpoon
+" ca.alexgirard.harpoonIJ.mainGroup
+" GotoHarpoon1
+" GotoHarpoon2
+" GotoHarpoon3
+" GotoHarpoon4
+" GotoHarpoon5
+" SelectHarpoonItem
+" SetHarpoon1
+" SetHarpoon2
+" SetHarpoon3
+" SetHarpoon4
+" SetHarpoon5
+" ShowHarpoon
+nmap \\h :action OpenHarpoon<CR>
+nmap <Leader>h :action AddFile<CR>
+nmap <Leader>1 :action com.obertdev.harpoonminimal.actions.OpenFile1Action<CR>
+nmap <Leader>2 :action com.obertdev.harpoonminimal.actions.OpenFile2Action<CR>
+nmap <Leader>3 :action com.obertdev.harpoonminimal.actions.OpenFile3Action<CR>
+nmap <Leader>4 :action com.obertdev.harpoonminimal.actions.OpenFile4Action<CR>
+nmap <Leader>5 :action com.obertdev.harpoonminimal.actions.OpenFile5Action<CR>
+" nmap <Leader>6 :action HarpoonerOpenFile5<CR>
+" nmap <Leader>7 :action HarpoonerOpenFile6<CR>
+" nmap <Leader>8 :action HarpoonerOpenFile7<CR>
+
+" nmap <Leader>6 :action GotoHarpoon6<CR>
+" nmap <Leader>7 :action GotoHarpoon7<CR>
+" nmap <Leader>8 :action GotoHarpoon8<CR>
+" nmap <Leader>9 :action GotoHarpoon9<CR>
+
+
+"marks
+nmap <Leader>fm :action ShowBookmarks<CR>
+nmap mm :action ToggleBookmark<CR>
+nmap \\b :action ActivateBookmarksToolWindow<CR>
+
+nmap <Leader>mj :action GotoNextBookmark<CR>
+nmap <Leader>mk :action GotoPreviousBookmark<CR>
+" alternate-file
 nmap <leader><tab> :e#<CR>
 
 
-
-
 " alt + j/k to move line(s) up and down in visual and normal mode
-nmap <A-J> :action MoveLineDown<CR>
-nmap <A-K> :action MoveLineUp<CR>
-xmap <A-J> :action MoveLineDown<CR>
-xmap <A-K> :action MoveLineUp<CR>
 
 " debug
 nmap <Leader>db :action ToggleLineBreakpoint<CR>

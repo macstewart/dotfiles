@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-# inspired by script from https://github.com/ThePrimeagen/.dotfiles of the same name
-
 ####################
 ### arg handling
 ####################
 usage() {
-    echo "Usage: tmux-sessionizer [-d dir] [-h] [-c] [identifier]"
+    echo "Usage: tmux-assist [-d dir] [-h] [-c] [identifier]"
     echo ""
     echo "  -c: allow creating a new session dir if it doesn't exist"
     echo "  -d: use specific dir, otherwise it uses projectDirs"

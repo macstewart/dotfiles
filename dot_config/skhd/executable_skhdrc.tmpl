@@ -70,11 +70,12 @@ ctrl + alt + shift - 7 : yabai -m window --ratio abs:0.75
 ctrl + alt - r : yabai -m window --toggle split
 alt - f : yabai -m window --toggle float
 
-ctrl + alt + cmd + shift - k : yabToggleWindow wezterm
 ctrl + alt + cmd + shift - o : yabToggleWindow obsidian
 ctrl + alt + cmd + shift - m : yabToggleWindow telegram
 ctrl + alt + cmd + shift - tab : yabToggleWindow display
-{{- if eq .chezmoi.hostname "mackenziestewart" }}
+{{- if eq .chezmoi.os "darwin"  }}
+# ctrl + alt + cmd + shift - k : yabToggleWindow wezterm
+ctrl + alt + cmd + shift - k : yabToggleWindow ghostty
 ctrl + alt + cmd + shift - p : yabToggleWindow postman
 ctrl + alt + cmd + shift - s : yabToggleWindow slack
 ctrl + alt + cmd + shift - t : yabToggleWindow teams

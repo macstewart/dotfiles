@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# File picker for tmux sessions
+# Uses the current session's working directory as the starting point
+
+####################
+### arg handling
+####################
+usage() {
+    echo "Usage: tmux-filepicker [-d dir] [-h] [-p pattern] [filepath]"
+    echo ""
+    echo "  -d: use specific dir, otherwise it uses current tmux session directory"
+    echo "  -h: show this help message"
+    echo "  -p: file pattern to search for (e.g. '*.md' or '*.{js,ts}')"
+    echo "  filepath: select a specific file instead of selecting from the list"
+}
+
+pattern="*"
+while getopts "d:hp:" opt; do
+    case $opt in
+
+        d) dir=$OPTARG; 
+            ;;
+        h) usage; exit 0
+            ;;
+        p) pattern=$OPTARG;
+            ;;
+        \?) usage; exit 1
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+####################
+### file selection
+####################
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+elif [[ -n $dir ]]; then
+    search_dir="$dir"
+else
+    # Get the current tmux session's working directory
+    if [[ -n $TMUX ]]; then
+        session_name=$(tmux display-message -p '#S')
+        search_dir=$(tmux display-message -p -t "$session_name" '#{pane_current_path}')
+    else
+        search_dir="$PWD"
+    fi
+fi
+
+if [[ -z $selected ]]; then
+    if [[ ! -d "$search_dir" ]]; then
+        echo "Directory not found: $search_dir"
+        exit 1
+    fi
+    
+    # Use find to get all files matching the pattern
+    # Use fzf to select a file with preview
+    selected=$(find "$search_dir" -type f -name "$pattern" | \
+               fzf --ansi --height 100% --keep-right --border-label "filepicker" \
+                   --info hidden --no-scrollbar --tabstop 4 \
+                   --preview 'bat -f --style=numbers --color=always {}' \
+                   --preview-window up,60%)
+fi
+
+####################
+### output selected file
+####################
+
+# Output the selected file path
+if [[ -n $selected ]]; then
+    echo "$selected"
+fi

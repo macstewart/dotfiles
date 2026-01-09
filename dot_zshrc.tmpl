@@ -3,6 +3,10 @@ if [[ $DEBUG == 1 ]]; then
     zmodload zsh/zprof
 fi
 
+preexec () {
+  echo -n "\\x1b]133;A\\x1b\\"
+}
+
 source $DOTZSH/config.zsh
 
 source $DOTZSH/osfunc.zsh
@@ -32,14 +36,15 @@ unset __conda_setup
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+source $DOTZSH/plugins.zsh
+
 source $DOTZSH/bindings.zsh
 
 source $DOTZSH/comp.zsh
-
-source $DOTZSH/plugins.zsh
 
 eval "$(starship init zsh)"
 
 if [[ $DEBUG == 1 ]]; then
     zprof
 fi
+

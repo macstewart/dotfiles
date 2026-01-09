@@ -3,6 +3,7 @@ alias nnn='nnn -e -x'
 alias cat='bat'
 
 alias vi="nvim"
+alias vj="nvim -c 'setfiletype json' -c 'Format'"
 alias vim="nvim"
 alias vv="nvim ."
 alias vr="nvim -c 'Telescope oldfiles'"
@@ -11,6 +12,15 @@ alias cd='cd -P'
 
 alias ld='lazydocker'
 alias lg='lazygit'
+alias llq='llm -m gemini-flash'
+alias jq\?='llm jq'
+alias llc='llm -c'
+alias cmd='llm cmd'
+
+alias y=pbcopy
+alias v=pbpaste
+
+alias 2csv='jq -r -f ~/.config/utils/jq/tocsv.jq'
 
 alias dc='docker compose'
 alias dcupdate='docker compose pull && docker compose up --force-recreate --build -d && docker image prune -f'
@@ -41,12 +51,15 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 alias dot='chezmoi'
+alias wm='workmux'
 
 alias s='suck'
 alias b='blow'
 
 alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysql -h$SERVITOR_HOST -u$SERVITOR_DB_USER"
 alias db="export MYSQL_PWD=$LOCAL_DB_PASS; mysql -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
+alias dbi="export MYSQL_PWD=$LOCAL_DB_PASS; mycli -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
+alias dbdump="export MYSQL_PWD=$LOCAL_DB_PASS; mysqldump -h$LOCAL_DB_HOST -u$LOCAL_DB_USER"
 alias dbe="noglob localdbe"
 alias sdbe="noglob servitordbe"
 alias dbc="setdb"
@@ -56,3 +69,6 @@ alias k="kubectl"
 
 alias z="zed"
 
+alias ,showcsv=" | tr '\t' ',' \| csvlens"
+
+alias claude="/Users/mackenziestewart/.claude/local/claude"

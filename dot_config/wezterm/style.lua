@@ -13,4 +13,22 @@ StyleConfig = {
 	use_fancy_tab_bar = false,
 	-- inactive_pane_hsb = { saturation = 0.6, brightness = 0.4 },
 	show_new_tab_button_in_tab_bar = false,
+	-- window_frame = {
+	-- 	border_left_width = "0.2cell",
+		-- border_right_width = "0.2cell",
+		-- border_bottom_height = "0.2cell",
+		-- border_top_height = "0.1cell",
+		-- border_left_color = "green",
+		-- border_right_color = "green",
+		-- border_bottom_color = "green",
+	-- 	border_top_color = "green",
+	-- },
+	inactive_pane_hsb = {
+		saturation = 0.5,
+		brightness = 0.5,
+	},
+	active_pane_hsb = {
+		saturation = 0.5,
+		brightness = 0.5,
+	},
 }
