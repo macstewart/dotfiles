@@ -26,6 +26,7 @@ function getTargetWindow() {
 }
 
 function refocusManagedWindow() {
+    # current=( $(getCurrentSpace) )
     firstManagedWindow=$(yabai -m query --windows --space | gojq -r '[.[] | select(."is-floating" == false and .layer == "normal")][0] | .id') 
     if [[ ! -z $firstManagedWindow ]]; then
         yabai -m window $firstManagedWindow --focus
@@ -37,8 +38,17 @@ function sendToShelf() {
     yabai -m window $winId --space $SHELF_SPACE
     source /tmp/yab_prev_win
     if [[ ! -z $YAB_PREV_WIN && $YAB_PREV_WIN != $winId ]]; then
-        yabai -m window $YAB_PREV_WIN --focus
-        echo "Moved focus to previous window $YAB_PREV_WIN"
+        # Check if previous window is on current space before focusing
+        prevWinSpace=$(yabai -m query --windows --window $YAB_PREV_WIN 2>/dev/null | gojq -r '.space')
+        if [[ ! -z $prevWinSpace && $prevWinSpace == "${current[0]}" ]]; then
+            yabai -m window $YAB_PREV_WIN --focus
+            echo "Moved focus to previous window $YAB_PREV_WIN"
+        else
+            echo "Previous window not on current space, focusing managed window instead"
+            refocusManagedWindow
+        fi
+    else
+        refocusManagedWindow
     fi
 }
 
@@ -93,7 +103,18 @@ winSpace="${windowArr[1]}"
 winFocus="${windowArr[2]}"
 echo "prepull"
 if [[ $winSpace == "${current[0]}" && $winFocus == 'true' ]]; then
+    # Window is on current space and focused - hide it
     sendToShelf
-else
+elif [[ $winSpace == $SHELF_SPACE ]]; then
+    # Window is on shelf - pull it to current space
     pullFromShelf
+else
+    # Window is on another space (different monitor) - bring it here without using shelf
+    echo "YAB_PREV_WIN=${current[1]}" > /tmp/yab_prev_win
+    echo "Moving window $winId from space $winSpace to current space ${current[0]}"
+    yabai -m window $winId --space ${current[0]}
+    if [[ $? -eq 0 ]]; then
+        echo "Moving focus to window $winId"
+        yabai -m window $winId --focus
+    fi
 fi

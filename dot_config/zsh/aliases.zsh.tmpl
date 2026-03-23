@@ -65,11 +65,11 @@ alias sdbe="noglob servitordbe"
 alias dbc="setdb"
 # alias sdb="export MYSQL_PWD=$SERVITOR_DB_PASS; mysqlsh --host $SERVITOR_HOST --user $SERVITOR_DB_USER"
 alias kauth="source ,awsAuth"
+alias awsauth="source ,awsAuth"
 alias k="kubectl"
 
 alias z="zed"
 
 alias ,showcsv=" | tr '\t' ',' \| csvlens"
 {{- if eq .chezmoi.hostname "mackenziestewart" }}
-alias claude="/Users/mackenziestewart/.claude/local/claude"
 {{- end }}
