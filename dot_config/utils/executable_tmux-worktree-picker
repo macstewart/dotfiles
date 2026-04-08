@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+session_dir=$(tmux display-message -p '#{session_path}')
+
+json=$(cd "$session_dir" && workmux list --json 2>/dev/null)
+
+if [[ -z "$json" || "$json" == "[]" ]]; then
+    echo "session_dir: $session_dir"
+    echo "No worktrees found for current session"
+    read -n 1
+    exit 1
+fi
+
+tmpfile=$(mktemp)
+echo "$json" > "$tmpfile"
+trap 'rm -f "$tmpfile"' EXIT
+
+selected=$(jq -r '.[].handle' "$tmpfile" \
+    | fzf --height 100% --border-label "worktrees" --info hidden --no-scrollbar \
+           --preview "jq '.[] | select(.handle == \"'{}'\")' \"$tmpfile\"" \
+           --preview-window right,60%)
+
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+cd "$session_dir" && workmux open "$selected"

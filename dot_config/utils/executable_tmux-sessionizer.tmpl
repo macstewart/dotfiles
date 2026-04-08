@@ -35,9 +35,9 @@ shift $((OPTIND-1))
 if [[ $# -eq 1 ]]; then
     selected=$1
 elif [[ -n $dir ]]; then
-    options=( $(find "$dir" -mindepth 1 -maxdepth 1 -type d) )
+    options=( $(find "$dir" -mindepth 1 -maxdepth 1 -type d -not -name '*__worktrees') )
 else
-    options=( $(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d) )
+    options=( $(find {{ .projectDirs | join " " }} -mindepth 1 -maxdepth 1 -type d -not -name '*__worktrees') )
     options+=($HOME/.local/share/chezmoi)
     options+=($HOME/syncthing/vaults/codemonkey)
 fi

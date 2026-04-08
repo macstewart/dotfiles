@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Outputs the effective directory for the current tmux window.
+# For worktree windows (wt|<name>), resolves the worktree path via workmux.
+# Otherwise, falls back to the session path.
+
+window_name=$(tmux display-message -p '#W')
+
+if [[ "$window_name" == wt\|* ]]; then
+    handle="${window_name#wt|}"
+    handle="${handle%% *}"
+    session_dir=$(tmux display-message -p '#{session_path}')
+    worktree_path=$(cd "$session_dir" && workmux list --json | jq -r --arg h "$handle" '.[] | select(.handle == $h) | .path' | head -1)
+    if [[ -n "$worktree_path" ]]; then
+        echo "$worktree_path"
+        exit 0
+    fi
+fi
+
+tmux display-message -p '#{session_path}'

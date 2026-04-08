@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+lazygit -p "$(~/.config/utils/tmux-window-dir)"
