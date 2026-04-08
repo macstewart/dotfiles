@@ -16,6 +16,16 @@ M.Prev_quickfix_item = function()
     end
 end
 
+M.Remove_quickfix_item = function()
+  local qflist = vim.fn.getqflist()
+  local idx = vim.fn.line(".")
+  if #qflist == 0 then return end
+  table.remove(qflist, idx)
+  vim.fn.setqflist(qflist, "r")
+  if idx > #qflist then idx = #qflist end
+  if idx > 0 then vim.api.nvim_win_set_cursor(0, { idx, 0 }) end
+end
+
 M.Async_format = function(args)
   local range = nil
   if args.count ~= -1 then

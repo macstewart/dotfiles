@@ -46,7 +46,14 @@ map("n", "<leader>kq", function()
   require("utils").Prev_quickfix_item()
 end, { desc = "next quickfix" })
 map("n", "<leader>jk", "<cmd>cp<CR>", { desc = "prev quickfix" })
-map("n", "\\q", ":ccl<cr>:lcl<cr>", { desc = "toggle quickfix" })
+map("n", "\\q", ":ccl<cr>:lcl<cr>", { desc = "close quickfix" })
+map("n", "dd", function()
+  if vim.bo.buftype == "quickfix" then
+    require("utils").Remove_quickfix_item()
+  else
+    return "dd"
+  end
+end, { expr = true, desc = "remove quickfix item or normal dd" })
 
 map("n", "<C-S-p>", ":echo 'csp works!'<cr>")
 -- map("n", "<C-S-M-Enter>", ":echo 'csa enter works!'<cr>")

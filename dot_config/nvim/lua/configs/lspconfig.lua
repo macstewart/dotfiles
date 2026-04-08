@@ -1,24 +1,7 @@
--- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
+local servers = { "html", "cssls", "sqlls" }
 
--- EXAMPLE
-local servers = { "html", "cssls", "jdtls", "sqlls"}
-local nvlsp = require "nvchad.configs.lspconfig"
-
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
 end
-
--- configuring single server, example: typescript
-lspconfig.sqlls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-}
