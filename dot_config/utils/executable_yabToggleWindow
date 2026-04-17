@@ -10,6 +10,7 @@ configuredWindowFilters[obsidian]='[.[] | select(.app == "Obsidian" and ."is-flo
 configuredWindowFilters[wezterm]='[.[] | select(.app == "WezTerm" and ."is-floating" == true)][0]'
 configuredWindowFilters[ghostty]='[.[] | select(.app == "Ghostty" and ."is-floating" == true and .layer == "normal")][0]'
 configuredWindowFilters[telegram]='[.[] | select(.app == "Telegram" and ."is-floating" == true)][0]'
+configuredWindowFilters[claude]='[.[] | select(.app == "Claude" and ."is-floating" == true)][0]'
 
 configuredWindowFilters[postman]='[.[] | select(.app == "Postman" and ."is-floating" == true)][0]'
 configuredWindowFilters[orion]='[.[] | select(.app == "Orion" and ."is-floating" == true)][0]'

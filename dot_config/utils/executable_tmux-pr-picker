@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+repo=$(tmux display-message -p '#{session_name}')
+org="SolaceDev"
+full_repo="${org}/${repo}"
+
+prs=$(gh pr list --repo="$full_repo" --search="-label:dependabot" --json number,title,author,headRefName,body --limit 50 2>&1)
+
+if [[ $? -ne 0 || -z "$prs" || "$prs" == "[]" ]]; then
+    echo "No open PRs found for $full_repo"
+    read -n 1
+    exit 1
+fi
+
+tmpfile=$(mktemp)
+echo "$prs" > "$tmpfile"
+trap 'rm -f "$tmpfile"' EXIT
+
+selected=$(jq -r '.[] | "#\(.number)\t\(.title) [\(.author.login)]"' "$tmpfile" \
+    | fzf --height 100% \
+           --border-label " ${full_repo} PRs " \
+           --info hidden --no-scrollbar \
+           --delimiter $'\t' \
+           --with-nth '1..' \
+           --preview "$HOME/.config/utils/tmux-pr-preview {1} $tmpfile" \
+           --preview-window right,60%,wrap)
+
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+pr_number=$(echo "$selected" | cut -f1 | tr -d '#')
+pr_json=$(jq --argjson n "$pr_number" '.[] | select(.number == $n)' "$tmpfile")
+title=$(echo "$pr_json" | jq -r '.title')
+body=$(echo "$pr_json" | jq -r '.body // "No description provided"')
+
+# Build Jira link if title starts with DATAGO
+jira_section=""
+if [[ "$title" =~ ^(DATAGO-[0-9]+) ]]; then
+    ticket="${BASH_REMATCH[1]}"
+    jira_section="## Jira Ticket
+
+[${ticket}](https://sol-jira.atlassian.net/browse/${ticket})
+
+Review the Jira ticket for business requirements and acceptance criteria. Cross-reference the code changes against these requirements.
+"
+fi
+
+# Generate prompt file
+promptfile=$(mktemp "${TMPDIR:-/tmp}/pr-prompt-XXXXXX.md")
+cat > "$promptfile" << EOF
+# PR Review: ${full_repo}#${pr_number}
+
+## Pull Request Details
+
+- **Repository:** ${full_repo}
+- **PR:** #${pr_number}
+- **Title:** ${title}
+
+## Description
+
+${body}
+
+${jira_section}## Task
+
+Analyze this pull request and provide:
+
+1. **Change Walkthrough** — summarize what this PR is changing and why, file by file
+2. **Code Issues** — highlight bugs, logic errors, performance concerns, security issues, or style problems
+3. **Business Requirements** — flag anything that may not align with the PR description${jira_section:+ or the Jira ticket requirements}
+4. **Questions** — list anything unclear or worth discussing with the author
+EOF
+
+session_dir=$(tmux display-message -p '#{session_path}')
+cd "$session_dir" && workmux add --pr "$pr_number" \
+    --background \
+    --prompt-file "$promptfile"
+
+rm -f "$promptfile"

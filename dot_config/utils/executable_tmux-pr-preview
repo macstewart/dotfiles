@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+num=$(echo "$1" | tr -d '#')
+jq -r --argjson n "$num" '
+  .[] | select(.number == $n) |
+  "PR #\(.number)\n" +
+  "Title: \(.title)\n" +
+  "Author: \(.author.login)\n" +
+  "Branch: \(.headRefName)\n" +
+  "───────────────────────────────\n" +
+  (.body // "No description")
+' "$2"
