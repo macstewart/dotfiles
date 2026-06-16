@@ -7,3 +7,4 @@ panes:
     focus: true
   - split: horizontal # Second pane with default shell
 nerdfont: true
+theme: obsidian-pop

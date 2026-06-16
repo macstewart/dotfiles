@@ -1,4 +1,6 @@
+-- GitHub Copilot disabled — subscription cancelled.
 return {
+	--[=[
 	{
 		"zbirenbaum/copilot.lua",
 		opts = {
@@ -47,4 +49,5 @@ return {
 		cmd = "Copilot",
 		event = "InsertEnter",
 	},
+	]=]
 }
