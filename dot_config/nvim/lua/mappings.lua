@@ -55,6 +55,10 @@ map("n", "dd", function()
   end
 end, { expr = true, desc = "remove quickfix item or normal dd" })
 
+-- exit and save / exit without saving
+map({ "n", "i", "v" }, "<C-z>", "<cmd>xa<cr>", { desc = "save all and quit" })
+map({ "n", "i", "v" }, "<C-q>", "<cmd>qa!<cr>", { desc = "quit without saving" })
+
 map("n", "<C-S-p>", ":echo 'csp works!'<cr>")
 -- map("n", "<C-S-M-Enter>", ":echo 'csa enter works!'<cr>")
 map("n", "<T-p>", ":echo  'tp works!'<cr>")
