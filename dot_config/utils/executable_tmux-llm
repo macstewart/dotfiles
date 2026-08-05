@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+target="${1:-}"
+# Fail before spending a prompt: an unexpanded #{pane_id} is non-empty but
+# unusable, and the paste would silently no-op after the model had already run.
+if [[ -z $target ]] || ! tmux display-message -p -t "$target" '' 2>/dev/null; then
+    printf '\e[1;31mbad target pane: %s\e[0m\n\npress any key' "${target:-<empty>}"
+    read -rn 1
+    exit 1
+fi
+
+histfile="${XDG_STATE_HOME:-$HOME/.local/state}/tmux-llm.history"
+mkdir -p "$(dirname "$histfile")"
+touch "$histfile"
+history -r "$histfile"
+
+read -r -e -p $'\e[1;35mllm❯\e[0m ' prompt
+[[ -z ${prompt// /} ]] && exit 0
+
+history -s "$prompt"
+history -w "$histfile"
+
+printf '\n\e[2mthinking…\e[0m'
+if ! out=$(llm --no-stream -x "$prompt" 2>&1); then
+    printf '\r\e[K\e[1;31m%s\e[0m\n\npress any key' "$out"
+    read -rn 1
+    exit 1
+fi
+
+if [[ -z ${out//[[:space:]]/} ]]; then
+    printf '\r\e[K\e[1;31mempty response\e[0m\n\npress any key'
+    read -rn 1
+    exit 1
+fi
+
+printf '%s' "$out" | ~/.config/utils/tmux-yank
+
+# Bracketed paste so a multi-line answer lands in the pane's edit buffer
+# instead of the shell running every line but the last.
+tmux set-buffer -b tmux-llm -- "$out"
+tmux paste-buffer -b tmux-llm -d -p -t "$target"
