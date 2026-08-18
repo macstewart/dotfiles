@@ -11,24 +11,37 @@ return {
 
       local launcher_jar = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
       local config_dir = jdtls_path .. "/config_mac_arm"
+      local lombok_jar = jdtls_path .. "/lombok.jar"
+
+      local jvm_args = {
+        "/Library/Java/JavaVirtualMachines/ibm-semeru-open-25.jdk/Contents/Home/bin/java",
+        "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+        "-Dosgi.bundles.defaultStartLevel=4",
+        "-Declipse.product=org.eclipse.jdt.ls.core.product",
+        "-Dlog.level=ERROR",
+        "-Dsun.zip.disableMemoryMapping=true",
+        "-Xms256m",
+        "-Xmx2G",
+        "-XX:+UseParallelGC",
+        "-XX:GCTimeRatio=4",
+        "-XX:AdaptiveSizePolicyWeight=90",
+        "--add-modules=ALL-SYSTEM",
+        "--add-opens", "java.base/java.util=ALL-UNNAMED",
+        "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+      }
+
+      -- without the agent, jdtls can't see lombok-generated members and every
+      -- getter/setter/builder call resolves to nothing
+      if vim.fn.filereadable(lombok_jar) == 1 then
+        table.insert(jvm_args, "-javaagent:" .. lombok_jar)
+      end
 
       local config = {
-        cmd = {
-          "/Library/Java/JavaVirtualMachines/ibm-semeru-open-25.jdk/Contents/Home/bin/java",
-          "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-          "-Dosgi.bundles.defaultStartLevel=4",
-          "-Declipse.product=org.eclipse.jdt.ls.core.product",
-          "-Dlog.protocol=true",
-          "-Dlog.level=ALL",
-          "-Xms128m",
-          "-Xmx512m",
-          "--add-modules=ALL-SYSTEM",
-          "--add-opens", "java.base/java.util=ALL-UNNAMED",
-          "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+        cmd = vim.list_extend(jvm_args, {
           "-jar", launcher_jar,
           "-configuration", config_dir,
           "-data", workspace_dir,
-        },
+        }),
         root_dir = jdtls.setup.find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
         on_attach = function(client, bufnr)
           nvlsp.on_attach(client, bufnr)
@@ -65,7 +78,11 @@ return {
         end,
       })
 
-      jdtls.start_or_attach(config)
+      -- lazy loads this plugin *during* the FileType event, so the autocmd above
+      -- misses the buffer that triggered the load
+      if vim.bo.filetype == "java" then
+        jdtls.start_or_attach(config)
+      end
     end,
   },
 }
