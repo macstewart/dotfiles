@@ -79,11 +79,20 @@ local function onKey(e)
 
   if role then
     if e:getType() == types.keyDown then
+      local mods = modifierNames(e:getFlags())
+      -- Chording role keys: holding caps and tapping tab should send ctrl-tab,
+      -- and caps must not then emit escape on release.
+      for heldCode, heldRole in pairs(ROLES) do
+        if held[heldCode] then
+          held[heldCode].used = true
+          for _, mod in ipairs(heldRole.mods) do table.insert(mods, mod) end
+        end
+      end
       -- Auto-repeat re-fires keyDown; keep the original press time.
       held[code] = held[code] or {
         at = hs.timer.secondsSinceEpoch(),
         used = false,
-        mods = modifierNames(e:getFlags()),
+        mods = mods,
       }
     else
       local press = held[code]
@@ -160,6 +169,17 @@ local function deskKeyboardAttached()
   return false
 end
 
+-- The launchd agent applies the mapping unconditionally, so it can strand the
+-- remapped keys as dead F17-F19 while the tap is off. Undo that if it happens.
+M.reconciler = hs.timer.doEvery(30, function()
+  if M.enabled then return end
+  hs.task.new("/usr/bin/hidutil", function(_, stdout)
+    if not M.enabled and stdout:find("HIDKeyboardModifierMappingSrc", 1, true) then
+      hidutil(CLEARED)
+    end
+  end, { "property", "--get", "UserKeyMapping" }):start()
+end)
+
 M.usbWatcher = hs.usb.watcher.new(function(event)
   if event.productName == DESK_KEYBOARD then
     if event.eventType == "added" then M.disable() else M.enable() end
@@ -170,9 +190,6 @@ end):start()
 
 if deskKeyboardAttached() then
   M.disable()
-  -- The launchd agent applies the mapping at login regardless; if it wins the
-  -- race with Hammerspoon starting, clear it again.
-  hs.timer.doAfter(5, function() if not M.enabled then M.disable() end end)
 else
   M.enable()
 end
