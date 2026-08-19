@@ -7,3 +7,8 @@ dot_xorg.conf
 {{- else if ne .chezmoi.os "darwin" }}
 {{- end }}
 
+{{- if ne .chezmoi.os "darwin" }}
+dot_hammerspoon/
+private_Library/
+{{- end }}
+

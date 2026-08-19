@@ -18,6 +18,7 @@ Managed with [chezmoi](https://chezmoi.io)
 ## macos
 - [yabai](dot_config/yabai)
 - [skhd](dot_config/skhd)
+- [hammerspoon](dot_hammerspoon) (caps/escape dual-role keys, karabiner replacement)
 ## both
 - [neovim](dot_config/nvim)
 - [surfingkeys](dot_config/surfingkeys) (w/ vivaldi)
