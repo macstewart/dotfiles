@@ -1,5 +1,8 @@
 hs.console.clearConsole()
 
+-- The keymap layer is dead without this process, so don't rely on remembering to start it.
+hs.autoLaunch(true)
+
 keyremap = require("keyremap")
 
 hs.ipc.cliInstall()

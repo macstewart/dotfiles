@@ -8,6 +8,8 @@
 	<array>
 		<string>/usr/bin/hidutil</string>
 		<string>property</string>
+		<string>--matching</string>
+		<string>{"Product":"Apple Internal Keyboard / Trackpad"}</string>
 		<string>--set</string>
 		<string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x70000006D},{"HIDKeyboardModifierMappingSrc":0x700000029,"HIDKeyboardModifierMappingDst":0x70000006E},{"HIDKeyboardModifierMappingSrc":0x70000002B,"HIDKeyboardModifierMappingDst":0x70000006C}]}</string>
 	</array>

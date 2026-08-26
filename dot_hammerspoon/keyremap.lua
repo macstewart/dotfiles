@@ -1,9 +1,10 @@
 -- Dual-role keys without Karabiner's DriverKit extension.
 --
--- Layer 1 (hidutil, HID level, no permissions): caps_lock -> F18, escape -> F19, tab -> F17.
+-- Layer 1 (hidutil, HID level, no permissions): caps_lock -> F18, escape -> F19, tab -> F17,
+--   scoped with --matching to the built-in keyboard only. External keyboards do their own
+--   remapping in firmware, so a global mapping would stomp on theirs.
 --   Applied at login by ~/Library/LaunchAgents/com.mackenziestewart.keyremap.plist,
---   and re-applied here on enable / keyboard attach (hidutil mappings are per-device
---   and are lost when a device reconnects or the machine reboots).
+--   and re-applied here on enable (hidutil mappings are lost on reboot).
 -- Layer 2 (this file, CGEventTap, Accessibility permission only):
 --   F18 held -> ctrl flag on following keys, F18 tapped alone -> escape
 --   F19 held -> hyper (cmd+alt+ctrl+shift) flag on following keys
@@ -14,8 +15,10 @@
 
 local M = { enabled = false }
 
--- Auto-disable while this keyboard is attached; it does the remapping in firmware.
-local DESK_KEYBOARD = "Moonlander Mark I"
+-- Only this keyboard gets the hidutil mapping. Externals are left alone, so the tap
+-- below never sees F17-F19 from them and their firmware layers pass through untouched.
+local BUILTIN_KEYBOARD = "Apple Internal Keyboard / Trackpad"
+local MATCHING = string.format('{"Product":"%s"}', BUILTIN_KEYBOARD)
 
 -- Longer than this and a lone press is treated as a hold, emitting nothing.
 local TAP_TIMEOUT = 0.2
@@ -46,7 +49,8 @@ local MAPPING = keyMapping({
 local CLEARED = keyMapping({})
 
 local function hidutil(json)
-  hs.task.new("/usr/bin/hidutil", nil, { "property", "--set", json }):start()
+  hs.task.new("/usr/bin/hidutil", nil,
+    { "property", "--matching", MATCHING, "--set", json }):start()
 end
 
 local ROLES = {
@@ -162,36 +166,19 @@ function M.reassert()
   tap:start()
 end
 
-local function deskKeyboardAttached()
-  for _, device in ipairs(hs.usb.attachedDevices() or {}) do
-    if device.productName == DESK_KEYBOARD then return true end
-  end
-  return false
-end
-
--- The launchd agent applies the mapping unconditionally, so it can strand the
--- remapped keys as dead F17-F19 while the tap is off. Undo that if it happens.
+-- The launchd agent and this module can disagree (agent applies at login, tap may be
+-- off; a reboot drops the mapping while the tap is on). Poll and reconcile both ways.
 M.reconciler = hs.timer.doEvery(30, function()
-  if M.enabled then return end
   hs.task.new("/usr/bin/hidutil", function(_, stdout)
-    if not M.enabled and stdout:find("HIDKeyboardModifierMappingSrc", 1, true) then
+    local mapped = stdout:find("HIDKeyboardModifierMappingSrc", 1, true) ~= nil
+    if M.enabled and not mapped then
+      hidutil(MAPPING)
+    elseif not M.enabled and mapped then
       hidutil(CLEARED)
     end
-  end, { "property", "--get", "UserKeyMapping" }):start()
+  end, { "property", "--matching", MATCHING, "--get", "UserKeyMapping" }):start()
 end)
 
-M.usbWatcher = hs.usb.watcher.new(function(event)
-  if event.productName == DESK_KEYBOARD then
-    if event.eventType == "added" then M.disable() else M.enable() end
-  elseif event.eventType == "added" and M.enabled then
-    hs.timer.doAfter(1, function() if M.enabled then hidutil(MAPPING) end end)
-  end
-end):start()
-
-if deskKeyboardAttached() then
-  M.disable()
-else
-  M.enable()
-end
+M.enable()
 
 return M
