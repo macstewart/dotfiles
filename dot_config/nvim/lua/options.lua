@@ -4,6 +4,8 @@ require "nvchad.options"
 
 local o = vim.o
 o.relativenumber = true
+-- nvchad sets this to "number", which only tints the line number
+o.cursorlineopt = "both"
 o.wrap = false
 o.cmdheight = 1
 local api = vim.api

@@ -8,10 +8,12 @@ local M = {}
 M.base46 = {
 	theme = "catppuccin",
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+	hl_override = {
+		-- base46 defaults (black2 / base01) are nearly indistinguishable from the bg
+		CursorLine = { bg = "one_bg3" },
+		CursorColumn = { bg = "one_bg3" },
+		CursorLineNr = { fg = "yellow", bold = true },
+	},
 }
 
 return M
