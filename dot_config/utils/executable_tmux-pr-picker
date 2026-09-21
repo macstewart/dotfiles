@@ -32,6 +32,7 @@ fi
 pr_number=$(echo "$selected" | cut -f1 | tr -d '#')
 pr_json=$(jq --argjson n "$pr_number" '.[] | select(.number == $n)' "$tmpfile")
 title=$(echo "$pr_json" | jq -r '.title')
+head_ref=$(echo "$pr_json" | jq -r '.headRefName')
 
 # Generate prompt file — delegate the review criteria to the wm-pr-review skill
 promptfile=$(mktemp "${TMPDIR:-/tmp}/pr-prompt-XXXXXX.md")
@@ -44,7 +45,13 @@ session_dir=$(tmux display-message -p '#{session_path}')
 # Snapshot existing windows so we can find the one workmux creates below
 before_ids=$(tmux list-windows -a -F '#{window_id}' | sort)
 
-cd "$session_dir" && workmux add --pr "$pr_number" \
+# Distinct branch/worktree names so a review never collides with a worktree
+# already checked out on the PR's own head branch.
+review_slug=$(echo "$head_ref" | tr '/' '-' | tr -cs '[:alnum:]-' '-' | sed 's/-\{2,\}/-/g; s/^-//; s/-$//')
+review_name="cr-${pr_number}-${review_slug}"
+
+cd "$session_dir" && workmux add --pr "$pr_number" "$review_name" \
+    --name "$review_name" \
     --background \
     --prompt-file "$promptfile"
 

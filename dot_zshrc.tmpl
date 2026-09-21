@@ -3,8 +3,11 @@ if [[ $DEBUG == 1 ]]; then
     zmodload zsh/zprof
 fi
 
+# Marks the start of command output for tmux's next-prompt/previous-prompt -o.
+# 133;A (prompt start) is deliberately not emitted from precmd: the flag would
+# land on the line zle then clears to draw the prompt, and tmux drops it.
 preexec () {
-  echo -n "\\x1b]133;A\\x1b\\"
+  echo -n "\\x1b]133;C\\x1b\\"
 }
 
 source $DOTZSH/config.zsh
