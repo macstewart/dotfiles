@@ -3,6 +3,8 @@
 # Closes the current tmux window. For worktree windows (wt|<name>), tears the
 # worktree down via workmux (which removes the window itself); falls back to a
 # plain kill-window if that fails or it isn't a worktree window.
+# All workmux output is routed to the tmux message line so run-shell never
+# spawns a pane to display it.
 
 window_name=$(tmux display-message -p '#W')
 
@@ -10,10 +12,12 @@ if [[ "$window_name" == wt\|* ]]; then
     handle="${window_name#wt|}"
     handle="${handle%% *}"
     session_dir=$(tmux display-message -p '#{session_path}')
-    if (cd "$session_dir" && workmux remove --force "$handle"); then
+    tmux display-message "workmux: removing $handle..."
+    if output=$(cd "$session_dir" && workmux remove --force "$handle" 2>&1); then
         exit 0
     fi
-    tmux display-message "workmux remove failed for $handle; killing window"
+    tmux display-message "workmux remove failed for $handle: $(printf '%s' "$output" | tail -1)"
 fi
 
 tmux kill-window
+exit 0

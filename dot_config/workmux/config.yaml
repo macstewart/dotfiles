@@ -8,3 +8,22 @@ panes:
   - split: horizontal # Second pane with default shell
 nerdfont: true
 theme: obsidian-pop
+
+# claude-flow role profiles, selected with `workmux add -a <profile>`.
+# Planner/worker/reviewer models live here; the orchestrator's is in flow-runner.
+agents:
+  flow-plan:
+    type: claude
+    args: [--model, opus, --effort, medium]
+  flow-plan-auto:
+    type: claude
+    args: [--model, opus, --effort, high]
+  flow-work:
+    type: claude
+    args: [--model, opus, --effort, high]
+  flow-work-light:
+    type: claude
+    args: [--model, sonnet, --effort, medium]
+  flow-review:
+    type: claude
+    args: [--model, opus, --effort, medium]
