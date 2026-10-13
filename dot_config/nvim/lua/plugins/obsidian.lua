@@ -25,6 +25,9 @@ return {
 			},
 		},
 
+		-- render-markdown.nvim handles rendering; obsidian's UI conflicts with it
+		ui = { enable = false },
+
 		-- see below for full list of options 👇
 	},
 }

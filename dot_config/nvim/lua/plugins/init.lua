@@ -37,7 +37,9 @@ return {
         "css",
         "java",
         "sql",
-        "json"
+        "json",
+        "markdown",
+        "markdown_inline",
       },
     },
   },
