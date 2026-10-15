@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Convert mysql CLI output on stdin to CSV on stdout.
+
+Handles both batch/TSV output (default when mysql's stdout is a pipe) and
+boxed table output (mysql -t / interactive style).
+"""
+import argparse
+import csv
+import re
+import sys
+
+# mysql batch mode escapes these in values unless --raw is used
+TSV_ESCAPES = {"n": "\n", "t": "\t", "\\": "\\", "0": "\0", "r": "\r"}
+
+
+def unescape(value):
+    return re.sub(r"\\(.)", lambda m: TSV_ESCAPES.get(m.group(1), m.group(0)), value)
+
+
+def parse_tsv(lines, raw):
+    for line in lines:
+        cells = line.rstrip("\n").split("\t")
+        yield cells if raw else [unescape(c) for c in cells]
+
+
+def parse_box(lines):
+    bounds = None
+    for line in lines:
+        line = line.rstrip("\n")
+        if line.startswith("+"):
+            bounds = [i for i, ch in enumerate(line) if ch == "+"]
+        elif line.startswith("|") and bounds:
+            # slice on border positions so values containing '|' survive
+            yield [line[a + 1 : b].strip() for a, b in zip(bounds, bounds[1:])]
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("-N", "--null", default="", metavar="TEXT",
+                        help="replacement for NULL values (default: empty)")
+    parser.add_argument("-d", "--delimiter", default=",", help="output delimiter")
+    parser.add_argument("-r", "--raw", action="store_true",
+                        help="input came from mysql --raw; skip unescaping")
+    parser.add_argument("--no-header", action="store_true", help="drop the header row")
+    args = parser.parse_args()
+
+    lines = [l for l in sys.stdin if l.strip()]
+    if not lines:
+        return
+
+    boxed = lines[0].startswith("+")
+    rows = parse_box(lines) if boxed else parse_tsv(lines, args.raw)
+
+    writer = csv.writer(sys.stdout, delimiter=args.delimiter, lineterminator="\n")
+    for index, row in enumerate(rows):
+        if index == 0:
+            if not args.no_header:
+                writer.writerow(row)
+            continue
+        writer.writerow([args.null if c == "NULL" else c for c in row])
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except BrokenPipeError:
+        sys.exit(0)
