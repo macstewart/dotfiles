@@ -35,7 +35,7 @@ title=$(echo "$pr_json" | jq -r '.title')
 head_ref=$(echo "$pr_json" | jq -r '.headRefName')
 
 # Generate prompt file — delegate the review criteria to the wm-pr-review skill
-promptfile=$(mktemp "${TMPDIR:-/tmp}/pr-prompt-XXXXXX.md")
+promptfile=$(mktemp "${TMPDIR:-/tmp}/pr-prompt-XXXXXX")
 cat > "$promptfile" << EOF
 Use the wm-pr-review skill to review this pull request (${full_repo}#${pr_number}: ${title}).
 EOF
@@ -50,12 +50,23 @@ before_ids=$(tmux list-windows -a -F '#{window_id}' | sort)
 review_slug=$(echo "$head_ref" | tr '/' '-' | tr -cs '[:alnum:]-' '-' | sed 's/-\{2,\}/-/g; s/^-//; s/-$//')
 review_name="cr-${pr_number}-${review_slug}"
 
+# Popups have no TMUX_PANE, so workmux can't infer the session from the pane
+# and falls back to cwd, which is ambiguous when several sessions share a path.
 cd "$session_dir" && workmux add --pr "$pr_number" "$review_name" \
     --name "$review_name" \
+    --parent-session "$repo" \
     --background \
     --prompt-file "$promptfile"
+add_status=$?
 
 rm -f "$promptfile"
+
+if [[ $add_status -ne 0 ]]; then
+    echo
+    echo "workmux add failed (exit $add_status) — press any key to close"
+    read -rn 1
+    exit "$add_status"
+fi
 
 # Tag the review window with a per-window user option instead of renaming it.
 # tmux.style.conf keys the yellow "CR" styling off @wt_cr, so the window keeps
