@@ -4,7 +4,7 @@ repo=$(tmux display-message -p '#{session_name}')
 org="SolaceDev"
 full_repo="${org}/${repo}"
 
-prs=$(gh pr list --repo="$full_repo" --search="-label:dependabot" --json number,title,author,headRefName,body --limit 50 2>&1)
+prs=$(gh pr list --repo="$full_repo" --search="-label:dependabot" --json number,title,author,headRefName,body,isDraft --limit 50 2>&1)
 
 if [[ $? -ne 0 || -z "$prs" || "$prs" == "[]" ]]; then
     echo "No open PRs found for $full_repo"

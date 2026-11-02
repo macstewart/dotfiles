@@ -6,6 +6,10 @@ jq -r --argjson n "$num" '
   "Title: \(.title)\n" +
   "Author: \(.author.login)\n" +
   "Branch: \(.headRefName)\n" +
-  "───────────────────────────────\n" +
-  (.body // "No description")
+  "Draft: \(if .isDraft then "yes" else "no" end)\n" +
+  "───────────────────────────────"
 ' "$2"
+
+# glow sees a pipe under fzf and would otherwise strip colour
+jq -r --argjson n "$num" '.[] | select(.number == $n) | .body // "No description"' "$2" \
+  | CLICOLOR_FORCE=1 glow -s dark -w "${FZF_PREVIEW_COLUMNS:-80}" -
