@@ -1,0 +1,67 @@
+#!/bin/sh
+# Renders the agents status line into the global @agents_line option, which
+# status-format[1] displays via #{E:@agents_line}. Setting an option redraws
+# immediately, so callers (agent-state hook, focus/fold/close hooks) get
+# instant updates; status-format also runs this via #() as a periodic self-heal
+# for changes no hook sees (e.g. @wt_cr / @flow_state set on a window).
+#
+# Source of truth stays in tmux: per-pane @agent_state/@agent_unread (from
+# ~/.claude/hooks/tmux-agent-state.sh), per-window @wt_cr/@flow_state, and
+# global @agents_fold_<grp>. Prints nothing, so it is safe inside #().
+
+[ -n "$TMUX" ] || exit 0
+
+tab=$(printf '\t')
+fmt="#{pane_id}$tab#{@agent_state}$tab#{@agent_unread}$tab#{@wt_cr}$tab#{@flow_state}$tab#{session_name}$tab#{window_name}$tab#{b:pane_current_path}$tab#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}}"
+folds=$(tmux display -p '#{?@agents_fold_gen,1,0} #{?@agents_fold_wt,1,0} #{?@agents_fold_cr,1,0} #{?@agents_fold_flow,1,0}')
+
+line=$(tmux list-panes -a -F "$fmt" | awk -F "$tab" -v folds="$folds" '
+BEGIN {
+  # Catppuccin mocha, mirrors tmux.style.conf
+  black = "#181825"; dim = "#585b70"; red = "#f38ba8"; viewing_bg = "#45475a"
+  ngroups = split("gen wt cr flow", order, " ")
+  split(folds, f, " ")
+  for (i = 1; i <= ngroups; i++) folded[order[i]] = (f[i] == "1")
+  icon["gen"] = "✦";  accent["gen"] = dim;       bg["gen"] = "#262637"
+  icon["wt"] = "🌿";  accent["wt"] = "#a6e3a1";  bg["wt"] = "#293034"
+  icon["cr"] = "🔍";  accent["cr"] = "#f9e2af";  bg["cr"] = "#333036"
+  icon["flow"] = "🔀"; accent["flow"] = "#cba6f7"; bg["flow"] = "#2d293e"
+  scolor["working"] = "#fab387"; sicon["working"] = "🤖"
+  scolor["waiting"] = red;       sicon["waiting"] = "💬"
+  scolor["done"] = "#a6e3a1";    sicon["done"] = "✅"
+}
+$2 != "" {
+  # Ranges use p<id>: a literal % followed by digits is eaten by strftime in status-format.
+  pane = $1; sub(/^%/, "p", pane); state = $2; unread = $3
+  if ($4 != "") g = "cr"
+  else if ($5 != "") g = "flow"
+  else if ($7 ~ /^wt\|/) g = "wt"
+  else g = "gen"
+
+  name = (g == "gen") ? $6 ":" $8 : $7
+  sub(/^wt\|/, "", name)
+  gsub(/#/, "##", name)
+
+  c = (state in scolor) ? scolor[state] : dim
+  ic = (state in sicon) ? sicon[state] : "💤"
+  count[g]++
+  if (unread != "") has_unread[g] = 1
+  # $9: pane is on screen in an attached session (any client).
+  viewing = ($9 == "1")
+  if (viewing) has_viewing[g] = 1
+  entries[g] = entries[g] "#[range=user|" pane "]#[fg=" c "," (unread != "" ? "underscore" : "nounderscore") (viewing ? ",bold,bg=" viewing_bg : "") "] " ic " " name " #[norange" (viewing ? ",nobold,bg=" bg[g] : "") "]"
+}
+END {
+  out = "#[align=left,fill=" black ",bg=" black ",fg=" dim "] agents "
+  for (i = 1; i <= ngroups; i++) {
+    g = order[i]
+    if (!count[g]) continue
+    out = out "#[bg=" bg[g] "] #[range=user|fold_" g "]#[fg=" accent[g] (folded[g] && has_viewing[g] ? ",bold,bg=" viewing_bg : "") "]" (folded[g] ? "▸" : "▾") icon[g]
+    if (folded[g]) out = out " " count[g] (has_unread[g] ? "#[fg=" red "]*" : "") "#[norange]"
+    else out = out "#[norange]" entries[g]
+    out = out " #[bg=" black ",nobold] "
+  }
+  print out
+}')
+
+tmux set -g @agents_line "$line"
