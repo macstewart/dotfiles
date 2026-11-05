@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+# Keyboard mode for the agents bar: Cmd+a (Ghostty → User0) enters the AGENTS key table
+# (tmux.keybinds.conf). While @agents_mode is set the renderer numbers the
+# visible agents and highlights @agents_sel (a pane id).
+#
+#   tmux-agents-mode enter                  select the current pane (if an agent) or the first
+#   tmux-agents-mode exit
+#   tmux-agents-mode move <+1|-1>           move the selection through @agents_order
+#   tmux-agents-mode attention              select the next waiting, then unread, agent
+#   tmux-agents-mode go <client>            jump to the selection and exit
+#   tmux-agents-mode nth <n> <client>       jump to the nth visible agent and exit
+#   tmux-agents-mode act <action> <client>  run an action on the selection
+#   tmux-agents-mode help                   print the key reference (run in a popup by `?`)
+
+menu="$HOME/.config/utils/tmux-agent-menu"
+render="$HOME/.config/utils/tmux-agents-render"
+
+read -ra order <<< "$(tmux show -gqv @agents_order)"
+sel=$(tmux show -gqv @agents_sel)
+
+index_of() {
+    local i
+    for i in "${!order[@]}"; do
+        [ "${order[$i]}" = "$1" ] && { echo "$i"; return; }
+    done
+    echo -1
+}
+
+select_pane() { tmux set -g @agents_sel "$1"; "$render"; }
+
+leave() { tmux set -gu @agents_mode \; set -gu @agents_sel; "$render"; }
+
+jump() {
+    local pane=$1 client=$2
+    # Switch before re-rendering so the jump isn't held up by the render.
+    [ -n "$pane" ] && tmux switch-client -c "$client" -t "$pane"
+    leave
+}
+
+case $1 in
+help)
+    # Keep in sync with the AGENTS table in tmux.keybinds.conf.
+    b=$'\e[1m' d=$'\e[2m' r=$'\e[0m'
+    cat <<EOF
+${b}AGENTS mode${r}  ${d}(Cmd+a)${r}
+
+${b}Move${r}
+  j l → Tab        next agent
+  k h ← S-Tab      previous agent
+  n                next waiting, then unread
+
+${b}Jump${r} ${d}(leaves mode)${r}
+  Enter Space      jump to selected
+  1-9              jump to numbered agent
+
+${b}Act on selected${r}
+  p                open PR
+  b                copy branch
+  u                mark read / unread
+  d                remove from bar
+  r                rename ${d}(leaves mode)${r}
+  X                close window ${d}(leaves mode)${r}
+  m                full menu ${d}(leaves mode)${r}
+
+${b}Groups${r} ${d}(fold / unfold)${r}
+  g general  w wt  c CR  f flow
+
+${b}Leave${r}
+  Esc q Cmd+a      or any unbound key
+
+${d}press any key to close${r}
+EOF
+    read -rsn1
+    ;;
+enter)
+    current=$(tmux display -p '#{pane_id}')
+    if [ "$(index_of "$current")" -ge 0 ]; then sel=$current; else sel=${order[0]}; fi
+    tmux set -g @agents_mode 1
+    select_pane "$sel"
+    ;;
+exit)
+    leave
+    ;;
+move)
+    n=${#order[@]}
+    [ "$n" -gt 0 ] || exit 0
+    i=$(index_of "$sel")
+    if [ "$i" -lt 0 ]; then
+        [ "$2" -gt 0 ] && i=0 || i=$((n - 1))
+    else
+        i=$(( (i + $2 + n) % n ))
+    fi
+    select_pane "${order[$i]}"
+    ;;
+attention)
+    # Waiting agents first, then unread ones, searching forward from the selection.
+    n=${#order[@]}
+    [ "$n" -gt 0 ] || exit 0
+    start=$(index_of "$sel")
+    declare -A state unread
+    while IFS=$'\t' read -r pane s u; do
+        state[$pane]=$s unread[$pane]=$u
+    done < <(tmux list-panes -a -F "#{pane_id}	#{@agent_state}	#{@agent_unread}")
+    for want in waiting unread; do
+        for ((step = 1; step <= n; step++)); do
+            pane=${order[$(( (start + step + n) % n ))]}
+            if { [ "$want" = waiting ] && [ "${state[$pane]}" = waiting ]; } ||
+               { [ "$want" = unread ] && [ -n "${unread[$pane]}" ]; }; then
+                select_pane "$pane"
+                exit 0
+            fi
+        done
+    done
+    tmux display "no agents waiting or unread"
+    ;;
+go)
+    jump "$sel" "$2"
+    ;;
+nth)
+    jump "${order[$(($2 - 1))]}" "$3"
+    ;;
+act)
+    action=$2 client=$3
+    [ -n "$sel" ] || exit 0
+    case $action in
+    pr|copy-branch|toggle-unread|forget)
+        "$menu" "$action" "$sel"
+        ;;
+    rename)
+        leave
+        target=$(tmux display -p -t "$sel" '#{window_id}.#{pane_index}')
+        label=$(tmux display -p -t "$sel" '#{@agent_label}')
+        tmux command-prompt -t "$client" -I "$label" -p 'Agent label (empty resets):' \
+            "run -b \"'$menu' label '$target' '%%'\""
+        ;;
+    close)
+        leave
+        window_id=$(tmux display -p -t "$sel" '#{window_id}')
+        name=$(tmux display -p -t "$sel" '#{window_name}')
+        tmux confirm-before -t "$client" -p "Close ${name//\'/}? (y/n)" \
+            "run -b \"'$HOME/.config/utils/tmux-kill-window' '$window_id'\""
+        ;;
+    menu)
+        leave
+        "$menu" show "$sel" "$client" C 0 0
+        ;;
+    esac
+    ;;
+esac

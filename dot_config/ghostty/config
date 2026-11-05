@@ -1185,7 +1185,9 @@ keybind = super+shift+comma=reload_config
 keybind = super+minus=decrease_font_size:1
 keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
-keybind = super+a=select_all
+# Cmd+a → private sequence that tmux maps to User0 (user-keys[0]) to enter
+# AGENTS mode (tmux.keybinds.conf). Replaces select_all.
+keybind = super+a=csi:9001~
 keybind = alt+right=esc:f
 keybind = shift+enter=text:\x1b\r
 keybind = super+alt+down=goto_split:bottom

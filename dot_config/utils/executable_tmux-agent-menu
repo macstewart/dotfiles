@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+# Right-click menu for an entry on the agents status line (see tmux-agents-render).
+#
+#   tmux-agent-menu show <pane> <client> <x|C> <status-line> <client-height>
+#   tmux-agent-menu <action> <pane> [arg]          run a menu action
+#
+# <pane> may be the renderer's p<id> range form or a real %<id>. Menu items
+# call back into this script so their commands stay free of nested quoting.
+
+self="$HOME/.config/utils/tmux-agent-menu"
+render="$HOME/.config/utils/tmux-agents-render"
+
+action=$1
+pane=${2/#p/%}
+[ -n "$action" ] && [ -n "$pane" ] || exit 1
+tmux display -p -t "$pane" '' >/dev/null 2>&1 || { tmux display "agent pane $pane is gone"; exit 0; }
+
+q() { tmux display -p -t "$pane" "$1"; }
+
+default_branch() {
+    case $1 in main|master|develop|"") return 0 ;; *) return 1 ;; esac
+}
+
+case $action in
+show)
+    client=$3 x=$4 client_height=$6
+    window_id=$(q '#{window_id}')
+    window_name=$(q '#{window_name}')
+    pane_index=$(q '#{pane_index}')
+    path=$(q '#{pane_current_path}')
+    state=$(q '#{@agent_state}')
+    label=$(q '#{@agent_label}')
+    unread=$(q '#{@agent_unread}')
+    branch=$(git -C "$path" symbolic-ref --short -q HEAD 2>/dev/null)
+    # Window+index target: a literal %<n> would be eaten as a command-prompt %1..%9 placeholder.
+    target="$window_id.$pane_index"
+    title=${label:-${window_name#wt|}}
+
+    items=(
+        "Jump" j "switch-client -c '$client' -t '$pane'"
+        ""
+    )
+    if [ -n "$branch" ] && ! default_branch "$branch"; then
+        items+=(
+            "Open PR" p "run -b \"'$self' pr '$pane'\""
+            "Copy branch" b "run -b \"'$self' copy-branch '$pane'\""
+        )
+    fi
+    if [ -n "$branch" ]; then
+        items+=("Lazygit" g "display-popup -c '$client' -d '$path' -w 90% -h 90% -E lazygit")
+    fi
+    items+=(
+        "Shell here" s "display-popup -c '$client' -d '$path' -w 80% -h 70% -E \"\$SHELL\""
+        ""
+        "Rename…" r "command-prompt -t '$client' -I '$label' -p 'Agent label (empty resets):' \"run -b \\\"'$self' label '$target' '%%'\\\"\""
+        "Mark $([ -n "$unread" ] && echo read || echo unread)" u "run -b \"'$self' toggle-unread '$pane'\""
+        "Remove from bar" h "run -b \"'$self' forget '$pane'\""
+        ""
+        "Close window" X "confirm-before -t '$client' -p 'Close ${title//\'/}? (y/n)' \"run -b \\\"'$HOME/.config/utils/tmux-kill-window' '$window_id'\\\"\""
+    )
+
+    # Numeric -y is one past the menu's bottom row (tmux clamps to the top if
+    # it's smaller than the menu height), so anchor it to the edge of the
+    # status area to open the menu right next to the bar.
+    status_lines=$(tmux show -gv status)
+    case $status_lines in on) status_lines=1 ;; off) status_lines=0 ;; esac
+    if [ "$x" = C ]; then
+        y=C  # keyboard-invoked (tmux-agents-mode): centre on the client
+    elif [ "$(tmux show -gv status-position)" = top ]; then
+        menu_height=$(( $(printf '%s\n' "${items[@]}" | grep -c '^$') ))  # separators
+        menu_height=$(( (${#items[@]} - menu_height) / 3 + menu_height + 2 ))
+        y=$(( status_lines + menu_height ))
+    else
+        y=$(( client_height - status_lines ))
+    fi
+
+    tmux display-menu -c "$client" -x "$x" -y "$y" \
+        -T "#[align=centre] ${title//#/##} #[fg=colour244]${state:+($state)} " \
+        "${items[@]}"
+    ;;
+pr)
+    # Review windows (tmux-pr-picker) record @pr_url and are named wt|cr-<n>-…;
+    # their branch isn't the PR head, so plain `gh pr view` can't find them.
+    url=$(q '#{@pr_url}')
+    if [ -n "$url" ]; then
+        open "$url"
+        exit 0
+    fi
+    path=$(q '#{pane_current_path}')
+    window_name=$(q '#{window_name}')
+    if [[ $window_name =~ ^wt\|cr-([0-9]+)- ]]; then
+        ref=${BASH_REMATCH[1]}
+    else
+        ref=$(git -C "$path" symbolic-ref --short -q HEAD 2>/dev/null)
+    fi
+    tmux display "opening PR for $ref…"
+    (cd "$path" && gh pr view ${ref:+"$ref"} --web >/dev/null 2>&1) || tmux display "no PR for $ref"
+    ;;
+copy-branch)
+    branch=$(git -C "$(q '#{pane_current_path}')" symbolic-ref --short -q HEAD 2>/dev/null)
+    printf '%s' "$branch" | pbcopy
+    tmux set-buffer -- "$branch" \; display "copied $branch"
+    ;;
+label)
+    if [ -n "$3" ]; then tmux set -p -t "$pane" @agent_label "$3"
+    else tmux set -p -u -t "$pane" @agent_label; fi
+    "$render"
+    ;;
+toggle-unread)
+    if [ -n "$(q '#{@agent_unread}')" ]; then tmux set -p -u -t "$pane" @agent_unread
+    else tmux set -p -t "$pane" @agent_unread 1; fi
+    "$render"
+    ;;
+forget)
+    tmux set -p -u -t "$pane" @agent_unread \; set -p -u -t "$pane" @agent_state
+    # Drop tmux-agent-state.sh's dedupe cache so the next hook re-adds the agent.
+    srv=${TMUX#*,}; srv=${srv%%,*}
+    rm -f "${TMPDIR:-/tmp}/tmux-agent-state.$srv.${pane#%}"
+    "$render"
+    ;;
+*)
+    tmux display "tmux-agent-menu: unknown action $action"
+    exit 1
+    ;;
+esac

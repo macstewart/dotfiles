@@ -12,17 +12,19 @@
 [ -n "$TMUX" ] || exit 0
 
 tab=$(printf '\t')
-fmt="#{pane_id}$tab#{@agent_state}$tab#{@agent_unread}$tab#{@wt_cr}$tab#{@flow_state}$tab#{session_name}$tab#{window_name}$tab#{b:pane_current_path}$tab#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}}"
-folds=$(tmux display -p '#{?@agents_fold_gen,1,0} #{?@agents_fold_wt,1,0} #{?@agents_fold_cr,1,0} #{?@agents_fold_flow,1,0}')
+fmt="#{pane_id}$tab#{@agent_state}$tab#{@agent_unread}$tab#{@wt_cr}$tab#{@flow_state}$tab#{session_name}$tab#{window_name}$tab#{b:pane_current_path}$tab#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}}$tab#{@agent_label}"
+# Global options ride along on every row to save tmux calls: fold flags
+# ($11-$14) and the keyboard mode's state ($15 active, $16 selected pane).
+fmt="$fmt$tab#{?@agents_fold_gen,1,0}$tab#{?@agents_fold_wt,1,0}$tab#{?@agents_fold_cr,1,0}$tab#{?@agents_fold_flow,1,0}$tab#{?@agents_mode,1,0}$tab#{@agents_sel}"
 
-line=$(tmux list-panes -a -F "$fmt" | awk -F "$tab" -v folds="$folds" '
+# Output line 1: visible agent pane ids in display order (@agents_order, used
+# by tmux-agents-mode for navigation); line 2: the status line.
+out=$(tmux list-panes -a -F "$fmt" | awk -F "$tab" '
 BEGIN {
   # Catppuccin mocha, mirrors tmux.style.conf
-  black = "#181825"; dim = "#585b70"; red = "#f38ba8"; viewing_bg = "#45475a"
+  black = "#181825"; dim = "#585b70"; red = "#f38ba8"; viewing_bg = "#45475a"; gap = "#89b4fa"  # window bar bg ($barbg)
   ngroups = split("gen wt cr flow", order, " ")
-  split(folds, f, " ")
-  for (i = 1; i <= ngroups; i++) folded[order[i]] = (f[i] == "1")
-  icon["gen"] = "✦";  accent["gen"] = dim;       bg["gen"] = "#262637"
+  icon["gen"] = "✦";  accent["gen"] = "#9399b2"; bg["gen"] = "#262637"
   icon["wt"] = "🌿";  accent["wt"] = "#a6e3a1";  bg["wt"] = "#293034"
   icon["cr"] = "🔍";  accent["cr"] = "#f9e2af";  bg["cr"] = "#333036"
   icon["flow"] = "🔀"; accent["flow"] = "#cba6f7"; bg["flow"] = "#2d293e"
@@ -30,9 +32,11 @@ BEGIN {
   scolor["waiting"] = red;       sicon["waiting"] = "💬"
   scolor["done"] = "#a6e3a1";    sicon["done"] = "✅"
 }
+NR == 1 {
+  for (i = 1; i <= ngroups; i++) folded[order[i]] = ($(10 + i) == "1")
+  mode = ($15 == "1"); sel = $16
+}
 $2 != "" {
-  # Ranges use p<id>: a literal % followed by digits is eaten by strftime in status-format.
-  pane = $1; sub(/^%/, "p", pane); state = $2; unread = $3
   if ($4 != "") g = "cr"
   else if ($5 != "") g = "flow"
   else if ($7 ~ /^wt\|/) g = "wt"
@@ -40,28 +44,59 @@ $2 != "" {
 
   name = (g == "gen") ? $6 ":" $8 : $7
   sub(/^wt\|/, "", name)
+  if ($10 != "") name = $10  # @agent_label, set via the right-click menu
   gsub(/#/, "##", name)
 
-  c = (state in scolor) ? scolor[state] : dim
-  ic = (state in sicon) ? sicon[state] : "💤"
-  count[g]++
-  if (unread != "") has_unread[g] = 1
+  k = ++count[g]
+  e_pane[g, k] = $1
+  e_color[g, k] = ($2 in scolor) ? scolor[$2] : dim
+  e_icon[g, k] = ($2 in sicon) ? sicon[$2] : "💤"
+  e_name[g, k] = name
+  e_unread[g, k] = ($3 != "")
   # $9: pane is on screen in an attached session (any client).
-  viewing = ($9 == "1")
-  if (viewing) has_viewing[g] = 1
-  entries[g] = entries[g] "#[range=user|" pane "]#[fg=" c "," (unread != "" ? "underscore" : "nounderscore") (viewing ? ",bold,bg=" viewing_bg : "") "] " ic " " name " #[norange" (viewing ? ",nobold,bg=" bg[g] : "") "]"
+  e_viewing[g, k] = ($9 == "1")
+  if ($3 != "") has_unread[g] = 1
+  if ($9 == "1") has_viewing[g] = 1
 }
 END {
-  out = "#[align=left,fill=" black ",bg=" black ",fg=" dim "] agents "
+  if (mode) bar = "#[align=left,fill=" black ",bg=" gap ",fg=" black ",bold] AGENTS #[bg=" black ",nobold] "
+  else bar = "#[align=left,fill=" black ",bg=" black ",fg=" dim "] agents "
+  n = 0; visible = ""
   for (i = 1; i <= ngroups; i++) {
     g = order[i]
     if (!count[g]) continue
-    out = out "#[bg=" bg[g] "] #[range=user|fold_" g "]#[fg=" accent[g] (folded[g] && has_viewing[g] ? ",bold,bg=" viewing_bg : "") "]" (folded[g] ? "▸" : "▾") icon[g]
-    if (folded[g]) out = out " " count[g] (has_unread[g] ? "#[fg=" red "]*" : "") "#[norange]"
-    else out = out "#[norange]" entries[g]
-    out = out " #[bg=" black ",nobold] "
+    bar = bar "#[bg=" bg[g] "] #[range=user|fold_" g "]#[fg=" accent[g] (folded[g] && has_viewing[g] ? ",bold,bg=" viewing_bg : "") "]" (folded[g] ? "▸" : "▾") icon[g]
+    if (folded[g]) {
+      bar = bar " " count[g] (has_unread[g] ? "#[fg=" red "]*" : "") "#[norange]"
+    } else {
+      bar = bar "#[norange]"
+      for (k = 1; k <= count[g]; k++) {
+        pane = e_pane[g, k]; n++; visible = visible (visible == "" ? "" : " ") pane
+        # Ranges use p<id>: a literal % followed by digits is eaten by strftime in status-format.
+        range = pane; sub(/^%/, "p", range)
+        selected = (mode && pane == sel)
+        style = "fg=" e_color[g, k] "," (e_unread[g, k] ? "underscore" : "nounderscore")
+        if (selected) style = "fg=" black ",bg=" accent[g] ",bold," (e_unread[g, k] ? "underscore" : "nounderscore")
+        else if (e_viewing[g, k]) style = style ",bold,bg=" viewing_bg
+        num = (mode && n <= 9) ? n ":" : ""
+        bar = bar "#[range=user|" range "]#[" style "] " num e_icon[g, k] " " e_name[g, k] " #[norange,nobold,bg=" bg[g] "]"
+      }
+    }
+    bar = bar " #[bg=" gap ",nobold] #[bg=" black "]"
   }
-  print out
+  print visible
+  print bar
 }')
 
-tmux set -g @agents_line "$line"
+# Skip the set (and the redraw of every client it causes) when nothing changed.
+# Keyed by tmux server pid so a restarted server always gets a fresh set.
+srv=${TMUX#*,}; srv=${srv%%,*}
+cache="${TMPDIR:-/tmp}/tmux-agents-line.$srv"
+if [ -f "$cache" ] && [ "$(cat "$cache")" = "$out" ]; then
+    exit 0
+fi
+order=${out%%"
+"*}
+line=${out#*"
+"}
+tmux set -g @agents_order "$order" \; set -g @agents_line "$line" && printf '%s\n' "$out" > "$cache"

@@ -4,7 +4,7 @@ repo=$(tmux display-message -p '#{session_name}')
 org="SolaceDev"
 full_repo="${org}/${repo}"
 
-prs=$(gh pr list --repo="$full_repo" --search="-label:dependabot" --json number,title,author,headRefName,body,isDraft --limit 50 2>&1)
+prs=$(gh pr list --repo="$full_repo" --search="-label:dependabot" --json number,title,author,headRefName,body,isDraft,url --limit 50 2>&1)
 
 if [[ $? -ne 0 || -z "$prs" || "$prs" == "[]" ]]; then
     echo "No open PRs found for $full_repo"
@@ -33,6 +33,7 @@ pr_number=$(echo "$selected" | cut -f1 | tr -d '#')
 pr_json=$(jq --argjson n "$pr_number" '.[] | select(.number == $n)' "$tmpfile")
 title=$(echo "$pr_json" | jq -r '.title')
 head_ref=$(echo "$pr_json" | jq -r '.headRefName')
+pr_url=$(echo "$pr_json" | jq -r '.url')
 
 # Generate prompt file — delegate the review criteria to the wm-pr-review skill
 promptfile=$(mktemp "${TMPDIR:-/tmp}/pr-prompt-XXXXXX")
@@ -76,4 +77,7 @@ new_id=$(comm -13 <(echo "$before_ids") \
     <(tmux list-windows -a -F '#{window_id}' | sort) | head -1)
 if [[ -n "$new_id" ]]; then
     tmux set-option -w -t "$new_id" @wt_cr 1
+    # The review branch (cr-<n>-…) isn't the PR head, so `gh pr view` can't
+    # find the PR from it; the agents-bar menu opens this instead.
+    tmux set-option -w -t "$new_id" @pr_url "$pr_url"
 fi
